@@ -2,26 +2,31 @@ package de.streamfusion.models;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "videos")
 public class Video {
     @Id
+    @Column(name = "video_id")
     private Long id;
     private String title;
     private int likes;
     private int dislikes;
     private int views;
     private int length;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 
-    public Video() {
+    @PrePersist
+    public void prePersist() {
         this.id = System.currentTimeMillis();
     }
 
-    public Long getId() {
+    public Long getID() {
         return this.id;
     }
 
@@ -57,15 +62,23 @@ public class Video {
         this.views = views;
     }
 
-    public Long getUploader() {
-        return this.id; // TODO: Make method return proper user
-    }
-
     public int getLength() {
         return this.length;
     }
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

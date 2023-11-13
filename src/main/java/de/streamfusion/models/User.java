@@ -19,12 +19,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Video> videos;
 
-    public User() {
+    @PrePersist
+    public void prePersist() {
         this.id = System.currentTimeMillis();
     }
-
-    public Long getId() {
-        return this.id;
+    
+    public Long getID() {
+        return id;
     }
 
     public String getUsername() {
@@ -67,11 +68,19 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Video> getVideos() {
+        return videos;
+    }
+
+    public void addVideo(Video video) {
+        this.videos.add(video);
+    }
+
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
     }
 }

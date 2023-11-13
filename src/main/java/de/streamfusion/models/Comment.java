@@ -8,30 +8,35 @@ import java.util.Set;
 @Table(name = "comments")
 public class Comment {
     @Id
+    @Column(name = "comment_id")
     private Long id;
+    @Column(nullable = false)
     private String content;
     private int likes;
     private int dislikes;
-    @OneToMany
-    private Set<Comment> comments;
-    @OneToOne
-    @Column(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "video_id")
+    private Video video;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private Set<Comment> replies;
 
-    public Comment() {
+    @PrePersist
+    public void prePersist() {
         this.id = System.currentTimeMillis();
     }
 
-    public Long getId() {
+    public Long getID() {
         return this.id;
     }
 
-    public User getUser() {
-        return this.user;
-    }
-
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(String content) {
@@ -39,7 +44,7 @@ public class Comment {
     }
 
     public int getLikes() {
-        return likes;
+        return this.likes;
     }
 
     public void setLikes(int likes) {
@@ -52,5 +57,29 @@ public class Comment {
 
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public Comment getParent() {
+        return parent;
+    }
+
+    public void setParent(Comment parent) {
+        this.parent = parent;
+    }
+
+    public Set<Comment> getReplies() {
+        return replies;
+    }
+
+    public void addReply(Comment reply) {
+        this.replies.add(reply);
     }
 }
