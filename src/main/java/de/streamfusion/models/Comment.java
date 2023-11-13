@@ -1,9 +1,6 @@
 package de.streamfusion.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
@@ -12,12 +9,14 @@ import java.util.Set;
 public class Comment {
     @Id
     private Long id;
-    private Long userId;
     private String content;
     private int likes;
     private int dislikes;
     @OneToMany
     private Set<Comment> comments;
+    @OneToOne
+    @Column(name = "user_id")
+    private User user;
 
     public Comment() {
         this.id = System.currentTimeMillis();
@@ -27,8 +26,8 @@ public class Comment {
         return this.id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return this.user;
     }
 
     public String getContent() {
