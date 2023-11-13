@@ -11,6 +11,7 @@ public class Video {
     private int likes;
     private int dislikes;
     private int views;
+    private int length;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -58,5 +59,13 @@ public class Video {
 
     public Long getUploader() {
         return this.id; // TODO: Make method return proper user
+    }
+
+    public int getLength() {
+        return this.length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 }
