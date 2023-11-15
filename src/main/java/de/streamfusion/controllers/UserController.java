@@ -1,8 +1,8 @@
-package de.streamfusion.controller;
+package de.streamfusion.controllers;
 
-import de.streamfusion.Exceptions.EmailAlreadyExistsException;
-import de.streamfusion.Exceptions.NoValidEmailException;
-import de.streamfusion.Exceptions.UsernameTakenException;
+import de.streamfusion.exceptions.EmailAlreadyExistsException;
+import de.streamfusion.exceptions.NoValidEmailException;
+import de.streamfusion.exceptions.UsernameTakenException;
 import de.streamfusion.models.User;
 import de.streamfusion.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
