@@ -19,13 +19,13 @@ public class UserService {
 
     public void addUser(User user) throws EmailAlreadyExistsException, NoValidEmailException, UsernameTakenException {
         if (this.userRepository.existsByEmail(user.getEmail())) {
-            throw new EmailAlreadyExistsException("Email " + user.getEmail() + " already exists");
+            throw new EmailAlreadyExistsException("Email %s already exists".formatted(user.getEmail()));
         }
-        if (!((user.getEmail().contains("@") && (user.getEmail().contains("."))))) {
-            throw new NoValidEmailException("Your email must contain '@' and '.' to be valid");
+        if (!user.getEmail().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            throw new NoValidEmailException("Email %s is not valid".formatted(user.getEmail()));
         }
         if (this.userRepository.existsByUsername(user.getUsername())) {
-            throw new UsernameTakenException(user.getUsername() + " is already taken");
+            throw new UsernameTakenException("Username %s is already taken".formatted(user.getUsername()));
         }
         this.userRepository.save(user);
     }
