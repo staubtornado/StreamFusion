@@ -32,4 +32,9 @@ public class PageController {
         model.addAttribute("id", id);
         return "video";
     }
+
+    @GetMapping("/error")
+    public String error(Model model) {
+        return "error";
+    }
 }
