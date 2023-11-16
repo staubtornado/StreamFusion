@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.FileNotFoundException;
@@ -30,7 +27,7 @@ public class VideoController {
     @ResponseBody
     public ResponseEntity<StreamingResponseBody> cdnV(
             @RequestParam(name="id") long id,
-            @RequestParam(name="range", required = false) String range
+            @RequestHeader(name="Range", required = false) String range
     ) {
         Video video = this.videoService.getVideoByID(id).orElseThrow();
         Path filePath = Paths.get("./data/%d/video.%s".formatted(id, video.getFiletype()));
@@ -60,7 +57,7 @@ public class VideoController {
             return new ResponseEntity<>(responseStream, responseHeaders, HttpStatus.OK);
         }
 
-        String[] ranges = range.split("-");
+        String[] ranges = range.replace("bytes=", "").split("-");
         long start = Long.parseLong(ranges[0]);
         long end;
         if (ranges.length > 1) {
