@@ -6,6 +6,8 @@ import de.streamfusion.exceptions.UsernameTakenException;
 import de.streamfusion.models.User;
 import de.streamfusion.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,16 +22,13 @@ public class UserController {
     }
 
     @PostMapping
-    public void registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
         try {
             this.userService.addUser(user);
-        } catch (EmailAlreadyExistsException e) { //TODO: HTTP-Response Types!
-
-        } catch (NoValidEmailException e) {
-
-        } catch (UsernameTakenException e) {
-
+        } catch (EmailAlreadyExistsException | NoValidEmailException | UsernameTakenException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
