@@ -17,7 +17,7 @@ public class Security {
             auth.requestMatchers("/register").permitAll();
             auth.requestMatchers("/login").permitAll();
             auth.requestMatchers("/video").permitAll();
-            auth.requestMatchers("/cdn/v").permitAll();
+            auth.requestMatchers("/cdn/*").permitAll();
             auth.requestMatchers("/error").permitAll();
 
             auth.requestMatchers("/account").authenticated();

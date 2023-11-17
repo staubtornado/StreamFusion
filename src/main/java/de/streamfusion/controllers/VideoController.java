@@ -3,8 +3,10 @@ package de.streamfusion.controllers;
 import de.streamfusion.models.Video;
 import de.streamfusion.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -87,5 +89,19 @@ public class VideoController {
             }
         };
         return new ResponseEntity<>(responseStream, responseHeaders, HttpStatus.PARTIAL_CONTENT);
+    }
+
+    @GetMapping("/cdn/p")
+    @ResponseBody
+    public ResponseEntity<byte[]> cdnP(@RequestParam(name = "id") long id) {
+        String path = "./data/%d/thumbnail.jpg".formatted(id);
+
+        byte[] image;
+        try {
+            image = new UrlResource(Paths.get(path).toUri()).getInputStream().readAllBytes();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 }
