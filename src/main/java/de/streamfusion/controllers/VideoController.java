@@ -91,7 +91,7 @@ public class VideoController {
         return new ResponseEntity<>(responseStream, responseHeaders, HttpStatus.PARTIAL_CONTENT);
     }
 
-    @GetMapping("/cdn/p")
+    @GetMapping("/cdn/v/thumbnail")
     @ResponseBody
     public ResponseEntity<byte[]> cdnP(@RequestParam(name = "id") long id) {
         String path = "./data/%d/thumbnail.jpg".formatted(id);
