@@ -8,6 +8,8 @@ import de.streamfusion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -15,6 +17,10 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public Optional<User> getUserByID(long id) {
+        return this.userRepository.findById(id);
     }
 
     public void addUser(User user) throws EmailAlreadyExistsException, NoValidEmailException, UsernameTakenException {
