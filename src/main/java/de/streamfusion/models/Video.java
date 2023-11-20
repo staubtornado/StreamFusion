@@ -15,6 +15,7 @@ public class Video {
     private int dislikes;
     private int views;
     private int length;
+    private String description;
     private String filetype;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -85,5 +86,13 @@ public class Video {
 
     public String getFiletype() {
         return this.filetype;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
