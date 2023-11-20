@@ -6,5 +6,15 @@
 </head>
 <body>
     <h1>Video</h1>
+
+    <p th:text="${title}"></p>
+    <video width="320" height="240" controls>
+        <source th:src="${streamURL}" type="video/mp4">
+        Your browser does not support video streaming
+    </video>
+    <p>Likes: </p><span th:text="${likes}"></span>
+    <p>Dislikes: </p><span th:text="${dislikes}"></span>
+    <p>Views: </p><span th:text="${views}"></span>
+    <p>Description: </p><p th:text="${description}"></p>
 </body>
 </html>
