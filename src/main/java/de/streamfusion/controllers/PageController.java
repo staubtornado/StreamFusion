@@ -33,6 +33,16 @@ public class PageController {
         return "video";
     }
 
+    @GetMapping("/upload")
+    public String upload(Model model) {
+        return "uploaf";
+    }
+
+    @GetMapping("/user")
+    public String user(@RequestParam(name="id") long id, Model model){
+        return "User";
+    }
+
     @GetMapping("/error")
     public String error(Model model) {
         return "error";
