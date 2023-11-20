@@ -16,12 +16,16 @@ public class Security {
             auth.requestMatchers("/").permitAll();
             auth.requestMatchers("/register").permitAll();
             auth.requestMatchers("/login").permitAll();
+            auth.requestMatchers("/account").permitAll();
             auth.requestMatchers("/video").permitAll();
+            auth.requestMatchers("/upload").permitAll();
+            auth.requestMatchers("/user").permitAll();
+
             auth.requestMatchers("/cdn/v").permitAll();
             auth.requestMatchers("/cdn/v/thumbnail").permitAll();
+
             auth.requestMatchers("/error").permitAll();
 
-            auth.requestMatchers("/account").authenticated();
         })
             .formLogin(formLogin -> formLogin.loginPage("/login"))
             .logout(logout -> logout.logoutSuccessUrl("/").permitAll())
