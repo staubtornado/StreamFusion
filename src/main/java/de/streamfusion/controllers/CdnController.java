@@ -17,11 +17,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-public class VideoController {
+public class CdnController {
     private final VideoService videoService;
 
     @Autowired
-    public VideoController(VideoService videoService) {
+    public CdnController(VideoService videoService) {
         this.videoService = videoService;
     }
 
