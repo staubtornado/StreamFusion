@@ -5,6 +5,36 @@
     <title>Upload</title>
 </head>
 <body>
-    <h1>Uploaf</h1>
+<form method="POST"
+           action="/api/v1/upload"
+           enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Title</td>
+            <td><label>
+                <input type="text" name="title" />
+            </label></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><label>
+                <input type="text" name="description" />
+            </label></td>
+        </tr>
+        <tr>
+            <td>Select a file to upload</td>
+            <td><input type="file" name="file" /></td>
+        </tr>
+        <tr>
+            <td>UserID</td>
+            <td><label>
+                <input type="text" name="userID" />
+            </label></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
