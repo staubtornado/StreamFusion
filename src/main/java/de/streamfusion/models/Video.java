@@ -14,7 +14,6 @@ public class Video {
     private int likes;
     private int dislikes;
     private int views;
-    private int length;
     private String description;
     private String filetype;
     @ManyToOne
@@ -64,16 +63,12 @@ public class Video {
         this.views = views;
     }
 
-    public int getLength() {
-        return this.length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
     public User getUser() {
         return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Comment> getComments() {
@@ -94,5 +89,9 @@ public class Video {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
     }
 }
