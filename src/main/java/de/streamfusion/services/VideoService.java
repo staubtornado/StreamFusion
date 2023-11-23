@@ -19,4 +19,12 @@ public class VideoService {
     public Optional<Video> getVideoByID(long id) {
         return this.videoRepository.findById(id);
     }
+
+    public void saveVideo(Video video) {
+        this.videoRepository.save(video);
+    }
+
+    public void deleteVideo(Video video) {
+        this.videoRepository.delete(video);
+    }
 }
