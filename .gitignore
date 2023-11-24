@@ -34,3 +34,6 @@ build/
 
 ### DATA ###
 data/
+
+### app-properties ###
+src/main/resources/application.properties
