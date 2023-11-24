@@ -83,14 +83,4 @@ public class APIController {
         }
         return new ResponseEntity<>("Video successfully deleted.", HttpStatus.OK);
     }
-
-    @PostMapping(value = "/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
-        try {
-            this.userService.addUser(user);
-        } catch (EmailAlreadyExistsException | NoValidEmailException | UsernameTakenException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
