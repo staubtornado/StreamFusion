@@ -116,6 +116,10 @@ public class User implements UserDetails {
         this.videos.add(video);
     }
 
+    public String getProfilePictureURL() {
+        return "/cdn/u/picture?id=%d".formatted(this.id);
+    }
+
     public boolean checkPassword(String password) {
         return this.password.equals(password);
     }

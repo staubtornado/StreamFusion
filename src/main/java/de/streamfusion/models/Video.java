@@ -94,4 +94,12 @@ public class Video {
     public void setFiletype(String filetype) {
         this.filetype = filetype;
     }
+
+    public String getStreamURL() {
+        return "/cdn/v?id=%d".formatted(this.id);
+    }
+
+    public String getThumbnailURL() {
+        return "/cdn/v/thumbnail?id=%d".formatted(this.id);
+    }
 }
