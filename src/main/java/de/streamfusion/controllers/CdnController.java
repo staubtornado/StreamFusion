@@ -27,8 +27,8 @@ public class CDNController {
 
     @GetMapping("/v")
     public ResponseEntity<StreamingResponseBody> cdnV(
-            @RequestParam(name="id") long id,
-            @RequestHeader(name="Range", required = false) String range
+            @RequestParam(name = "id") long id,
+            @RequestHeader(name = "Range", required = false) String range
     ) {
         Video video = this.videoService.getVideoByID(id).orElseThrow();
         Path filePath = Paths.get("./data/%d/video.%s".formatted(id, video.getFiletype()));
