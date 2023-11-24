@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -17,16 +16,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-public class CdnController {
+@RequestMapping("/cdn")
+public class CDNController {
     private final VideoService videoService;
 
     @Autowired
-    public CdnController(VideoService videoService) {
+    public CDNController(VideoService videoService) {
         this.videoService = videoService;
     }
 
-    @GetMapping("/cdn/v")
-    @ResponseBody
+    @GetMapping("/v")
     public ResponseEntity<StreamingResponseBody> cdnV(
             @RequestParam(name="id") long id,
             @RequestHeader(name="Range", required = false) String range
@@ -91,17 +90,25 @@ public class CdnController {
         return new ResponseEntity<>(responseStream, responseHeaders, HttpStatus.PARTIAL_CONTENT);
     }
 
-    @GetMapping("/cdn/v/thumbnail")
-    @ResponseBody
-    public ResponseEntity<byte[]> cdnP(@RequestParam(name = "id") long id) {
+    @GetMapping("v/thumbnail")
+    public ResponseEntity<byte[]> cdnThumbnail(@RequestParam(name = "id") long id) {
         String path = "./data/%d/thumbnail.jpg".formatted(id);
+        return getResponseEntity(path);
+    }
 
+    @GetMapping("/u/picture")
+    public ResponseEntity<byte[]> cdnUserPicture(@RequestParam(name = "id") long id) {
+        String path = "./data/%d/picture.jpg".formatted(id);
+        return getResponseEntity(path);
+    }
+
+    private ResponseEntity<byte[]> getResponseEntity(String path) {
         byte[] image;
         try {
             image = new UrlResource(Paths.get(path).toUri()).getInputStream().readAllBytes();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+        return new ResponseEntity<>(image, HttpStatus.OK);
     }
 }
