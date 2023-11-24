@@ -40,61 +40,14 @@ public class PageController {
     }
 
     @GetMapping("/account")
-    public String account(Model model) {
-        return "account";
-    }
-
-    @GetMapping("/video")
-    public ModelAndView video(@RequestParam(name="id") long id, ModelAndView modelAndView) {
-        final Video video;
-        try {
-            video = this.videoService.getVideoByID(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            modelAndView.setViewName("error");
-            return modelAndView;
-        }
-
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("title", video.getTitle());
-        modelAndView.addObject("likes", video.getLikes());
-        modelAndView.addObject("dislikes", video.getDislikes());
-        modelAndView.addObject("views", video.getViews());
-        modelAndView.addObject("description", video.getDescription());
-        modelAndView.addObject("filetype", video.getFiletype());
-        modelAndView.addObject("streamURL", "/cdn/v?id=%d".formatted(id));
-        modelAndView.addObject("thumbnailURL", "/cdn/thumbnail?id=%d".formatted(id));
+    public ModelAndView account() {
+        ModelAndView modelAndView = new ModelAndView("account");
+        modelAndView.addObject("user", null);
         return modelAndView;
     }
 
-    @GetMapping("/upload")
-    public String upload(Model model) {
-        return "upload";
-    }
-
-    @GetMapping("/user")
-    public ModelAndView user(@RequestParam(name="id") long id, ModelAndView model){
-        final User user;
-        try {
-            user = this.userService.getUserByID(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            model.setViewName("error");
-            return model;
-        }
-
-        model.addObject("id", id);
-        model.addObject("username", user.getUsername());
-        model.addObject("email", user.getEmail());
-        model.addObject("videos", user.getVideos());
-        model.addObject("password", user.getPassword());
-        model.addObject("firstname", user.getFirstName());
-        model.addObject("lastname", user.getLastName());
-        model.addObject("dateOfBirth", user.getDateOfBirth());
-        model.addObject("picture", "/cdn/u/picture/?id=%d".formatted(id));
-        return model;
-    }
-
     @GetMapping("/error")
-    public String error(Model model) {
+    public String error() {
         return "error";
     }
 }
