@@ -1,18 +1,16 @@
 package de.streamfusion.controllers;
 
-import de.streamfusion.exceptions.EmailAlreadyExistsException;
-import de.streamfusion.exceptions.NoValidEmailException;
-import de.streamfusion.exceptions.UsernameTakenException;
 import de.streamfusion.models.User;
 import de.streamfusion.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+import java.util.NoSuchElementException;
+
+@Controller
 public class UserController {
     private final UserService userService;
 
@@ -21,14 +19,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    @GetMapping(value = "/user")
+    public ModelAndView user(@RequestParam long id) {
+        ModelAndView modelAndView = new ModelAndView("user");
         try {
-            this.userService.addUser(user);
-        } catch (EmailAlreadyExistsException | NoValidEmailException | UsernameTakenException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            User user = this.userService.getUserByID(id).orElseThrow();
+            modelAndView.addObject("user", user);
+        } catch (NoSuchElementException e) {
+            modelAndView.setViewName("redirect:/error");
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return modelAndView;
     }
-
 }

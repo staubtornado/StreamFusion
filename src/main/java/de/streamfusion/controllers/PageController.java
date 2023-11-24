@@ -1,41 +1,34 @@
 package de.streamfusion.controllers;
 
-import de.streamfusion.models.User;
-import de.streamfusion.models.Video;
 import de.streamfusion.services.UserService;
-import de.streamfusion.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.NoSuchElementException;
 
 @Controller
 public class PageController {
-    private final VideoService videoService;
     private final UserService userService;
 
     @Autowired
-    public PageController(VideoService videoService, UserService userService) {
-        this.videoService = videoService;
+    public PageController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/")
-    public String home(Model model) {
-        return "home";
+    public ModelAndView home() {
+        ModelAndView modelAndView = new ModelAndView("home");
+        modelAndView.addObject("user", null);
+        return modelAndView;
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register() {
         return "register";
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
     }
 
