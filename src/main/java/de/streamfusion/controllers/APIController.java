@@ -1,7 +1,9 @@
 package de.streamfusion.controllers;
 
+import de.streamfusion.controllers.requestAndResponse.PasswordChangeRequest;
 import de.streamfusion.exceptions.EmailAlreadyExistsException;
 import de.streamfusion.exceptions.NoValidEmailException;
+import de.streamfusion.exceptions.PasswordMismatchException;
 import de.streamfusion.exceptions.UsernameTakenException;
 import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
