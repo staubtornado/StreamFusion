@@ -6,18 +6,16 @@ public class UpdateRequest {
     private String newFirstname;
     private String newLastname;
     private Long newDate;
-    private String newPassword;
 
     public UpdateRequest() {
     }
 
-    public UpdateRequest(String newUsername, String newEmail, String newFirstname, String newLastname, Long newDate, String newPassword) {
+    public UpdateRequest(String newUsername, String newEmail, String newFirstname, String newLastname, Long newDate) {
         this.newUsername = newUsername;
         this.newEmail = newEmail;
         this.newFirstname = newFirstname;
         this.newLastname = newLastname;
         this.newDate = newDate;
-        this.newPassword = newPassword;
     }
 
     public String getNewUsername() {
@@ -58,13 +56,5 @@ public class UpdateRequest {
 
     public void setNewDate(Long newDate) {
         this.newDate = newDate;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
     }
 }
