@@ -26,6 +26,20 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Video> videos;
 
+    public User() {
+    }
+
+    public User(String username, String email, String firstname, String lastname, Long dateOfBirth, String password, Role role) {
+        prePersist();
+        this.username = username;
+        this.email = email;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.role = role;
+    }
+
     @PrePersist
     public void prePersist() {
         this.id = System.currentTimeMillis();
