@@ -7,7 +7,7 @@
 <body>
     <h1>Account Settings</h1>
 
-    <form th:action="${sendUrl}" method="post">
+    <form th:action="'/account?id=' + ${user.getID()}" method="post">
         <label for="newUsername">Enter your new Username</label>
         <input name="newUsername" id="newUsername" th:value="${user.username}">
 
@@ -22,11 +22,19 @@
 
         <label for="newDateOfBirth">Enter your new Birthday</label>
         <input name="newDateOfBirth" id="newDateOfBirth" type="text" inputmode="numeric" th:value="${user.dateOfBirth}">
+        <button type="submit">Update!</button>
+    </form>
+    <br><br><br>
+    <form th:action="'/account/changePassword?id=' + ${user.getID()}" method="post">
+        <label for="oldPassword">Enter your old Password</label>
+        <input name="oldPassword" id="oldPassword" type="password">
 
         <label for="newPassword">Enter your new Password</label>
         <input name="newPassword" id="newPassword" type="password">
 
-        <button type="submit">Update!</button>
+        <label for="repeatPassword">Repeat your new Password</label>
+        <input name="repeatPassword" id="repeatPassword" type="password">
+        <button type="submit">Change Password</button>
     </form>
 </body>
 </html>
