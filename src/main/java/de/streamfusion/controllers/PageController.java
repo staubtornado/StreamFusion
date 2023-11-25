@@ -1,18 +1,16 @@
 package de.streamfusion.controllers;
 
-import de.streamfusion.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.streamfusion.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.NoSuchElementException;
+
 @Controller
 public class PageController {
-    private final UserService userService;
 
-    @Autowired
-    public PageController(UserService userService) {
-        this.userService = userService;
+    public PageController() {
     }
 
     @GetMapping("/")
@@ -23,20 +21,15 @@ public class PageController {
     }
 
     @GetMapping("/register")
-    public String register() {
-        return "register";
+    public ModelAndView register() {
+        ModelAndView modelAndView = new ModelAndView("register");
+        modelAndView.addObject("user", null);
+        return modelAndView;
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
-    }
-
-    @GetMapping("/account")
-    public ModelAndView account() {
-        ModelAndView modelAndView = new ModelAndView("account");
-        modelAndView.addObject("user", null);
-        return modelAndView;
     }
 
     @GetMapping("/error")
