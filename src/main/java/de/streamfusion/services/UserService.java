@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
+
+//TODO: Hash, Salt and Pepper Passwords
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -96,6 +98,7 @@ public class UserService {
         return !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     }
 
+    //TODO: Make Nullsafe
     public RegisterRequest putIntoRegisterRequest(String registerData) {
         String[] contentArray = registerData.split("&");
         return new RegisterRequest(
@@ -108,6 +111,7 @@ public class UserService {
         );
     }
 
+    //TODO: Make Nullsafe
     public UpdateRequest putIntoUpdateRequest(String updateData) {
         String[] contentArray = updateData.split("&");
         return new UpdateRequest(
@@ -119,6 +123,7 @@ public class UserService {
         );
     }
 
+    //TODO: Make Nullsafe
     public PasswordChangeRequest putIntoPasswordChangeRequest(String passwordChangeData) {
         String[] contentArray = passwordChangeData.split("&");
         return new PasswordChangeRequest(
