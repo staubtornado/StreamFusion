@@ -1,5 +1,6 @@
 package de.streamfusion.controllers;
 
+import de.streamfusion.controllers.requestAndResponse.RegisterRequest;
 import de.streamfusion.controllers.requestAndResponse.UpdateRequest;
 import de.streamfusion.exceptions.EmailAlreadyExistsException;
 import de.streamfusion.exceptions.NoValidEmailException;
@@ -40,11 +41,27 @@ public class UserController {
         }
         return modelAndView;
     }
-    @PostMapping("/account/settings")
+
+    @GetMapping("/account")
+    public ModelAndView account(@RequestParam long id) {
+        ModelAndView modelAndView = new ModelAndView("account");
+        final User user;
+        try {
+            user = this.userService.getUserByID(id).orElseThrow();
+            modelAndView.addObject("sendUrl", "/account?id=" + user.getID());
+            modelAndView.addObject("user", user);
+        } catch (NoSuchElementException e) {
+            modelAndView.setViewName("redirect:/error");
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/account")
     public ResponseEntity<?> editUser(
-            @RequestParam Long id,
-            @RequestBody UpdateRequest request
-            ){
+            @RequestParam long id,
+            @RequestBody String updateData
+    ) {
+        UpdateRequest request = userService.putIntoUpdateRequest(updateData);
         final User user;
         try {
             user = this.userService.getUserByID(id).orElseThrow();
@@ -57,5 +74,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Saved changes.", HttpStatus.OK);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody String registerData) {
+        RegisterRequest request = userService.putIntoRegisterRequest(registerData);
+        try {
+            this.userService.addUser(request);
+        } catch (EmailAlreadyExistsException | NoValidEmailException | UsernameTakenException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully created your account", HttpStatus.OK);
     }
 }
