@@ -5,6 +5,27 @@
     <title>Register</title>
 </head>
 <body>
-    <h1>Try to register</h1>
+    <h1>Register to StreamFusion!</h1>
+    <form action="/register" method="post">
+        <label for="username">Enter your Username</label>
+        <input name="username" id="username">
+
+        <label for="email">Enter your Email</label>
+        <input name="email" id="email">
+
+        <label for="firstname">Enter your firstname</label>
+        <input name="firstname" id="firstname">
+
+        <label for="lastname">Enter your lastname</label>
+        <input name="lastname" id="lastname">
+
+        <label for="dateOfBirth">Enter your Birthday</label>
+        <input name="dateOfBirth" id="dateOfBirth" type="text" inputmode="numeric">
+
+        <label for="password">Enter your Password</label>
+        <input name="password" id="password">
+
+        <button type="submit">Register me!</button>
+    </form>
 </body>
 </html>
