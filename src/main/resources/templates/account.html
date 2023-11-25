@@ -5,6 +5,28 @@
     <title>Account</title>
 </head>
 <body>
-    <h1>Account</h1>
+    <h1>Account Settings</h1>
+
+    <form th:action="${sendUrl}" method="post">
+        <label for="newUsername">Enter your new Username</label>
+        <input name="newUsername" id="newUsername" th:value="${user.username}">
+
+        <label for="newEmail">Enter your new Email</label>
+        <input name="newEmail" id="newEmail" type="email" th:value="${user.email}">
+
+        <label for="newFirstname">Enter your new firstname</label>
+        <input name="newFirstname" id="newFirstname" th:value="${user.firstName}">
+
+        <label for="newLastname">Enter your new lastname</label>
+        <input name="newLastname" id="newLastname" th:value="${user.lastName}">
+
+        <label for="newDateOfBirth">Enter your new Birthday</label>
+        <input name="newDateOfBirth" id="newDateOfBirth" type="text" inputmode="numeric" th:value="${user.dateOfBirth}">
+
+        <label for="newPassword">Enter your new Password</label>
+        <input name="newPassword" id="newPassword" type="password">
+
+        <button type="submit">Update!</button>
+    </form>
 </body>
 </html>
