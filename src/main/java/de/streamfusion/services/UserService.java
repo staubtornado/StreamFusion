@@ -1,16 +1,16 @@
 package de.streamfusion.services;
 
+import de.streamfusion.controllers.requestAndResponse.PasswordChangeRequest;
 import de.streamfusion.controllers.requestAndResponse.RegisterRequest;
 import de.streamfusion.controllers.requestAndResponse.UpdateRequest;
-import de.streamfusion.exceptions.EmailAlreadyExistsException;
-import de.streamfusion.exceptions.NoValidEmailException;
-import de.streamfusion.exceptions.UsernameTakenException;
+import de.streamfusion.exceptions.*;
 import de.streamfusion.models.Role;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -71,6 +71,17 @@ public class UserService {
         user.setFirstName(request.getNewFirstname());
         user.setLastName(request.getNewLastname());
         user.setDateOfBirth(request.getNewDate());
+        this.userRepository.save(user);
+    }
+
+    public void changePassword(User user, PasswordChangeRequest request) throws PasswordMismatchException, WrongPasswordException {
+        if (!Objects.equals(request.getOldPassword(), user.getPassword())) {
+            throw new WrongPasswordException("You entered a wrong password!");
+        }
+        if (!Objects.equals(request.getNewPassword(), request.getRepeatPassword())) {
+            throw new PasswordMismatchException("Passwords did not Match");
+        }
+
         user.setPassword(request.getNewPassword());
         this.userRepository.save(user);
     }
@@ -97,19 +108,23 @@ public class UserService {
         );
     }
 
-    //TODO: Make Null safe!
     public UpdateRequest putIntoUpdateRequest(String updateData) {
         String[] contentArray = updateData.split("&");
-        UpdateRequest updateRequest = new UpdateRequest(
+        return new UpdateRequest(
                 contentArray[1].split("=")[1],
                 contentArray[2].split("=")[1].replace("%40", "@"),
                 contentArray[3].split("=")[1],
                 contentArray[4].split("=")[1],
-                Long.parseLong(contentArray[5].split("=")[1]),
-                contentArray[6].split("=")[1]
+                Long.parseLong(contentArray[5].split("=")[1])
         );
-
-        return updateRequest;
     }
 
+    public PasswordChangeRequest putIntoPasswordChangeRequest(String passwordChangeData) {
+        String[] contentArray = passwordChangeData.split("&");
+        return new PasswordChangeRequest(
+                contentArray[1].split("=")[1],
+                contentArray[2].split("=")[1],
+                contentArray[3].split("=")[1]
+        );
+    }
 }
