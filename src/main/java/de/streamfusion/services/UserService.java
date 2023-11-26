@@ -1,90 +1,52 @@
 package de.streamfusion.services;
 
-import de.streamfusion.controllers.requestAndResponse.PasswordChangeRequest;
-import de.streamfusion.controllers.requestAndResponse.RegisterRequest;
-import de.streamfusion.controllers.requestAndResponse.UpdateRequest;
-import de.streamfusion.exceptions.*;
-import de.streamfusion.models.Role;
+import de.streamfusion.controllers.requestAndResponse.EditAccountDetailsRequest;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
-
-//TODO: Hash, Salt and Pepper Passwords
 @Service
 public class UserService {
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository
-//            , PasswordEncoder passwordEncoder
-    ) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-//        this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> getUserByID(long id) {
-        return this.userRepository.findById(id);
+    public User getUserByID(long id) throws NoSuchElementException {
+        return this.userRepository.findById(id).orElseThrow();
     }
 
-    public void addUser(RegisterRequest request) throws EmailAlreadyExistsException, NoValidEmailException, UsernameTakenException {
-        User user = new User(
-                request.getUsername(),
-                request.getEmail(),
-                request.getFirstname(),
-                request.getLastname(),
-                request.getDateOfBirth(),
-//                this.passwordEncoder.encode(request.getPassword()),
-                request.getPassword(),
-                Role.USER
-        );
-        if (this.userRepository.existsByEmail(user.getEmail())) {
-            throw new EmailAlreadyExistsException("Email %s already exists".formatted(user.getEmail()));
-        }
-        if (emailIsNotValid(user.getEmail())){
-            throw new NoValidEmailException("Email %s is not valid".formatted(user.getEmail()));
-        }
-        if (this.userRepository.existsByUsername(user.getUsername())) {
-            throw new UsernameTakenException("Username %s is already taken".formatted(user.getUsername()));
-        }
-        this.userRepository.save(user);
+    public User getUserByEmail(String email) throws NoSuchElementException {
+        return this.userRepository.findByEmail(email).orElseThrow();
     }
 
-    public void updateUser(User user, UpdateRequest request
-    ) throws UsernameTakenException, NoValidEmailException, EmailAlreadyExistsException {
-
-        if (this.userRepository.existsByUsername(request.getNewUsername())) {
-            throw new UsernameTakenException("Username %s is already taken".formatted(user.getUsername()));
+    public void updateUser(User user, @NonNull EditAccountDetailsRequest request) throws IllegalArgumentException {
+        if (request.newUsername().isEmpty()) {
+            throw new IllegalArgumentException("Username is empty.");
         }
-        if (emailIsNotValid(request.getNewEmail())) {
-            throw new NoValidEmailException("Email %s is not valid".formatted(user.getEmail()));
+        if (request.newEmail().isEmpty()) {
+            throw new IllegalArgumentException("Email is empty.");
         }
-        if (this.userRepository.existsByEmail(request.getNewEmail())) {
-            throw new EmailAlreadyExistsException("Email %s already exists".formatted(user.getEmail()));
+        if (this.emailIsNotValid(request.newEmail())) {
+            throw new IllegalArgumentException("Email is not valid.");
         }
-
-        user.setUsername(request.getNewUsername());
-        user.setEmail(request.getNewEmail());
-        user.setFirstName(request.getNewFirstname());
-        user.setLastName(request.getNewLastname());
-        user.setDateOfBirth(request.getNewDate());
-        this.userRepository.save(user);
-    }
-
-    public void changePassword(User user, PasswordChangeRequest request) throws PasswordMismatchException, WrongPasswordException {
-        if (!Objects.equals(request.getOldPassword(), user.getPassword())) {
-            throw new WrongPasswordException("You entered a wrong password!");
+        if (request.newFirstname().isEmpty()) {
+            throw new IllegalArgumentException("First name is empty.");
         }
-        if (!Objects.equals(request.getNewPassword(), request.getRepeatPassword())) {
-            throw new PasswordMismatchException("Passwords did not Match");
+        if (request.newLastname().isEmpty()) {
+            throw new IllegalArgumentException("Last name is empty.");
         }
-
-        user.setPassword(request.getNewPassword());
+        user.setUsername(request.newUsername());
+        user.setEmail(request.newEmail());
+        user.setFirstName(request.newFirstname());
+        user.setLastName(request.newLastname());
+        user.setDateOfBirth(request.newDateOfBirth());
         this.userRepository.save(user);
     }
 
@@ -94,42 +56,7 @@ public class UserService {
      * @param email a String representing the users email
      * @return true if email is <i>not</i> valid
      */
-    private boolean emailIsNotValid(String email) {
+    private boolean emailIsNotValid(@NonNull String email) {
         return !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-    }
-
-    //TODO: Make Nullsafe
-    public RegisterRequest putIntoRegisterRequest(String registerData) {
-        String[] contentArray = registerData.split("&");
-        return new RegisterRequest(
-                contentArray[0].split("=")[1],
-                contentArray[1].split("=")[1].replace("%40", "@"),
-                contentArray[2].split("=")[1],
-                contentArray[3].split("=")[1],
-                Long.parseLong(contentArray[4].split("=")[1]),
-                contentArray[5].split("=")[1]
-        );
-    }
-
-    //TODO: Make Nullsafe
-    public UpdateRequest putIntoUpdateRequest(String updateData) {
-        String[] contentArray = updateData.split("&");
-        return new UpdateRequest(
-                contentArray[1].split("=")[1],
-                contentArray[2].split("=")[1].replace("%40", "@"),
-                contentArray[3].split("=")[1],
-                contentArray[4].split("=")[1],
-                Long.parseLong(contentArray[5].split("=")[1])
-        );
-    }
-
-    //TODO: Make Nullsafe
-    public PasswordChangeRequest putIntoPasswordChangeRequest(String passwordChangeData) {
-        String[] contentArray = passwordChangeData.split("&");
-        return new PasswordChangeRequest(
-                contentArray[1].split("=")[1],
-                contentArray[2].split("=")[1],
-                contentArray[3].split("=")[1]
-        );
     }
 }
