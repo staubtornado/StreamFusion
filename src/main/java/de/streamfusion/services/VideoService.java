@@ -4,6 +4,7 @@ import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
 import de.streamfusion.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,12 @@ public class VideoService {
         return this.videoRepository.findById(id);
     }
 
-    public void saveVideo(MultipartFile multipartFile, String title, String description, User user) throws IOException {
+    public void newVideo(
+            @NonNull MultipartFile multipartFile,
+            String title,
+            String description,
+            User user
+    ) throws IOException {
         final String fileExtension = Objects.requireNonNull(multipartFile.getContentType()).split("/")[1];
         final String[] validFileExtensions = new String[] {"mp4", "mp3", "wav", "ogg", "webm"};
 
@@ -52,7 +58,7 @@ public class VideoService {
         multipartFile.transferTo(onDisk);
     }
 
-    public void deleteVideo(Video video) throws IOException {
+    public void deleteVideo(@NonNull Video video) throws IOException {
         File directory = new File("%s/data/%d".formatted(
                 System.getProperty("user.dir"),
                 video.getID()
@@ -72,5 +78,11 @@ public class VideoService {
             throw new IOException("Could not delete directory.");
         }
         this.videoRepository.delete(video);
+    }
+
+    public void editVideo(@NonNull Video video, String title, String description) throws IllegalArgumentException {
+        video.setTitle(title);
+        video.setDescription(description);
+        this.videoRepository.save(video);
     }
 }
