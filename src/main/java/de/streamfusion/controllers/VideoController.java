@@ -33,8 +33,20 @@ public class VideoController {
         return modelAndView;
     }
 
-    @GetMapping("/upload")
+    @GetMapping("/new")
     public String upload() {
         return "upload";
+    }
+
+    @GetMapping("/edit")
+    public ModelAndView editVideo(@RequestParam long id) {
+        ModelAndView modelAndView = new ModelAndView("edit");
+        try {
+            Video video = this.videoService.getVideoByID(id).orElseThrow();
+            modelAndView.addObject("video", video);
+        } catch (NoSuchElementException e) {
+            modelAndView.setViewName("redirect:/error");
+        }
+        return modelAndView;
     }
 }
