@@ -1,10 +1,5 @@
-package de.streamfusion.controllers;
+package de.streamfusion.controllers.api;
 
-import de.streamfusion.controllers.requestAndResponse.PasswordChangeRequest;
-import de.streamfusion.exceptions.EmailAlreadyExistsException;
-import de.streamfusion.exceptions.NoValidEmailException;
-import de.streamfusion.exceptions.PasswordMismatchException;
-import de.streamfusion.exceptions.UsernameTakenException;
 import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
 import de.streamfusion.services.UserService;
@@ -19,18 +14,18 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/api/v1")
-public class APIController {
+@RequestMapping("/api/v1/video")
+public class VideoAPIController {
     private final UserService userService;
     private final VideoService videoService;
 
     @Autowired
-    public APIController(UserService userService, VideoService videoService) {
+    public VideoAPIController(UserService userService, VideoService videoService) {
         this.userService = userService;
         this.videoService = videoService;
     }
 
-    @PostMapping(value = "/video/upload")
+    @PostMapping(value = "/upload")
     public ResponseEntity<String> uploadVideo(
         @RequestParam MultipartFile file,
         @RequestParam String title,
@@ -49,12 +44,12 @@ public class APIController {
 
         final User user;
         try {
-            user = this.userService.getUserByID(userID).orElseThrow();
+            user = this.userService.getUserByID(userID);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
-            this.videoService.saveVideo(file, title, description, user);
+            this.videoService.newVideo(file, title, description, user);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {
@@ -63,7 +58,7 @@ public class APIController {
         return new ResponseEntity<>("Video successfully uploaded.", HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/video/delete")
+    @DeleteMapping(value = "/delete")
     public ResponseEntity<String> deleteVideo(
         @RequestParam long id,
         @RequestParam long userID
@@ -84,5 +79,25 @@ public class APIController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>("Video successfully deleted.", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/edit")
+    public ResponseEntity<String> editVideo(
+        @RequestParam long id,
+        @RequestParam String title,
+        @RequestParam String description,
+        @RequestParam long userID
+    ) {
+        final Video video;
+        try {
+            video = this.videoService.getVideoByID(id).orElseThrow();
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (video.getUser().getID() != userID) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        this.videoService.editVideo(video, title, description);
+        return new ResponseEntity<>("Video successfully edited.", HttpStatus.OK);
     }
 }
