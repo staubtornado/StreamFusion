@@ -1,6 +1,6 @@
 package de.streamfusion.controllers.requestAndResponse;
 
-public record PasswordChangeRequest (
+public record ChangePasswordRequest (
         String oldPassword,
         String newPassword
 ) {}

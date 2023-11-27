@@ -22,34 +22,6 @@ public class UserService {
         return this.userRepository.findById(id).orElseThrow();
     }
 
-    public User getUserByEmail(String email) throws NoSuchElementException {
-        return this.userRepository.findByEmail(email).orElseThrow();
-    }
-
-    public void updateUser(User user, @NonNull EditAccountDetailsRequest request) throws IllegalArgumentException {
-        if (request.newUsername().isEmpty()) {
-            throw new IllegalArgumentException("Username is empty.");
-        }
-        if (request.newEmail().isEmpty()) {
-            throw new IllegalArgumentException("Email is empty.");
-        }
-        if (this.emailIsNotValid(request.newEmail())) {
-            throw new IllegalArgumentException("Email is not valid.");
-        }
-        if (request.newFirstname().isEmpty()) {
-            throw new IllegalArgumentException("First name is empty.");
-        }
-        if (request.newLastname().isEmpty()) {
-            throw new IllegalArgumentException("Last name is empty.");
-        }
-        user.setUsername(request.newUsername());
-        user.setEmail(request.newEmail());
-        user.setFirstName(request.newFirstname());
-        user.setLastName(request.newLastname());
-        user.setDateOfBirth(request.newDateOfBirth());
-        this.userRepository.save(user);
-    }
-
     /**
      * Checks a given String if it contains all the characteristics of an email.
      *
