@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+
+    <script src="./js/login.js"></script>
 </head>
 <body>
-    <h1>Try to Login</h1>
+    <h1>Login</h1>
+
+    <form>
+        <label for="email">Enter your Email:</label>
+        <input name="email" id="email">
+        <br>
+        <label for="password">Enter your Password:</label>
+        <input name="password" id="password" type="password">
+        <button onclick="sendFormData()"></button>
+    </form>
 </body>
 </html>
