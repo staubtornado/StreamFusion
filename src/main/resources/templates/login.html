@@ -3,19 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-
-    <script src="./js/login.js"></script>
 </head>
 <body>
     <h1>Login</h1>
 
-    <form>
+    <form id="login">
         <label for="email">Enter your Email:</label>
         <input name="email" id="email">
         <br>
         <label for="password">Enter your Password:</label>
-        <input name="password" id="password" type="password">
-        <button onclick="sendFormData()"></button>
+        <input name="password" id="password" type="password"><br><br>
+        <input type="submit" value="Submit">
     </form>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+    <script>
+        document.getElementById('login').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            fetch('/api/v1/auth/authenticate', {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(formData)
+            }).then(function(response) {
+                return response.text();
+            }).then(function(text) {
+                document.getElementsByName('hiddenFrame')[0].contentWindow.document.write(text);
+            }).catch(function(error) {
+                console.error(error);
+            });
+        });
+    </script>
 </body>
 </html>
