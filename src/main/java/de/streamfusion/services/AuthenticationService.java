@@ -39,6 +39,12 @@ public class AuthenticationService {
         if (this.userRepository.existsByUsername(registerRequest.username())) {
             throw new IllegalArgumentException("Username already exists.");
         }
+        if (this.usernameIsNotValid(registerRequest.username())) {
+            throw new IllegalArgumentException("Username is not valid.");
+        }
+        if (this.emailIsNotValid(registerRequest.email())) {
+            throw new IllegalArgumentException("Email is not valid.");
+        }
         final User user = new User(
                 registerRequest.username(),
                 registerRequest.email(),
@@ -53,7 +59,7 @@ public class AuthenticationService {
         return new AuthenticationResponse("Successfully registered.", token);
     }
 
-    public AuthenticationResponse changePassword(ChangePasswordRequest request, @NonNull String token) {
+    public AuthenticationResponse changePassword(@NonNull ChangePasswordRequest request, @NonNull String token) {
         token = this.extractToken(token);
         final String email = this.getEmailFromToken(token);
         matchCredentials(email, request.oldPassword());
@@ -141,5 +147,9 @@ public class AuthenticationService {
      */
     private boolean emailIsNotValid(@NonNull String email) {
         return !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    }
+
+    private boolean usernameIsNotValid(@NonNull String username) {
+        return !username.matches("^[a-z\\d]{1,10}$");
     }
 }
