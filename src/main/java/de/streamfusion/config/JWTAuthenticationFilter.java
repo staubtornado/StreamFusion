@@ -3,6 +3,7 @@ package de.streamfusion.config;
 import de.streamfusion.models.User;
 import de.streamfusion.services.JWTService;
 import de.streamfusion.services.UserDetailsServiceImpl;
+import io.jsonwebtoken.io.DecodingException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -54,7 +55,13 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        final String userEmail = jwtService.getUsernameFromToken(token);
+        final String userEmail;
+        try {
+            userEmail = jwtService.getUsernameFromToken(token);
+        } catch (DecodingException e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user = this.userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(token, user)) {
