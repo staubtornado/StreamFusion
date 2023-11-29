@@ -31,13 +31,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
                             "/",
-                            "video/",
-                            "user/",
-                            "login",
-                            "register",
-                            "error",
-                            "api/v1/auth/register",
-                            "api/v1/auth/authenticate"
+                            "/video",
+                            "/user",
+                            "/login",
+                            "/register",
+                            "/error",
+                            "/api/v1/auth/register",
+                            "/api/v1/auth/authenticate",
+                            "/cdn/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
