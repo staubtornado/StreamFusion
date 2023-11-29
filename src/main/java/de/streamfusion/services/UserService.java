@@ -22,13 +22,8 @@ public class UserService {
         return this.userRepository.findById(id).orElseThrow();
     }
 
-    /**
-     * Checks a given String if it contains all the characteristics of an email.
-     *
-     * @param email a String representing the users email
-     * @return true if email is <i>not</i> valid
-     */
-    private boolean emailIsNotValid(@NonNull String email) {
-        return !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    public User getUserByEmail(@NonNull String email) throws NoSuchElementException {
+        return this.userRepository.findByEmail(email).orElseThrow();
     }
+
 }
