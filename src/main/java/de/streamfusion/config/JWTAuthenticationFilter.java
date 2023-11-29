@@ -58,7 +58,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
         try {
             userEmail = jwtService.getUsernameFromToken(token);
-        } catch (DecodingException e) {
+        } catch (DecodingException | IllegalArgumentException e) {
             filterChain.doFilter(request, response);
             return;
         }

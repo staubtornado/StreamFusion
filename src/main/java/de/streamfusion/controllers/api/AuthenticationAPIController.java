@@ -105,4 +105,10 @@ public class AuthenticationAPIController {
         response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Successfully authenticated.", HttpStatus.OK);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@NonNull HttpServletResponse response) {
+        response.addCookie(AuthenticationService.generateCookie(""));
+        return new ResponseEntity<>("Successfully logged out.", HttpStatus.OK);
+    }
 }
