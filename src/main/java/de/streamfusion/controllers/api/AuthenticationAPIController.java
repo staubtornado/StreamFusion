@@ -3,7 +3,6 @@ package de.streamfusion.controllers.api;
 import de.streamfusion.controllers.requestAndResponse.*;
 import de.streamfusion.services.AuthenticationService;
 import io.jsonwebtoken.MalformedJwtException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +40,7 @@ public class AuthenticationAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         if (newToken != null) {
-            response.addCookie(new Cookie("Authorization", newToken));
+            response.addCookie(AuthenticationService.generateCookie(newToken));
             return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
         }
         return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
@@ -76,7 +75,7 @@ public class AuthenticationAPIController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        response.addCookie(new Cookie("Authorization", token));
+        response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Successfully changed password.", HttpStatus.OK);
     }
 
@@ -88,7 +87,7 @@ public class AuthenticationAPIController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        response.addCookie(new Cookie("Authorization", token));
+        response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Successfully registered.", HttpStatus.OK);
     }
 
@@ -103,7 +102,7 @@ public class AuthenticationAPIController {
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        response.addCookie(new Cookie("Authorization", token));
+        response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Successfully authenticated.", HttpStatus.OK);
     }
 }

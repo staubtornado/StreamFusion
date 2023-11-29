@@ -210,11 +210,11 @@ public class AuthenticationService {
      * @param cookie The cookie to extract the token from.
      * @return The extracted token. If no token was found, an empty string is returned.
      */
-    private static @NonNull String extractTokenFromCookie(@NonNull String cookie) {
+    public static @NonNull String extractTokenFromCookie(@NonNull String cookie) {
         String[] cookieParts = cookie.split("; ");
         for (String cookiePart : cookieParts) {
-            if (cookiePart.startsWith("Authorization=Bearer ")) {
-                return cookiePart.substring(21);
+            if (cookiePart.startsWith("Authorization=")) {
+                return cookiePart.substring(14);
             }
         }
         return "";
@@ -224,6 +224,8 @@ public class AuthenticationService {
         Cookie cookie = new Cookie("Authorization", token);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+        cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
 }
