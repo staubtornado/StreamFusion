@@ -4,7 +4,10 @@ import de.streamfusion.controllers.requestAndResponse.*;
 import de.streamfusion.models.Role;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -36,19 +39,19 @@ public class AuthenticationService {
         * Registers the user.
         *
         * @param registerRequest The register request.
-        * @return The authentication response.
+        * @return The generated token.
      */
-    public AuthenticationResponse register(@NonNull RegisterRequest registerRequest) {
+    public String register(@NonNull RegisterRequest registerRequest) {
         if (this.userRepository.existsByEmail(registerRequest.email())) {
             throw new IllegalArgumentException("Email already exists.");
         }
         if (this.userRepository.existsByUsername(registerRequest.username())) {
             throw new IllegalArgumentException("Username already exists.");
         }
-        if (this.usernameIsNotValid(registerRequest.username())) {
+        if (usernameIsNotValid(registerRequest.username())) {
             throw new IllegalArgumentException("Username is not valid.");
         }
-        if (this.emailIsNotValid(registerRequest.email())) {
+        if (emailIsNotValid(registerRequest.email())) {
             throw new IllegalArgumentException("Email is not valid.");
         }
         final User user = new User(
@@ -61,37 +64,35 @@ public class AuthenticationService {
                 Role.USER
         );
         this.userRepository.save(user);
-        String token = this.generateToken(user);
-        return new AuthenticationResponse("Successfully registered.", token);
+        return this.generateToken(user);
     }
 
     /**
         * Changes the password of the user.
         *
         * @param request The change password request.
-        * @param token The token of the user.
-        * @return The authentication response.
+        * @param cookies The cookies of the user.
+        * @return The new token.
      */
-    public AuthenticationResponse changePassword(@NonNull ChangePasswordRequest request, @NonNull String token) {
-        token = this.extractToken(token);
+    public String changePassword(@NonNull ChangePasswordRequest request, @NonNull String cookies) {
+        final String token = extractTokenFromCookie(cookies);
         final String email = this.getEmailFromToken(token);
         matchCredentials(email, request.oldPassword());
 
         final User user = this.userRepository.findByEmail(email).orElseThrow();
         user.setPassword(this.passwordEncoder.encode(request.newPassword()));
         this.userRepository.save(user);
-        token = this.generateToken(user);
-        return new AuthenticationResponse("Successfully changed password.", token);
+        return this.generateToken(user);
     }
 
     /**
         * Deletes the user.
         *
         * @param request The delete account request.
-        * @param token The token of the user.
+        * @param cookies The cookies of the user.
      */
-    public void deleteUser(@NonNull DeleteAccountRequest request, @NonNull String token) {
-        token = this.extractToken(token);
+    public void deleteUser(@NonNull DeleteAccountRequest request, @NonNull String cookies) {
+        String token = extractTokenFromCookie(cookies);
         String email = this.getEmailFromToken(token);
 
         this.matchCredentials(email, request.password());
@@ -103,14 +104,14 @@ public class AuthenticationService {
         * Edits the user.
         *
         * @param request The edit account details request.
-        * @param token The token of the user.
-        * @return The authentication response.
+        * @param cookies The cookies of the user.
+        * @return Null if the email was not changed, the new token otherwise.
      */
-    public AuthenticationResponse editUser(@NonNull EditAccountDetailsRequest request, @NonNull String token) {
-        token = this.extractToken(token);
-        String email = this.getEmailFromToken(token);
+    public String editUser(@NonNull EditAccountDetailsRequest request, @NonNull String cookies) {
+        final String token = extractTokenFromCookie(cookies);
+        final String email = this.getEmailFromToken(token);
 
-        if (this.emailIsNotValid(request.newEmail())) {
+        if (emailIsNotValid(request.newEmail())) {
             throw new IllegalArgumentException("Email is not valid.");
         }
 
@@ -129,22 +130,21 @@ public class AuthenticationService {
         this.userRepository.save(user);
 
         if (!request.newEmail().equals(email)) {
-            token = this.generateToken(user);
+            return this.generateToken(user);
         }
-        return new AuthenticationResponse("Successfully edited user.", token);
+        return null;
     }
 
     /**
         * Authenticates the user.
         *
         * @param authenticationRequest The authentication request.
-        * @return The authentication response.
+        * @return The generated token.
      */
-    public AuthenticationResponse authenticate(@NonNull AuthenticationRequest authenticationRequest) {
+    public String authenticate(@NonNull AuthenticationRequest authenticationRequest) {
         this.matchCredentials(authenticationRequest.email(), authenticationRequest.password());
         final User user = this.userRepository.findByEmail(authenticationRequest.email()).orElseThrow();
-        String token = this.generateToken(user);
-        return new AuthenticationResponse("Successfully authenticated.", token);
+        return this.generateToken(user);
     }
 
     /**
@@ -184,25 +184,13 @@ public class AuthenticationService {
     }
 
     /**
-        * Extracts the token from the Authorization header.
-        *
-        * @param token The token to extract.
-        * @return The extracted token.
-     */
-    private @NonNull String extractToken(@NonNull String token) {
-        if (token.matches("Bearer .*")) {
-            token = token.substring(7);
-        }
-        return token;
-    }
-    /**
         * Email must contain an @ symbol.
         * Email must contain a domain name.
         *
         * @param email The email to check.
         * @return True if the email is not valid, false otherwise.
      */
-    private boolean emailIsNotValid(@NonNull String email) {
+    private static boolean emailIsNotValid(@NonNull String email) {
         return !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     }
 
@@ -213,7 +201,29 @@ public class AuthenticationService {
         * @param username The username to check.
         * @return True if the username is not valid, false otherwise.
      */
-    private boolean usernameIsNotValid(@NonNull String username) {
-        return !username.matches("^[a-z\\d]{1,10}$");
+    private static boolean usernameIsNotValid(@NonNull String username) {
+        return !username.matches("^[a-z\\d]{1,20}$");
+    }
+
+    /**
+     * Extracts the token from the cookie.
+     * @param cookie The cookie to extract the token from.
+     * @return The extracted token. If no token was found, an empty string is returned.
+     */
+    private static @NonNull String extractTokenFromCookie(@NonNull String cookie) {
+        String[] cookieParts = cookie.split("; ");
+        for (String cookiePart : cookieParts) {
+            if (cookiePart.startsWith("Authorization=Bearer ")) {
+                return cookiePart.substring(21);
+            }
+        }
+        return "";
+    }
+
+    public static @NonNull Cookie generateCookie(String token) {
+        Cookie cookie = new Cookie("Authorization", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        return cookie;
     }
 }

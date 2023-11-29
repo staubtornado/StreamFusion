@@ -5,6 +5,7 @@ import de.streamfusion.services.JWTService;
 import de.streamfusion.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,20 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        final String authorization = request.getHeader("Authorization");
-        final String token;
+        final Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-        try {
-            token = authorization.split(" ")[1];
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+        String token = null;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("Authorization")) {
+                token = cookie.getValue();
+                break;
+            }
+        }
+        if (token == null) {
             filterChain.doFilter(request, response);
             return;
         }

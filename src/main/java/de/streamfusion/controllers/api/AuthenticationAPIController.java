@@ -3,6 +3,8 @@ package de.streamfusion.controllers.api;
 import de.streamfusion.controllers.requestAndResponse.*;
 import de.streamfusion.services.AuthenticationService;
 import io.jsonwebtoken.MalformedJwtException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,33 +25,35 @@ public class AuthenticationAPIController {
     }
 
     @PostMapping("/edit-details")
-    public ResponseEntity<AuthenticationResponse> editUserDetails(
+    public ResponseEntity<String> editUserDetails(
             @NonNull @RequestBody EditAccountDetailsRequest request,
-            @RequestHeader("Authorization") String token
+            @RequestHeader("Cookie") String cookies,
+            HttpServletResponse response
     ) {
-        AuthenticationResponse response;
+        final String newToken;
         try {
-            response = this.authenticationService.editUser(request, token);
+            newToken = this.authenticationService.editUser(request, cookies);
         } catch (NoSuchElementException e) {
-            response = new AuthenticationResponse("User not found.", null);
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
         } catch (MalformedJwtException e) {
-            response = new AuthenticationResponse("Invalid token.", null);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid token.", HttpStatus.BAD_REQUEST);
         } catch (IllegalArgumentException e) {
-            response = new AuthenticationResponse(e.getMessage(), token.replace("Bearer ", ""));
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if (newToken != null) {
+            response.addCookie(new Cookie("Authorization", newToken));
+            return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
     }
 
     @PostMapping("/delete")
     public ResponseEntity<String> deleteUser(
             @NonNull @RequestBody DeleteAccountRequest request,
-            @RequestHeader("Authorization") String token
+            @RequestHeader("Cookie") String cookies
     ) {
         try {
-            this.authenticationService.deleteUser(request, token);
+            this.authenticationService.deleteUser(request, cookies);
         } catch (BadCredentialsException | MalformedJwtException e) {
             return new ResponseEntity<>("Authorization failed.", HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e) {
@@ -59,42 +63,47 @@ public class AuthenticationAPIController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<AuthenticationResponse> changePassword(
+    public ResponseEntity<String> changePassword(
             @NonNull @RequestBody ChangePasswordRequest request,
-            @RequestHeader("Authorization") String token
+            @RequestHeader("Cookie") String cookies,
+            HttpServletResponse response
     ) {
-        final AuthenticationResponse response;
+        final String token;
         try {
-            response = this.authenticationService.changePassword(request, token);
+            token = this.authenticationService.changePassword(request, cookies);
         } catch (BadCredentialsException | MalformedJwtException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.addCookie(new Cookie("Authorization", token));
+        return new ResponseEntity<>("Successfully changed password.", HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest request) {
-        AuthenticationResponse response;
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request, HttpServletResponse response) {
+        final String token;
         try {
-            response = this.authenticationService.register(request);
+            token = this.authenticationService.register(request);
         } catch (IllegalArgumentException e) {
-            response = new AuthenticationResponse(e.getMessage(), null);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.addCookie(new Cookie("Authorization", token));
+        return new ResponseEntity<>("Successfully registered.", HttpStatus.OK);
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticateUser(@RequestBody AuthenticationRequest loginData) {
-
-        final AuthenticationResponse response;
+    public ResponseEntity<String> authenticateUser(
+            @RequestBody AuthenticationRequest loginData,
+            HttpServletResponse response
+    ) {
+        final String token;
         try {
-            response = this.authenticationService.authenticate(loginData);
+            token = this.authenticationService.authenticate(loginData);
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.addCookie(new Cookie("Authorization", token));
+        return new ResponseEntity<>("Successfully authenticated.", HttpStatus.OK);
     }
 }
