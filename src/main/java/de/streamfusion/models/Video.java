@@ -75,10 +75,6 @@ public class Video {
         return comments;
     }
 
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
-    }
-
     public String getFiletype() {
         return this.filetype;
     }

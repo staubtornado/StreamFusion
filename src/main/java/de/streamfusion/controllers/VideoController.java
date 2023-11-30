@@ -30,6 +30,7 @@ public class VideoController {
         } catch (NoSuchElementException e) {
             modelAndView.setViewName("redirect:/error");
         }
+        this.videoService.addView(id);
         return modelAndView;
     }
 

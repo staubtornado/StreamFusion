@@ -121,4 +121,10 @@ public class VideoService {
         video.setDescription(description);
         this.videoRepository.save(video);
     }
+
+    public void addView(long id) {
+        final Video video = this.videoRepository.findById(id).orElseThrow();
+        video.setViews(video.getViews() + 1);
+        this.videoRepository.save(video);
+    }
 }
