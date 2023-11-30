@@ -37,7 +37,9 @@ public class SecurityConfiguration {
                             "/error",
                             "/api/v1/auth/register",
                             "/api/v1/auth/authenticate",
-                            "/cdn/**"
+                            "/cdn/**",
+                            "/js/**",
+                            "/css/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
