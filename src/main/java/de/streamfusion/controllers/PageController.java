@@ -6,10 +6,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PageController {
-
-    public PageController() {
-    }
-
     @GetMapping("/")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("home");
