@@ -25,7 +25,7 @@ public class VideoController {
     public ModelAndView video(@RequestParam long id) {
         ModelAndView modelAndView = new ModelAndView("video");
         try {
-            Video video = this.videoService.getVideoByID(id).orElseThrow();
+            Video video = this.videoService.getVideoByID(id);
             modelAndView.addObject("video", video);
         } catch (NoSuchElementException e) {
             modelAndView.setViewName("redirect:/error");
@@ -42,7 +42,7 @@ public class VideoController {
     public ModelAndView editVideo(@RequestParam long id) {
         ModelAndView modelAndView = new ModelAndView("edit");
         try {
-            Video video = this.videoService.getVideoByID(id).orElseThrow();
+            Video video = this.videoService.getVideoByID(id);
             modelAndView.addObject("video", video);
         } catch (NoSuchElementException e) {
             modelAndView.setViewName("redirect:/error");
