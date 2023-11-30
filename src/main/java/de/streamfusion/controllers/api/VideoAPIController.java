@@ -65,4 +65,13 @@ public class VideoAPIController {
         }
         return new ResponseEntity<>("Video successfully edited.", HttpStatus.OK);
     }
+
+    @PutMapping(value = "/add-like")
+    public ResponseEntity<String> addLike(
+            @NonNull @RequestBody long id,
+            @RequestHeader("Cookie") String cookies
+    ) {
+        this.videoService.likeVideo(id, cookies);
+        return new ResponseEntity<>("Video liked successfully", HttpStatus.OK);
+    }
 }
