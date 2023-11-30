@@ -1,57 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link th:href="@{css/default.css}" rel="stylesheet"/>
+    <link th:href="@{css/register.css}" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Register to StreamFusion!</h1>
-    <form id="register" action="/api/v1/auth/register" method="post">
-        <label for="username">Enter your Username</label>
-        <input name="username" id="username">
-        <br>
-        <label for="email">Enter your Email</label>
-        <input name="email" id="email">
-        <br>
-        <label for="firstName">Enter your firstname</label>
-        <input name="firstName" id="firstName">
-        <br>
-        <label for="lastName">Enter your lastname</label>
-        <input name="lastName" id="lastName">
-        <br>
-        <label for="dateOfBirth">Enter your Birthday</label>
-        <input name="dateOfBirth" id="dateOfBirth" type="text" inputmode="numeric">
-        <br>
-        <label for="password">Enter your Password</label>
-        <input name="password" id="password" type="password">
-        <br><br>
-        <input type="submit" value="Submit">
+    <h1>Create an account.</h1>
+
+    <form id="register">
+        <label for="firstName">
+            <input name="firstName" id="firstName" placeholder="First Name" required pattern="[A-Za-z]+">
+        </label>
+        <label for="lastName">
+            <input name="lastName" id="lastName" placeholder="Last Name" required pattern="[A-Za-z]+">
+        </label>
+        <label for="email">
+            <input name="email" id="email" placeholder="Email" required type="email">
+        </label>
+        <label for="username">
+            <input name="username" id="username" placeholder="Username" required pattern="[a-z\d]{1,20}">
+        </label>
+        <label for="dateOfBirth">
+            <input name="dateOfBirth" id="dateOfBirth" type="date" required>
+        </label>
+        <label for="password">
+            <input name="password" id="password" type="password" placeholder="Password" required>
+        </label>
+        <label for="confirmPassword">
+            <input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm Password" required>
+        </label>
+        <input type="submit" value="Register">
     </form>
-    <iframe name="hiddenFrame" width="0" height="0" style="display: none;"></iframe>
 
     <script>
-        document.getElementById('register').addEventListener('submit', function(event) {
+        document.getElementById("register").addEventListener("submit", function(event) {
             event.preventDefault();
 
             let formData = {
-                username: document.getElementById('username').value,
-                email: document.getElementById('email').value,
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                dateOfBirth: document.getElementById('dateOfBirth').value,
-                password: document.getElementById('password').value
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                email: document.getElementById("email").value,
+                username: document.getElementById("username").value,
+                dateOfBirth: document.getElementById("dateOfBirth").value,
+                password: document.getElementById("password").value
             };
 
-            fetch('/api/v1/auth/register', {
-                method: 'POST',
+            if (formData.password !== document.getElementById("confirmPassword").value) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            fetch("/api/v1/auth/register", {
+                method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 },
                 body: JSON.stringify(formData)
             }).then(function(response) {
-                return response.text();
-            }).then(function(text) {
-                document.getElementsByName('hiddenFrame')[0].contentWindow.document.write(text);
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                window.location.href = "/";
             }).catch(function(error) {
                 console.error(error);
             });

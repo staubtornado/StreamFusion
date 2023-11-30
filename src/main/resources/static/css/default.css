@@ -1,0 +1,26 @@
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #ffffff;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #ffffff;
+        color: #121212;
+    }
+}
+
+input[type=submit] {
+    cursor: pointer;
+}
+
+
+
+

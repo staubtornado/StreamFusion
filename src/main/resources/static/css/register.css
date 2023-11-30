@@ -1,0 +1,38 @@
+h1 {
+    text-align: center;
+}
+
+form {
+    margin: 5% 25% 25%;
+    border-radius: 5px;
+    padding: 2%;
+}
+
+input {
+    margin: 2%;
+    background: transparent;
+    border-radius: 5px;
+    padding: 1%;
+}
+
+@media (prefers-color-scheme: dark) {
+    form {
+        border: white 1px solid;
+    }
+
+    input {
+        border: white 1px solid;
+        color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    form {
+        border: #121212 1px solid;
+    }
+
+    input {
+        border: #121212 1px solid;
+        color: #121212;
+    }
+}
