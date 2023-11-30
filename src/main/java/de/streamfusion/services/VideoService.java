@@ -11,28 +11,50 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class VideoService {
     private final VideoRepository videoRepository;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public VideoService(VideoRepository videoRepository) {
+    public VideoService(VideoRepository videoRepository, AuthenticationService authenticationService) {
         this.videoRepository = videoRepository;
+        this.authenticationService = authenticationService;
     }
 
-    public Optional<Video> getVideoByID(long id) {
-        return this.videoRepository.findById(id);
+    /**
+     * Returns the video with the given ID.
+     *
+     * @param id The ID of the video.
+     * @return The video with the given ID.
+     * @throws NoSuchElementException If the video does not exist.
+     */
+    public Video getVideoByID(long id) {
+        return this.videoRepository.findById(id).orElseThrow();
     }
 
     public void newVideo(
             @NonNull MultipartFile multipartFile,
             String title,
             String description,
-            User user
+            String cookies
     ) throws IOException {
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Title cannot be empty.");
+        }
+        if (description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Description cannot be empty.");
+        }
+        if (cookies == null) {
+            throw new IllegalArgumentException("No cookies provided.");
+        }
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookies)
+        );
+
         final String fileExtension = Objects.requireNonNull(multipartFile.getContentType()).split("/")[1];
         final String[] validFileExtensions = new String[] {"mp4", "mp3", "wav", "ogg", "webm"};
 
@@ -58,7 +80,14 @@ public class VideoService {
         multipartFile.transferTo(onDisk);
     }
 
-    public void deleteVideo(@NonNull Video video) throws IOException {
+    public void deleteVideo(@NonNull long id, String cookie) throws IOException {
+        final Video video = this.videoRepository.findById(id).orElseThrow();
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookie)
+        );
+        if (!Objects.equals(video.getUser().getID(), user.getID())) {
+            throw new IllegalArgumentException("User does not own video.");
+        }
         File directory = new File("%s/data/%d".formatted(
                 System.getProperty("user.dir"),
                 video.getID()
@@ -80,7 +109,14 @@ public class VideoService {
         this.videoRepository.delete(video);
     }
 
-    public void editVideo(@NonNull Video video, String title, String description) throws IllegalArgumentException {
+    public void editVideo(String title, String description, long id, String cookies) throws IllegalArgumentException {
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookies)
+        );
+        final Video video = this.videoRepository.findById(id).orElseThrow();
+        if (!Objects.equals(video.getUser().getID(), user.getID())) {
+            throw new IllegalArgumentException("User does not own video.");
+        }
         video.setTitle(title);
         video.setDescription(description);
         this.videoRepository.save(video);
