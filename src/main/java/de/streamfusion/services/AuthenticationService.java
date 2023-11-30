@@ -226,4 +226,9 @@ public class AuthenticationService {
         cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
+
+    public @NonNull User getUserFromToken(String token) {
+        final String email = this.getEmailFromToken(token);
+        return this.userRepository.findByEmail(email).orElseThrow();
+    }
 }
