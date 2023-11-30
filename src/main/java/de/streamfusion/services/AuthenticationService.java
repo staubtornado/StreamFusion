@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
@@ -52,12 +54,18 @@ public class AuthenticationService {
         if (emailIsNotValid(registerRequest.email())) {
             throw new IllegalArgumentException("Email is not valid.");
         }
+        if (dateOfBirthIsNotValid(registerRequest.dateOfBirth())) {
+            throw new IllegalArgumentException("Date of birth is not valid. Format: YYYY-MM-DD");
+        }
+
+        // Convert the date of birth to a long value representing the milliseconds since January 1, 1970, 00:00:00 GMT
+        long dateOfBirth = Date.valueOf(registerRequest.dateOfBirth()).getTime();
         final User user = new User(
                 registerRequest.username(),
                 registerRequest.email(),
                 registerRequest.firstName(),
                 registerRequest.lastName(),
-                registerRequest.dateOfBirth(),
+                dateOfBirth,
                 this.passwordEncoder.encode(registerRequest.password()),
                 Role.USER
         );
@@ -230,5 +238,9 @@ public class AuthenticationService {
     public @NonNull User getUserFromToken(String token) {
         final String email = this.getEmailFromToken(token);
         return this.userRepository.findByEmail(email).orElseThrow();
+    }
+
+    private static boolean dateOfBirthIsNotValid(@NonNull String dateOfBirth) {
+        return !dateOfBirth.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
     }
 }

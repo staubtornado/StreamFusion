@@ -6,5 +6,5 @@ public record RegisterRequest (
         String password,
         String firstName,
         String lastName,
-        long dateOfBirth
+        String dateOfBirth  // YYYY-MM-DD
 ) {}
