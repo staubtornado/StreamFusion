@@ -1,6 +1,7 @@
 package de.streamfusion.controllers.api;
 
 import de.streamfusion.controllers.requestAndResponse.EditVideoRequest;
+import de.streamfusion.models.Video;
 import de.streamfusion.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,9 @@ public class VideoAPIController {
             @RequestParam(value = "description") String description,
             @RequestHeader("Cookie") String cookies
     ) {
+        final Video video;
         try {
-            this.videoService.newVideo(file, title, description, cookies);
+            video = this.videoService.newVideo(file, title, description, cookies);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {
@@ -38,7 +40,7 @@ public class VideoAPIController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Video successfully uploaded.", HttpStatus.OK);
+        return new ResponseEntity<>(video.getID().toString(), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete")

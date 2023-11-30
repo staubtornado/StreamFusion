@@ -36,7 +36,7 @@ public class VideoService {
         return this.videoRepository.findById(id).orElseThrow();
     }
 
-    public void newVideo(
+    public Video newVideo(
             @NonNull MultipartFile multipartFile,
             String title,
             String description,
@@ -78,6 +78,7 @@ public class VideoService {
             throw new IOException("Could not create directories.");
         }
         multipartFile.transferTo(onDisk);
+        return video;
     }
 
     public void deleteVideo(@NonNull long id, String cookie) throws IOException {

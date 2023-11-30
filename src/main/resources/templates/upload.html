@@ -6,8 +6,6 @@
 </head>
 <body>
     <h1>Upload</h1>
-    <iframe name="hiddenFrame" width="0" height="0" style="display: none;"></iframe>
-
     <form id="upload-form">
         <input type="file" id="file" name="file" accept="video/*">
         <label for="title"></label>
@@ -32,9 +30,12 @@
                 method: 'POST',
                 body: formData
             }).then(function(response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
                 return response.text();
-            }).then(function(text) {
-                document.getElementsByName('hiddenFrame')[0].contentWindow.document.write(text);
+            }).then(function(id) {
+                window.location.href = '/video?id=' + id;
             }).catch(function(error) {
                 console.error(error);
             });
