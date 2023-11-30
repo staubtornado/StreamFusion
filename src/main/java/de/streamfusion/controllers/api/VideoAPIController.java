@@ -1,13 +1,13 @@
 package de.streamfusion.controllers.api;
 
 import de.streamfusion.controllers.requestAndResponse.EditVideoRequest;
-import de.streamfusion.controllers.requestAndResponse.UploadVideoRequest;
 import de.streamfusion.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
@@ -24,10 +24,13 @@ public class VideoAPIController {
 
     @PostMapping(value = "/upload")
     public ResponseEntity<String> uploadVideo(
-            @NonNull @RequestBody UploadVideoRequest request, @RequestHeader("Cookie") String cookies
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "title") String title,
+            @RequestParam(value = "description") String description,
+            @RequestHeader("Cookie") String cookies
     ) {
         try {
-            this.videoService.newVideo(request.file(), request.title(), request.description(), cookies);
+            this.videoService.newVideo(file, title, description, cookies);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {
