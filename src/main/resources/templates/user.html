@@ -9,11 +9,10 @@
 
     <img th:src="${user.getProfilePictureURL()}" alt="profilePicture">
 
-    <p>Username: </p><span th:text="${user.username}"></span>
-    <p>Email: </p><span th:text="${user.email}"></span>
-    <p>Firstname: </p><p th:text="${user.firstName}"></p>
-    <p>Lastname: </p><p th:text="${user.lastName}"></p>
-    <p>Date of Birth: </p><p th:text="${user.dateOfBirth}"></p>
-    <p>Password: </p><span th:text="${user.password}"></span>
+    <p>Username: </p><span th:text="${user.getFirstName()}"></span>
+    <p>Email: </p><span th:text="${user.getEmail()}"></span>
+    <p>Firstname: </p><p th:text="${user.getFirstName()}"></p>
+    <p>Lastname: </p><p th:text="${user.getLastName()}"></p>
+    <p>Date of Birth: </p><p th:text="${user.getDateOfBirth()}"></p>
 </body>
 </html>
