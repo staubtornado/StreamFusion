@@ -30,7 +30,7 @@ public class CDNController {
             @RequestParam(name = "id") long id,
             @RequestHeader(name = "Range", required = false) String range
     ) {
-        Video video = this.videoService.getVideoByID(id).orElseThrow();
+        Video video = this.videoService.getVideoByID(id);
         Path filePath = Paths.get("./data/%d/video.%s".formatted(id, video.getFiletype()));
 
         StreamingResponseBody responseStream;
