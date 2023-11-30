@@ -127,4 +127,18 @@ public class VideoService {
         video.setViews(video.getViews() + 1);
         this.videoRepository.save(video);
     }
+
+    public void likeVideo(long videoId, String cookies) {
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookies)
+        );
+        final Video video = this.videoRepository.findById(videoId).orElseThrow();
+        if (user.getLikedVideos().contains(video)) {
+            user.getLikedVideos().remove(video);
+            video.setLikes(video.getLikes() - 1);
+            return;
+        }
+        user.addLikedVideo(video);
+        video.setLikes(video.getLikes() + 1);
+    }
 }
