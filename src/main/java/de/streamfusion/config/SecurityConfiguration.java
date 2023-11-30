@@ -33,7 +33,6 @@ public class SecurityConfiguration {
                             "/",
                             "/video",
                             "/user",
-                            "/login",
                             "/register",
                             "/error",
                             "/api/v1/auth/register",
@@ -45,6 +44,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(this.authProvider)
                 .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin(form -> form.loginPage("/login").permitAll())
                 .build();
     }
 }
