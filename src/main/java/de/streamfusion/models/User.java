@@ -25,6 +25,8 @@ public class User implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user")
     private Set<Video> videos;
+    @OneToMany(mappedBy = "user")
+    private Set<Video> likedVideos;
 
     public User() {}
 
@@ -135,5 +137,13 @@ public class User implements UserDetails {
 
     public String getProfilePictureURL() {
         return "/cdn/u/picture?id=%d".formatted(this.id);
+    }
+
+    public void addLikedVideo(Video video) {
+        this.likedVideos.add(video);
+    }
+
+    public Set<Video> getLikedVideos() {
+        return likedVideos;
     }
 }
