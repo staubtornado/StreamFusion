@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Video</title>
+    <title th:text="${video.getTitle()} + ' - StreamFusion'"></title>
 </head>
 <body>
     <h1>Video</h1>
@@ -13,28 +13,48 @@
         <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
         Your browser does not support video streaming
     </video>
-    <button onclick=like()>LIKE</button>
-    <p>Likes: </p><span th:text="${video.getLikes()}"></span>
-    <div id="dislikeBtn">DISLIKE</div>
-    <p>Dislikes: </p><span th:text="${video.getDislikes()}"></span>
+    <button onclick="like()">LIKE</button>
+    <p >Likes: </p><span id="likes" th:text="${video.getLikes()}"></span>
+    <button onclick="dislike()">DISLIKE</button>
+    <p>Dislikes: </p><span id="dislikes" th:text="${video.getDislikes()}"></span>
     <p>Views: </p><span th:text="${video.getViews()}"></span>
     <p>Description: </p>
     <p th:text="${video.getDescription()}"></p>
 
     <script>
         function like() {
-            fetch('/api/v1/video/add-like', {
-                method: 'PUT',
+            fetch("/api/v1/video/add-like", {
+                method: "PUT",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 },
-                body: document.getElementById('vidID').value
+                body: document.getElementById('vidID').textContent
             }).then(function(response) {
-                return response.text();
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
             }).catch(function(error) {
                 console.error(error);
             });
-        });
+            // let likes = parseInt(document.getElementById('likes').textContent);
+            // document.getElementById('likes').textContent = (likes + 1).toString()
+        }
+
+        function dislike() {
+            fetch("/api/v1/video/add-dislike", {
+                method: "PUT",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: document.getElementById('vidID').textContent
+            }).then(function(response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+            }).catch(function(error) {
+                console.error(error);
+            });
+        }
     </script>
 </body>
 </html>
