@@ -2,6 +2,7 @@ package de.streamfusion.services;
 
 import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
+import de.streamfusion.repositories.UserRepository;
 import de.streamfusion.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -18,11 +19,16 @@ import java.util.Objects;
 public class VideoService {
     private final VideoRepository videoRepository;
     private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public VideoService(VideoRepository videoRepository, AuthenticationService authenticationService) {
+    public VideoService(
+            VideoRepository videoRepository,
+            AuthenticationService authenticationService,
+            UserRepository userRepository) {
         this.videoRepository = videoRepository;
         this.authenticationService = authenticationService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -134,12 +140,37 @@ public class VideoService {
                 AuthenticationService.extractTokenFromCookie(cookies)
         );
         final Video video = this.videoRepository.findById(videoId).orElseThrow();
-        if (user.getLikedVideos().contains(video)) {
-            user.getLikedVideos().remove(video);
-            video.setLikes(video.getLikes() - 1);
-            return;
+
+        if (user.getDislikedVideos().contains(video)) {
+            this.dislikeVideo(videoId, cookies);
         }
-        user.addLikedVideo(video);
-        video.setLikes(video.getLikes() + 1);
+        if (user.getLikedVideos().contains(video)) {
+            user.removeLikedVideo(video);
+            video.setLikes(video.getLikes() - 1);
+        }
+        else {
+            user.addLikedVideo(video);
+            video.setLikes(video.getLikes() + 1);
+        }
+        this.userRepository.save(user);
+    }
+    public void dislikeVideo(long videoId, String cookies) {
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookies)
+        );
+        final Video video = this.videoRepository.findById(videoId).orElseThrow();
+
+        if (user.getLikedVideos().contains(video)) {
+            this.likeVideo(videoId, cookies);
+        }
+        if (user.getDislikedVideos().contains(video)) {
+            user.removeDislikedVideo(video);
+            video.setDislikes(video.getDislikes() - 1);
+        }
+        else {
+            user.addDislikedVideo(video);
+            video.setDislikes(video.getDislikes() + 1);
+        }
+        this.userRepository.save(user);
     }
 }
