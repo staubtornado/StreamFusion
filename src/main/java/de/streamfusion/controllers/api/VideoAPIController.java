@@ -76,4 +76,13 @@ public class VideoAPIController {
         this.videoService.likeVideo(id, cookies);
         return new ResponseEntity<>("Video liked successfully", HttpStatus.OK);
     }
+
+    @PutMapping(value = "/add-dislike")
+    public ResponseEntity<String> addDislike(
+            @NonNull @RequestBody long id,
+            @RequestHeader("Cookie") String cookies
+    ) {
+        this.videoService.dislikeVideo(id, cookies);
+        return new ResponseEntity<>("Video disliked successfully", HttpStatus.OK);
+    }
 }
