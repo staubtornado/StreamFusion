@@ -25,8 +25,18 @@ public class User implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user")
     private Set<Video> videos;
-    @OneToMany(mappedBy = "user")
+    @ManyToMany
+    @JoinTable(
+            name = "liked_videos",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id"))
     private Set<Video> likedVideos;
+    @ManyToMany
+    @JoinTable(
+            name = "disliked_videos",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "video_id"))
+    private Set<Video> dislikedVideos;
 
     public User() {}
 
@@ -47,6 +57,8 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
         this.videos = Set.of();
+        this.likedVideos = Set.of();
+        this.dislikedVideos = Set.of();
     }
 
     @PrePersist
@@ -144,6 +156,21 @@ public class User implements UserDetails {
     }
 
     public Set<Video> getLikedVideos() {
-        return likedVideos;
+        return this.likedVideos;
+    }
+
+    public boolean removeLikedVideo(Video video) {
+        return this.likedVideos.remove(video);
+    }
+
+    public void  addDislikedVideo(Video video) {
+        this.dislikedVideos.add(video);
+    }
+
+    public Set<Video> getDislikedVideos(){
+        return this.dislikedVideos;
+    }
+    public boolean removeDislikedVideo(Video video) {
+        return this.dislikedVideos.remove(video);
     }
 }
