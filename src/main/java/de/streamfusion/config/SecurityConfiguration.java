@@ -39,7 +39,8 @@ public class SecurityConfiguration {
                             "/api/v1/auth/authenticate",
                             "/cdn/**",
                             "/js/**",
-                            "/css/**"
+                            "/css/**",
+                            "/img/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
