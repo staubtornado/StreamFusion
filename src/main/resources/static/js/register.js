@@ -45,8 +45,22 @@ form.addEventListener('submit', function(e) {
     });
 });
 
+
+function validatePassword() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password === confirmPassword && confirmPassword.length > 0) {
+        document.getElementById('confirmPassword-div').style.borderBottomColor = 'hsl(120, 100%, 50%)';
+        return;
+    }
+    document.getElementById('confirmPassword-div').style.borderBottomColor = 'white';
+}
+
+
 document.getElementById('password').addEventListener('input', (e) => {
     const password = e.target.value;
+    validatePassword();
 
     if (password.length === 0) {
         document.getElementById('password-div').style.borderBottomColor = 'white';
@@ -60,6 +74,8 @@ document.getElementById('password').addEventListener('input', (e) => {
     percentage += Number(new RegExp(/[^A-Za-z0-9]/).test(password)) * 25;
     percentage *= Math.min(password.length / 8, 1);
     document.getElementById('password-div').style.borderBottomColor = `hsl(${percentage * 1.2}, 100%, 50%)`;
+});
 
-
+document.getElementById('confirmPassword').addEventListener('input', (e) => {
+    validatePassword();
 });
