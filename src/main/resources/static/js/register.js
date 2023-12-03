@@ -76,6 +76,6 @@ document.getElementById('password').addEventListener('input', (e) => {
     document.getElementById('password-div').style.borderBottomColor = `hsl(${percentage * 1.2}, 100%, 50%)`;
 });
 
-document.getElementById('confirmPassword').addEventListener('input', (e) => {
+document.getElementById('confirmPassword').addEventListener('input', () => {
     validatePassword();
 });
