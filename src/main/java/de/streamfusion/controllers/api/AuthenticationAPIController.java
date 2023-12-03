@@ -11,6 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -86,6 +87,8 @@ public class AuthenticationAPIController {
             token = this.authenticationService.register(request);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.addCookie(AuthenticationService.generateCookie(token));
         return new ResponseEntity<>("Successfully registered.", HttpStatus.OK);

@@ -5,6 +5,7 @@ import de.streamfusion.models.Role;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
 import jakarta.servlet.http.Cookie;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Date;
 
 @Service
@@ -41,7 +45,7 @@ public class AuthenticationService {
         * @param registerRequest The register request.
         * @return The generated token.
      */
-    public String register(@NonNull RegisterRequest registerRequest) {
+    public String register(@NonNull RegisterRequest registerRequest) throws IOException {
         if (this.userRepository.existsByEmail(registerRequest.email())) {
             throw new IllegalArgumentException("Email already exists.");
         }
@@ -70,6 +74,21 @@ public class AuthenticationService {
                 Role.USER
         );
         this.userRepository.save(user);
+
+        if (registerRequest.profilePicture() != null) {
+            final File onDisk = new File("%s/data/user/%d/profile-picture.png".formatted(
+                    System.getProperty("user.dir"),
+                    user.getID()
+            ));
+            if (!onDisk.getParentFile().mkdirs()) {
+                throw new IOException("Could not create directories.");
+            }
+            // Write string to file
+            if (!onDisk.createNewFile()) {
+                throw new IOException("Could not create file.");
+            }
+            Files.write(onDisk.toPath(), Base64.decodeBase64(registerRequest.profilePicture()));
+        }
         return this.generateToken(user);
     }
 
