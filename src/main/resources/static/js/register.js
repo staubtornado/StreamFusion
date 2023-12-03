@@ -25,7 +25,9 @@ form.addEventListener('submit', function(e) {
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
             email: document.getElementById('email').value,
-            dateOfBirth: document.getElementById('dateOfBirth').value
+            dateOfBirth: document.getElementById('dateOfBirth').value,
+            // Get bytes from image
+            profilePicture: document.getElementById('image-preview').src.split(',')[1],
         }),
         headers: {
             'Content-Type': 'application/json'

@@ -2,50 +2,9 @@
     input[type=date]::-webkit-calendar-picker-indicator {
         filter: invert(1);
     }
-    .input {
-        border-bottom: 3px solid white;
-    }
-    .input input {
-        color: white;
-    }
 }
 
 @media (prefers-color-scheme: light) {
-    .input {
-        border-bottom: 3px solid black;
-    }
-}
-
-h1 {
-    text-align: center;
-    font-size: 64px;
-    font-weight: 400;
-}
-
-#register-form input[type=submit] {
-    background-color: var(--theme-color);
-    width: 90%;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 60px;
-    font-size: 1.5rem;
-    margin: auto auto 5% auto;
-    cursor: pointer;
-
-    border: transparent;
-    border-radius: 25px;
-    box-shadow: var(--box-shadow);
-}
-
-.container-gray {
-    width: 30%;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flow-root;
-    min-width: 380px;
-    max-width: 650px;
 }
 
 .container-headline {
@@ -54,19 +13,8 @@ h1 {
     display: inline-block;
 }
 
-.input input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    margin: auto auto 2% auto;
-}
-
 input[type=file] {
     display: none;
-}
-
-label {
-    font-size: 0;
 }
 
 .divider {
@@ -121,8 +69,4 @@ label {
 #already-registered a {
     color: var(--theme-color);
     text-decoration: none;
-}
-
-textarea:focus, input:focus{
-    outline: none;
 }

@@ -98,7 +98,7 @@ public class CDNController {
 
     @GetMapping("/u/picture")
     public ResponseEntity<byte[]> cdnUserPicture(@RequestParam(name = "id") long id) {
-        String path = "./data/%d/picture.jpg".formatted(id);
+        String path = "./data/user/%d/profile-picture.jpg".formatted(id);
         return getResponseEntity(path);
     }
 

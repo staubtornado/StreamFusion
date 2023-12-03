@@ -1,45 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link th:href="@{css/default.css}" rel="stylesheet"/>
+    <link th:href="@{css/authentication.css}" rel="stylesheet"/>
+    <link th:href="@{css/login.css}" rel="stylesheet"/>
 </head>
 <body>
     <h1>Login</h1>
-
-    <form id="login">
-        <label for="email">Enter your Email:</label>
-        <input name="email" id="email">
-        <br>
-        <label for="password">Enter your Password:</label>
-        <input name="password" id="password" type="password"><br><br>
-        <input type="submit" value="Submit">
-    </form>
-    <iframe name="hiddenFrame" width="0" height="0" style="display: none;"></iframe>
-
-    <script>
-        document.getElementById('login').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            let formData = {
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value
-            };
-
-            fetch('/api/v1/auth/authenticate', {
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                },
-                body: JSON.stringify(formData)
-            }).then(function(response) {
-                return response.text();
-            }).then(function(text) {
-                document.getElementsByName('hiddenFrame')[0].contentWindow.document.write(text);
-            }).catch(function(error) {
-                console.error(error);
-            });
-        });
-    </script>
-</body>
-</html>
+    <div class="container-gray">
+        <form id="login-form">
+            <label for="email"></label>
+            <label for="password"></label>
+            <div class="input">
+                <input type="email" id="email" name="email" placeholder="Email" autofocus required>
+            </div>
+            <div class="input">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <input type="submit" class="submit" value="Login">
+        </form>
+        <span id="already-registered">Don't have an account? <a href="/register">Register</a>.</span>
+    </div>
+    <script th:src="@{js/login.js}"></script>

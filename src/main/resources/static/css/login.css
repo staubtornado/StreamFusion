@@ -1,0 +1,30 @@
+#already-registered {
+    margin: auto auto 5% 5%;
+    display: inline-block;
+}
+
+#already-registered a {
+    color: var(--theme-color);
+    text-decoration: none;
+}
+
+#login-form {
+    width: 90%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 5% 0 auto 0;
+}
+
+.input {
+    margin-bottom: 10%;
+}
+
+.submit {
+    margin-bottom: 5%;
+    width: 100%;
+}
+
+.container-gray {
+    width: 20%;
+}
