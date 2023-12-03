@@ -104,4 +104,8 @@ label {
     align-items: center;
 }
 
+#password-recommendations li {
+    color: red;
+}
+
 
