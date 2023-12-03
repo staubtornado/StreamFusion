@@ -1,9 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Account</title>
+    <link th:href="@{css/default.css}" rel="stylesheet"/>
+    <link th:href="@{css/header.css}" rel="stylesheet"/>
 </head>
+
+<header>
+    <div class="container-gray" id="header-div">
+        <div id="account-section-header">
+            <div id="account-info-header">
+                <div id="account-names">
+                    <span th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></span>
+                    <br>
+                    <span id="username-header" th:text="'@' + ${user.getUsername()}"></span>
+                </div>
+                <img id="profile-picture" th:src="${user.getProfilePictureURL()}" alt="">
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
+                <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1" stroke="#121212"/>
+            </svg>
+            <div id="account-popup" class="container-gray">
+                <ul>
+                    <li><a th:href="'/user?id=' + ${user.getID()}">Profile</a></li>
+                    <li><a href="/account">Account Settings</a></li>
+                    <li><a id="logout" href="/login?logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
 <body>
     <h1>Account Settings</h1>
 
@@ -37,4 +65,3 @@
         <button type="submit">Change Password</button>
     </form>
 </body>
-</html>

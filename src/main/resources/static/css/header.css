@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+}
+
+#header-div {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+#account-section-header {
+    margin: auto 15px auto auto;
+    cursor: pointer;
+    border: var(--background-dark) 1px solid;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 300px;
+    height: 90px;
+    transition: all 0.3s;;
+}
+
+#account-section-header svg {
+    transition: filter 0.3s;
+}
+
+#account-section-header:hover {
+    border: var(--theme-color) 1px solid;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Hex color to filter converter:  https://codepen.io/sosuke/pen/Pjoqqp */
+#account-section-header:hover svg {
+    filter: invert(89%) sepia(98%) saturate(2181%) hue-rotate(17deg) brightness(100%) contrast(108%);
+}
+
+#account-section-header:hover #account-popup {
+    display: block;
+    border: var(--theme-color) 1px solid;
+    border-top: none;
+    opacity: 1;
+    visibility: visible;
+}
+
+#account-section-header img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+#account-names {
+    text-align: end;
+}
+
+#account-names #username-header {
+    font-size: 0.75rem;
+}
+
+#account-info-header {
+    display: flex;
+    align-items: center;
+}
+
+#account-names {
+    margin: 0 10px 0 0;
+}
+
+#account-popup {
+    position: absolute;
+    top: 106px;
+    right: 15px;
+    width: 300px;
+    height: auto;
+    opacity: 0;
+    visibility: hidden;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border: transparent 1px solid;
+    border-top: none;
+    transition: opacity 0.3s, visibility 0.3s;
+    cursor: auto;
+}
+
+#account-popup ul {
+    margin: 5%;
+    padding: 0;
+}
+
+#account-popup li {
+    list-style: none;
+    padding: 10px;
+    border-bottom: var(--background-dark) 1px solid;
+}
+
+#account-popup a {
+    text-decoration: none;
+    color: white;
+}
+
+#logout {
+    color: var(--error-color) !important;
+}
