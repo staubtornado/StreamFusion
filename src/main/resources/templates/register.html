@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Register</title>
     <link th:href="@{css/default.css}" rel="stylesheet"/>
+    <link th:href="@{css/authentication.css}" rel="stylesheet"/>
     <link th:href="@{css/register.css}" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Sign Up</h1>
+    <h1>Register</h1>
     <div class="container-gray">
         <form id="register-form">
             <div id="profile" class="divider">
@@ -77,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Register">
+            <input class="submit" type="submit" value="Register">
         </form>
         <span id="already-registered">Already have an account? <a href="/login">Login</a>.</span>
     </div>
