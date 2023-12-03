@@ -80,7 +80,6 @@ public class VideoAPIController {
         } catch (VideoAlreadyRatedException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
         return new ResponseEntity<>("Liked video successfully", HttpStatus.OK);
     }
 
