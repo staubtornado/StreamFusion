@@ -1,5 +1,7 @@
 package de.streamfusion.services;
 
+import de.streamfusion.Exceptions.VideoAlreadyRatedException;
+import de.streamfusion.Exceptions.VideoNotRatedException;
 import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
 import de.streamfusion.repositories.UserRepository;
@@ -135,42 +137,65 @@ public class VideoService {
         this.videoRepository.save(video);
     }
 
-    public void likeVideo(long videoId, String cookies) {
+    public void addLike(long id, String cookies) throws VideoAlreadyRatedException {
         final User user = this.authenticationService.getUserFromToken(
                 AuthenticationService.extractTokenFromCookie(cookies)
         );
-        final Video video = this.videoRepository.findById(videoId).orElseThrow();
+        final Video video = this.videoRepository.findById(id).orElseThrow();
 
         if (user.getDislikedVideos().contains(video)) {
-            this.dislikeVideo(videoId, cookies);
+            throw new VideoAlreadyRatedException("Video already disliked");
         }
         if (user.getLikedVideos().contains(video)) {
-            user.removeLikedVideo(video);
-            video.setLikes(video.getLikes() - 1);
+            throw new VideoAlreadyRatedException("Video already liked");
         }
-        else {
-            user.addLikedVideo(video);
-            video.setLikes(video.getLikes() + 1);
-        }
+        user.addLikedVideo(video);
+        video.setLikes(video.getLikes() + 1);
         this.userRepository.save(user);
     }
-    public void dislikeVideo(long videoId, String cookies) {
+
+    public void removeLike(long id, String cookies) throws VideoNotRatedException {
         final User user = this.authenticationService.getUserFromToken(
                 AuthenticationService.extractTokenFromCookie(cookies)
         );
-        final Video video = this.videoRepository.findById(videoId).orElseThrow();
+        final Video video = this.videoRepository.findById(id).orElseThrow();
+
+        if (!user.getLikedVideos().contains(video)) {
+            throw new VideoNotRatedException("Video is not liked");
+        }
+        user.removeLikedVideo(video);
+        video.setLikes(video.getLikes() - 1);
+        this.userRepository.save(user);
+    }
+
+    public void addDislike(long id, String cookies) throws VideoAlreadyRatedException {
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookies)
+        );
+        final Video video = this.videoRepository.findById(id).orElseThrow();
 
         if (user.getLikedVideos().contains(video)) {
-            this.likeVideo(videoId, cookies);
+            throw new VideoAlreadyRatedException("Video already liked");
         }
         if (user.getDislikedVideos().contains(video)) {
-            user.removeDislikedVideo(video);
-            video.setDislikes(video.getDislikes() - 1);
+            throw new VideoAlreadyRatedException("Video already disliked");
         }
-        else {
-            user.addDislikedVideo(video);
-            video.setDislikes(video.getDislikes() + 1);
+        user.addDislikedVideo(video);
+        video.setDislikes(video.getDislikes() + 1);
+        this.userRepository.save(user);
+    }
+
+    public void removeDislike(long id, String cookies) throws VideoNotRatedException {
+        final User user = this.authenticationService.getUserFromToken(
+                AuthenticationService.extractTokenFromCookie(cookies)
+        );
+        final Video video = this.videoRepository.findById(id).orElseThrow();
+
+        if (!user.getDislikedVideos().contains(video)) {
+            throw new VideoNotRatedException("Video is not disliked");
         }
+        user.removeDislikedVideo(video);
+        video.setDislikes(video.getDislikes() - 1);
         this.userRepository.save(user);
     }
 }

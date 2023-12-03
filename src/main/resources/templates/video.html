@@ -6,55 +6,30 @@
 </head>
 <body>
     <h1>Video</h1>
-    <span id="vidID" th:text="${video.getID()}"></span>
-
     <p th:text="${video.getTitle()}"></p>
     <video width="320" height="240" controls>
         <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
         Your browser does not support video streaming
     </video>
+    <br>
+
     <button onclick="like()">LIKE</button>
-    <p >Likes: </p><span id="likes" th:text="${video.getLikes()}"></span>
+    <span>Likes: </span>
+    <span id="likes" th:text="${video.getLikes()}"></span>
+    <br>
+
     <button onclick="dislike()">DISLIKE</button>
-    <p>Dislikes: </p><span id="dislikes" th:text="${video.getDislikes()}"></span>
-    <p>Views: </p><span th:text="${video.getViews()}"></span>
-    <p>Description: </p>
-    <p th:text="${video.getDescription()}"></p>
+    <span>Dislikes: </span>
+    <span id="dislikes" th:text="${video.getDislikes()}"></span>
 
-    <script>
-        function like() {
-            fetch("/api/v1/video/add-like", {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                },
-                body: document.getElementById('vidID').textContent
-            }).then(function(response) {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-            }).catch(function(error) {
-                console.error(error);
-            });
-            // let likes = parseInt(document.getElementById('likes').textContent);
-            // document.getElementById('likes').textContent = (likes + 1).toString()
-        }
+    <br>
+    <span>Views: </span>
+    <span th:text="${video.getViews()}"></span>
 
-        function dislike() {
-            fetch("/api/v1/video/add-dislike", {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                },
-                body: document.getElementById('vidID').textContent
-            }).then(function(response) {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-            }).catch(function(error) {
-                console.error(error);
-            });
-        }
-    </script>
+    <br>
+    <span>Description: </span>
+    <span th:text="${video.getDescription()}"></span>
+
+    <script src="/js/video.js"></script>
 </body>
 </html>
