@@ -46,7 +46,6 @@ input {
     border: transparent;
     border-radius: 25px;
     height: 40px;
-    padding: 0;
 }
 
 input[type=file] {
@@ -58,7 +57,7 @@ label {
 }
 
 .divider {
-    margin: 5% 5% 10% 5%;
+    margin: 5%;
 }
 
 #email {
