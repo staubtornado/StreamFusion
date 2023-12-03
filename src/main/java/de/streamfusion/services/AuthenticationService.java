@@ -49,7 +49,7 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Username already exists.");
         }
         if (usernameIsNotValid(registerRequest.username())) {
-            throw new IllegalArgumentException("Username is not valid.");
+            throw new IllegalArgumentException("Username is not valid. Only lowercase letters and numbers are allowed.");
         }
         if (emailIsNotValid(registerRequest.email())) {
             throw new IllegalArgumentException("Email is not valid.");
@@ -128,6 +128,13 @@ public class AuthenticationService {
         if (this.userRepository.existsByUsernameAndIdNot(request.newUsername(), user.getID())) {
             throw new IllegalArgumentException("Username already exists.");
         }
+        if (usernameIsNotValid(request.newUsername())) {
+            throw new IllegalArgumentException("Username should only contain lowercase letters and numbers.");
+        }
+        if (emailIsNotValid(request.newEmail())) {
+            throw new IllegalArgumentException("Email is not valid.");
+        }
+
         user.setUsername(request.newUsername());
         user.setEmail(request.newEmail());
         user.setFirstName(request.newFirstname());
