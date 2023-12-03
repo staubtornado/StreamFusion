@@ -23,29 +23,33 @@
                         <label for="firstName"></label>
                         <label for="lastName"></label>
                         <div class="row-of-inputs-beside-picture">
-                            <input
+                            <div class="input"><input
                                     type="text"
                                     id="firstName"
                                     name="firstName"
-                                    placeholder="  First Name"
+                                    placeholder="First Name"
                                     autofocus
                                     required
-                            >
-                            <input type="text" id="lastName" name="lastName" placeholder="  Last Name" required>
+                            ></div>
+                            <div class="input">
+                                <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                            </div>
                         </div>
                         <br>
                         <label for="username"></label>
                         <label for="dateOfBirth"></label>
                         <div class="row-of-inputs-beside-picture">
-                            <input
+                            <div class="input"><input
                                     type="text"
                                     id="username"
                                     name="username"
-                                    placeholder="  Username"
+                                    placeholder="Username"
                                     required
                                     pattern="^[a-z\d]{1,20}$"
-                            >
-                            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            ></div>
+                            <div class="input">
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,34 +59,27 @@
                 <br>
 
                 <label for="email"></label>
-                <input type="email" id="email" name="email" placeholder="  Email" required>
-
-                <div id="password-recommendations">
-                    <span>Recommendations for a strong password:</span>
-                    <ul>
-                        <li id="pwd-length">Must be at least 8 characters long.</li>
-                        <li id="pwd-uppercase">Must contain at least one uppercase letter.</li>
-                        <li id="pwd-lowercase">Must contain at least one lowercase letter.</li>
-                        <li id="pwd-number">Must contain at least one number.</li>
-                        <li id="pwd-special-char">Must contain at least one special character.</li>
-                    </ul>
-                </div>
+                <div class="input"><input type="email" id="email" name="email" placeholder="Email" required></div>
 
                 <label for="password"></label>
                 <label for="confirmPassword"></label>
                 <div id="passwords">
-                    <input type="password" id="password" name="password" placeholder="  Password" required>
-                    <input
+                    <div class="input" id="password-div">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="input">
+                        <input
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
-                            placeholder="  Confirm Password"
-                            required
-                    >
+                            placeholder="Confirm Password"
+                            required>
+                    </div>
                 </div>
             </div>
             <input type="submit" value="Register">
         </form>
+        <span id="already-registered">Already have an account? <a href="/login">Login</a>.</span>
     </div>
     <script src="/js/register.js"></script>
 </body>

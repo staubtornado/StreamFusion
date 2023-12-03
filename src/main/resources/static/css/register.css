@@ -1,11 +1,19 @@
 @media (prefers-color-scheme: dark) {
-    input {
-        background-color: white;
-        color: var(--background-dark);
-}
+    input[type=date]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+    .input {
+        border-bottom: 3px solid white;
+    }
+    .input input {
+        color: white;
+    }
 }
 
 @media (prefers-color-scheme: light) {
+    .input {
+        border-bottom: 3px solid black;
+    }
 }
 
 h1 {
@@ -24,6 +32,10 @@ h1 {
     font-size: 1.5rem;
     margin: auto auto 5% auto;
     cursor: pointer;
+
+    border: transparent;
+    border-radius: 25px;
+    box-shadow: var(--box-shadow);
 }
 
 .container-gray {
@@ -42,10 +54,11 @@ h1 {
     display: inline-block;
 }
 
-input {
-    border: transparent;
-    border-radius: 25px;
-    height: 40px;
+.input input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    margin: auto auto 2% auto;
 }
 
 input[type=file] {
@@ -60,16 +73,12 @@ label {
     margin: 5%;
 }
 
-#email {
-    width: 100%;
-    margin: auto 0 5% 0;
-}
-
 #passwords {
     display: flex;
     justify-content: space-between;
+    margin: 5% auto auto auto;
 }
-#passwords input {
+#passwords div {
     width: 47.5%;
 }
 
@@ -82,7 +91,7 @@ label {
     display: flex;
     justify-content: space-between;
 }
-.row-of-inputs-beside-picture input {
+.row-of-inputs-beside-picture div {
     width: 47.5%;
 }
 
@@ -104,8 +113,16 @@ label {
     align-items: center;
 }
 
-#password-recommendations li {
-    color: red;
+#already-registered {
+    margin: auto auto 5% 5%;
+    display: inline-block;
 }
 
+#already-registered a {
+    color: var(--theme-color);
+    text-decoration: none;
+}
 
+textarea:focus, input:focus{
+    outline: none;
+}

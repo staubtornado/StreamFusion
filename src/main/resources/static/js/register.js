@@ -47,11 +47,19 @@ form.addEventListener('submit', function(e) {
 
 document.getElementById('password').addEventListener('input', (e) => {
     const password = e.target.value;
-    const colors = {true: 'green', false: 'red'};
 
-    document.getElementById('pwd-length').style.color = colors[password.length >= 8];
-    document.getElementById('pwd-uppercase').style.color = colors[new RegExp(/[A-Z]/).test(password)];
-    document.getElementById('pwd-lowercase').style.color = colors[new RegExp(/[a-z]/).test(password)];
-    document.getElementById('pwd-number').style.color = colors[new RegExp(/[0-9]/).test(password)];
-    document.getElementById('pwd-special-char').style.color = colors[new RegExp(/[!%\-_+=\[\]{}:,.?<>();]/).test(password)];
+    if (password.length === 0) {
+        document.getElementById('password-div').style.borderBottomColor = 'white';
+        return;
+    }
+    let percentage = 0;
+
+    percentage += Number(new RegExp(/[A-Z]/).test(password)) * 25;
+    percentage += Number(new RegExp(/[a-z]/).test(password)) * 25;
+    percentage += Number(new RegExp(/[0-9]/).test(password)) * 25;
+    percentage += Number(new RegExp(/[^A-Za-z0-9]/).test(password)) * 25;
+    percentage *= Math.min(password.length / 8, 1);
+    document.getElementById('password-div').style.borderBottomColor = `hsl(${percentage * 1.2}, 100%, 50%)`;
+
+
 });
