@@ -1,5 +1,7 @@
 package de.streamfusion.controllers.api;
 
+import de.streamfusion.Exceptions.VideoAlreadyRatedException;
+import de.streamfusion.Exceptions.VideoNotRatedException;
 import de.streamfusion.controllers.requestAndResponse.EditVideoRequest;
 import de.streamfusion.models.Video;
 import de.streamfusion.services.VideoService;
@@ -73,8 +75,26 @@ public class VideoAPIController {
             @NonNull @RequestBody long id,
             @RequestHeader("Cookie") String cookies
     ) {
-        this.videoService.likeVideo(id, cookies);
-        return new ResponseEntity<>("Video liked successfully", HttpStatus.OK);
+        try {
+            this.videoService.addLike(id, cookies);
+        } catch (VideoAlreadyRatedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Liked video successfully", HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/remove-like")
+    public ResponseEntity<String> removeLike(
+            @NonNull @RequestBody long id,
+            @RequestHeader("Cookie") String cookies
+    ) {
+        try {
+            this.videoService.removeLike(id, cookies);
+        } catch (VideoNotRatedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Removed like from video successfully", HttpStatus.OK);
     }
 
     @PutMapping(value = "/add-dislike")
@@ -82,7 +102,24 @@ public class VideoAPIController {
             @NonNull @RequestBody long id,
             @RequestHeader("Cookie") String cookies
     ) {
-        this.videoService.dislikeVideo(id, cookies);
-        return new ResponseEntity<>("Video disliked successfully", HttpStatus.OK);
+        try {
+            this.videoService.addDislike(id, cookies);
+        } catch (VideoAlreadyRatedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Disliked video successfully", HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/remove-dislike")
+    public ResponseEntity<String> removeDislike(
+            @NonNull @RequestBody long id,
+            @RequestHeader("Cookie") String cookies
+    ) {
+        try {
+            this.videoService.removeDislike(id, cookies);
+        } catch (VideoNotRatedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Removed dislike from video successfully", HttpStatus.OK);
     }
 }
