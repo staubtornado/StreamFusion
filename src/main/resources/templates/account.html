@@ -5,9 +5,54 @@
     <title>Account</title>
     <link th:href="@{css/default.css}" rel="stylesheet"/>
     <link th:href="@{css/header.css}" rel="stylesheet"/>
+    <link th:href="@{css/account.css}" rel="stylesheet"/>
 </head>
 
-<header>
+<body>
+    <div class="container-gray" id="left-container-gray">
+        <div class="margin">
+            <span>Account Settings</span>
+            <br>
+            <div id="usernames">
+                <label for="image-upload">
+                    <img id="image-preview" alt="profile-picture" th:src="${user.getProfilePictureURL()}">
+                </label>
+                <input type="file" id="image-upload" accept="image/*">
+
+                <div>
+                    <div>
+                        <label for="firstName"></label>
+                        <label for="lastName"></label>
+                        <div>
+                            <input type="text" id="firstName" placeholder="First Name" autofocus
+                                   required th:value="${user.getFirstName()}">
+                        </div>
+                        <div>
+                            <input type="text" id="lastName" placeholder="Last Name" required
+                                   th:value="${user.getLastName()}">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="username"></label>
+                        <label for="dateOfBirth"></label>
+                        <div>
+                            <input type="text" id="username" placeholder="Username" required
+                                   pattern="^[a-z\d]{1,20}$" th:value="${user.getUsername()}">
+                        </div>
+                        <div>
+                            <input type="date" id="dateOfBirth" required th:value="${user.getDateOfBirth()}">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container-gray" id="right-container-gray">
+        <span>Profile Preview</span>
+    </div>
+
     <div class="container-gray" id="header-div">
         <div id="account-section-header">
             <div id="account-info-header">
@@ -19,7 +64,7 @@
                 <img id="profile-picture" th:src="${user.getProfilePictureURL()}" alt="">
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
-                <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1" stroke="#121212"/>
+                <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1"/>
             </svg>
             <div id="account-popup" class="container-gray">
                 <ul>
@@ -30,38 +75,4 @@
             </div>
         </div>
     </div>
-</header>
-
-<body>
-    <h1>Account Settings</h1>
-
-    <form th:action="'/account?id=' + ${user.getID()}" method="post">
-        <label for="newUsername">Enter your new Username</label>
-        <input name="newUsername" id="newUsername" th:value="${user.username}">
-        <br>
-        <label for="newEmail">Enter your new Email</label>
-        <input name="newEmail" id="newEmail" type="email" th:value="${user.email}">
-        <br>
-        <label for="newFirstname">Enter your new firstname</label>
-        <input name="newFirstname" id="newFirstname" th:value="${user.firstName}">
-        <br>
-        <label for="newLastname">Enter your new lastname</label>
-        <input name="newLastname" id="newLastname" th:value="${user.lastName}">
-        <br>
-        <label for="newDateOfBirth">Enter your new Birthday</label>
-        <input name="newDateOfBirth" id="newDateOfBirth" type="text" inputmode="numeric" th:value="${user.dateOfBirth}">
-        <button type="submit">Update!</button>
-    </form>
-    <br><br><br>
-    <form th:action="'/account/changePassword?id=' + ${user.getID()}" method="post">
-        <label for="oldPassword">Enter your old Password</label>
-        <input name="oldPassword" id="oldPassword" type="password">
-        <br>
-        <label for="newPassword">Enter your new Password</label>
-        <input name="newPassword" id="newPassword" type="password">
-        <br>
-        <label for="repeatPassword">Repeat your new Password</label>
-        <input name="repeatPassword" id="repeatPassword" type="password">
-        <button type="submit">Change Password</button>
-    </form>
 </body>
