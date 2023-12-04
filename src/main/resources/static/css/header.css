@@ -20,9 +20,10 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 300px;
-    min-width: fit-content;
-    gap: 5%;
+    width: 225px;
+    padding: 0 25px 0 25px;
+    min-width: max-content;
+    gap: 25px;
     height: 90px;
     transition: all 0.5s;;
 }
