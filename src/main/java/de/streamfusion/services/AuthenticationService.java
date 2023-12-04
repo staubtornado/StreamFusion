@@ -17,7 +17,11 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.sql.Date;
+import java.time.Instant;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 
 @Service
 public class AuthenticationService {
@@ -63,7 +67,10 @@ public class AuthenticationService {
         }
 
         // Convert the date of birth to a long value representing the milliseconds since January 1, 1970, 00:00:00 GMT
-        long dateOfBirth = Date.valueOf(registerRequest.dateOfBirth()).getTime();
+        long dateOfBirth = Date.from(Instant.parse(registerRequest.dateOfBirth() + "T00:00:00.00Z")).getTime();
+        if (userIsUnderage(dateOfBirth, 14)) {
+            throw new IllegalArgumentException("User is under 14");
+        }
         final User user = new User(
                 registerRequest.username(),
                 registerRequest.email(),
@@ -154,11 +161,17 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Email is not valid.");
         }
 
+        // Convert the date of birth to a long value representing the milliseconds since January 1, 1970, 00:00:00 GMT
+        long dateOfBirth = Date.from(Instant.parse(request.newDateOfBirth() + "T00:00:00.00Z")).getTime();
+        if (userIsUnderage(dateOfBirth, 14)) {
+            throw new IllegalArgumentException("User is under 14");
+        }
+
         user.setUsername(request.newUsername());
         user.setEmail(request.newEmail());
         user.setFirstName(request.newFirstname());
         user.setLastName(request.newLastname());
-        user.setDateOfBirth(request.newDateOfBirth());
+        user.setDateOfBirth(dateOfBirth);
         this.userRepository.save(user);
 
         if (!request.newEmail().equals(email)) {
@@ -268,5 +281,12 @@ public class AuthenticationService {
 
     private static boolean dateOfBirthIsNotValid(@NonNull String dateOfBirth) {
         return !dateOfBirth.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
+    }
+
+    private static boolean userIsUnderage(long userBirthday, int ageToCheckIfUnder) {
+        LocalDate birthdate = new Date(userBirthday).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate now = LocalDate.now();
+        Period periodBetween = Period.between(birthdate, now);
+        return periodBetween.getYears() <= ageToCheckIfUnder;
     }
 }
