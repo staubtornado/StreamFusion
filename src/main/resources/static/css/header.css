@@ -21,6 +21,8 @@ body {
     justify-content: space-evenly;
     align-items: center;
     width: 300px;
+    min-width: fit-content;
+    gap: 5%;
     height: 90px;
     transition: all 0.5s;;
 }
@@ -52,6 +54,7 @@ body {
     width: 70px;
     height: 70px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 #account-names {
