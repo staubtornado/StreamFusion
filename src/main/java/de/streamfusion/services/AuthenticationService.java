@@ -82,20 +82,21 @@ public class AuthenticationService {
         );
         this.userRepository.save(user);
 
-        if (registerRequest.profilePicture() != null) {
-            final File onDisk = new File("%s/data/user/%d/profile-picture.png".formatted(
-                    System.getProperty("user.dir"),
-                    user.getID()
-            ));
-            if (!onDisk.getParentFile().mkdirs()) {
-                throw new IOException("Could not create directories.");
-            }
-            // Write string to file
-            if (!onDisk.createNewFile()) {
-                throw new IOException("Could not create file.");
-            }
-            Files.write(onDisk.toPath(), Base64.decodeBase64(registerRequest.profilePicture()));
+        final File onDisk = new File("%s/data/user/%d/profile-picture.png".formatted(
+                System.getProperty("user.dir"),
+                user.getID()
+        ));
+        if (!onDisk.getParentFile().mkdirs()) {
+            throw new IOException("Could not create directories.");
         }
+        // Write string to file
+        if (!onDisk.createNewFile()) {
+            throw new IOException("Could not create file.");
+        }
+        if (registerRequest.profilePicture() == null) {
+            throw new IllegalArgumentException("Profile picture is null.");
+        }
+        Files.write(onDisk.toPath(), Base64.decodeBase64(registerRequest.profilePicture()));
         return this.generateToken(user);
     }
 
