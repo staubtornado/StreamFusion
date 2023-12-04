@@ -159,8 +159,8 @@ public class User implements UserDetails {
         return this.likedVideos;
     }
 
-    public boolean removeLikedVideo(Video video) {
-        return this.likedVideos.remove(video);
+    public void removeLikedVideo(Video video) {
+        this.likedVideos.remove(video);
     }
 
     public void  addDislikedVideo(Video video) {
@@ -170,7 +170,7 @@ public class User implements UserDetails {
     public Set<Video> getDislikedVideos(){
         return this.dislikedVideos;
     }
-    public boolean removeDislikedVideo(Video video) {
-        return this.dislikedVideos.remove(video);
+    public void removeDislikedVideo(Video video) {
+        this.dislikedVideos.remove(video);
     }
 }
