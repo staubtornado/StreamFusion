@@ -26,6 +26,7 @@ body {
 }
 
 #account-section-header svg path {
+    stroke: var(--background-dark);
     transition: stroke 0.5s;
 }
 
