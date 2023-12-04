@@ -16,34 +16,64 @@ form.addEventListener('submit', function(e) {
         alert('Passwords do not match');
         return;
     }
+    let picture = document.getElementById('image-preview').src.split(',')[1];
 
-    fetch('/api/v1/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value,
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            dateOfBirth: document.getElementById('dateOfBirth').value,
-            // Get bytes from image
-            profilePicture: document.getElementById('image-preview').src.split(',')[1],
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(function(response) {
-        if (response.ok) {
-            return response;
-        } else {
-            return response.text().then(function(text) {
-                throw new Error(text);
-            });
-        }
-    }).then(function() {
-        window.location.href = '/'
-    }).catch(function(error) {
-        alert(error);
+    const fetchProfilePicture = () => {
+        return new Promise((resolve, reject) => {
+            if (typeof picture !== 'undefined') {
+                resolve(picture);
+            } else {
+                const url = document.getElementById('image-preview').src;
+
+                fetch(url)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        let reader = new FileReader();
+                        reader.onload = function (e) {
+                            picture = e.target.result.split(',')[1];
+                            resolve(picture);
+                        };
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        reject(error);
+                    });
+            }
+        });
+    };
+
+    fetchProfilePicture().then(picture => {
+        fetch('/api/v1/auth/register', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                // Get bytes from image
+                profilePicture: picture
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            if (response.ok) {
+                return response;
+            } else {
+                return response.text().then(function (text) {
+                    throw new Error(text);
+                });
+            }
+        }).then(function () {
+            window.location.href = '/'
+        }).catch(function (error) {
+            alert(error);
+        });
+    }).catch(error => {
+        console.error('Failed to fetch profile picture:', error);
     });
 });
 
