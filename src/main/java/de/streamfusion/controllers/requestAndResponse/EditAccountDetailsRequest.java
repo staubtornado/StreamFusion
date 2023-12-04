@@ -5,5 +5,5 @@ public record EditAccountDetailsRequest(
         String newEmail,
         String newFirstname,
         String newLastname,
-        Long newDateOfBirth
+        String newDateOfBirth
 ) {}
