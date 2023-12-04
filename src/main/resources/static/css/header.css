@@ -22,11 +22,11 @@ body {
     align-items: center;
     width: 300px;
     height: 90px;
-    transition: all 0.3s;;
+    transition: all 0.5s;;
 }
 
 #account-section-header svg {
-    transition: filter 0.3s;
+    transition: filter 0.5s;
 }
 
 #account-section-header:hover {
@@ -83,7 +83,7 @@ body {
     border-top-left-radius: 0;
     border: transparent 1px solid;
     border-top: none;
-    transition: opacity 0.3s, visibility 0.3s;
+    transition: opacity 0.5s, visibility 0.5s;
     cursor: auto;
 }
 
