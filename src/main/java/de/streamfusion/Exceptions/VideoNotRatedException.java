@@ -1,4 +1,4 @@
-package de.streamfusion.Exceptions;
+package de.streamfusion.exceptions;
 
 public class VideoNotRatedException extends Exception{
     public VideoNotRatedException(String message) {

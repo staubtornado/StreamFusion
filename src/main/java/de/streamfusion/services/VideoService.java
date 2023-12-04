@@ -1,7 +1,7 @@
 package de.streamfusion.services;
 
-import de.streamfusion.Exceptions.VideoAlreadyRatedException;
-import de.streamfusion.Exceptions.VideoNotRatedException;
+import de.streamfusion.exceptions.VideoAlreadyRatedException;
+import de.streamfusion.exceptions.VideoNotRatedException;
 import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
 import de.streamfusion.repositories.UserRepository;
