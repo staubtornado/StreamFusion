@@ -110,3 +110,35 @@ body {
 #logout {
     color: var(--error-color) !important;
 }
+
+#logo {
+    width: 220px;
+    height: 100px;
+    margin: auto auto auto 30px;
+}
+
+#logo a {
+    text-decoration: none;
+    display: flex;
+    color: white;
+}
+
+#logo img {
+    width: 100px;
+    height: 100px;
+}
+
+#logo div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#logo div span {
+    text-align: center;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
