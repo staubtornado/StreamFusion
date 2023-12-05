@@ -77,7 +77,7 @@ public class VideoService {
         video.setFiletype(fileExtension);
         this.videoRepository.save(video);
 
-        final File onDisk = new File("%s/data/%d/video.%s".formatted(
+        final File onDisk = new File("%s/data/videos/%d/video.%s".formatted(
                 System.getProperty("user.dir"),
                 video.getID(),
                 fileExtension
@@ -97,7 +97,7 @@ public class VideoService {
         if (!Objects.equals(video.getUser().getID(), user.getID())) {
             throw new IllegalArgumentException("User does not own video.");
         }
-        File directory = new File("%s/data/%d".formatted(
+        File directory = new File("%s/data/videos/%d".formatted(
                 System.getProperty("user.dir"),
                 video.getID()
         ));

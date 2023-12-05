@@ -31,7 +31,7 @@ public class CDNController {
             @RequestHeader(name = "Range", required = false) String range
     ) {
         Video video = this.videoService.getVideoByID(id);
-        Path filePath = Paths.get("./data/%d/video.%s".formatted(id, video.getFiletype()));
+        Path filePath = Paths.get("./data/videos/%d/video.%s".formatted(id, video.getFiletype()));
 
         StreamingResponseBody responseStream;
         long fileSize = filePath.toFile().length();
@@ -92,7 +92,7 @@ public class CDNController {
 
     @GetMapping("v/thumbnail")
     public ResponseEntity<byte[]> cdnThumbnail(@RequestParam(name = "id") long id) {
-        String path = "./data/%d/thumbnail.jpg".formatted(id);
+        String path = "./data/videos/%d/thumbnail.jpg".formatted(id);
         return getResponseEntity(path);
     }
 
