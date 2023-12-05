@@ -3,6 +3,7 @@
     --background-light: #ffffff;
 
     --container-dark: #1E1E1E;
+    --default-gray: #868686;
 
     --theme-color: #BDFF00;
     --error-color: #ff005d;
@@ -20,6 +21,17 @@ body {
         color: white;
     }
 
+    input {
+        color: white;
+    }
+
+    .input {
+        border-bottom: 3px solid white;
+    }
+    .input input {
+        color: white;
+    }
+
     .container-gray {
         background-color: var(--container-dark);
         border-radius: 25px;
@@ -31,6 +43,10 @@ body {
     body {
         background-color: #ffffff;
         color: #121212;
+    }
+
+    .input {
+        border-bottom: 3px solid black;
     }
 }
 
