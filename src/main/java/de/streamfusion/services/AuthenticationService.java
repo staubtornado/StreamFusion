@@ -4,6 +4,7 @@ import de.streamfusion.controllers.requestAndResponse.*;
 import de.streamfusion.models.Role;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
+import de.streamfusion.repositories.VideoRepository;
 import jakarta.servlet.http.Cookie;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.time.ZoneId;
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final VideoRepository videoRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -35,12 +37,14 @@ public class AuthenticationService {
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             JWTService jwtService,
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager,
+            VideoRepository videoRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.videoRepository = videoRepository;
     }
 
     /**
@@ -119,7 +123,7 @@ public class AuthenticationService {
     }
 
     /**
-        * Deletes the user.
+        * Deletes the user and all his videos.
         *
         * @param request The delete account request.
         * @param cookies The cookies of the user.
@@ -130,6 +134,7 @@ public class AuthenticationService {
 
         this.matchCredentials(email, request.password());
         final User user = this.userRepository.findByEmail(email).orElseThrow();
+        this.videoRepository.deleteAll(user.getVideos());
         this.userRepository.delete(user);
     }
 
