@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -133,6 +134,10 @@ public class User implements UserDetails {
 
     public Long getDateOfBirth() {
         return this.dateOfBirth;
+    }
+
+    public String getDateOfBirthString() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(this.dateOfBirth));
     }
 
     public void setDateOfBirth(Long dateOfBirth) {
