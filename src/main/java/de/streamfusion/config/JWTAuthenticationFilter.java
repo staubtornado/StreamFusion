@@ -3,6 +3,7 @@ package de.streamfusion.config;
 import de.streamfusion.models.User;
 import de.streamfusion.services.JWTService;
 import de.streamfusion.services.UserDetailsServiceImpl;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.io.DecodingException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -59,7 +60,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
         try {
             userEmail = jwtService.getUsernameFromToken(token);
-        } catch (DecodingException | IllegalArgumentException e) {
+        } catch (DecodingException | IllegalArgumentException |ExpiredJwtException e) {
             filterChain.doFilter(request, response);
             return;
         }
