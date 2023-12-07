@@ -143,3 +143,16 @@ body {
     line-height: normal;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
+#login-button {
+    border: none;
+    border-radius: 25px;
+    background-color: var(--theme-color);
+    color: black;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    width: 10%;
+    margin: auto 5% auto auto;
+}
