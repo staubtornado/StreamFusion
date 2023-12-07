@@ -2,6 +2,8 @@ package de.streamfusion.models;
 
 import jakarta.persistence.*;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,6 +16,7 @@ public class Video {
     private int likes;
     private int dislikes;
     private int views;
+    @Column(length = 4096)
     private String description;
     private String filetype;
     @ManyToOne
@@ -97,5 +100,9 @@ public class Video {
 
     public String getThumbnailURL() {
         return "/cdn/v/thumbnail?id=%d".formatted(this.id);
+    }
+
+    public String getUploadDate() {
+        return DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date(this.id));
     }
 }

@@ -1,6 +1,6 @@
 const VIDEO_ID = window.location.search.substring(4);
-let likes = parseInt(document.getElementById('likes').textContent);
-let dislikes = parseInt(document.getElementById('dislikes').textContent);
+let likes = parseInt(document.getElementById('like-count').textContent);
+let dislikes = parseInt(document.getElementById('dislike-count').textContent);
 
 async function addLike() {
     const data = await fetch("/api/v1/video/add-like", {
@@ -49,19 +49,19 @@ async function removeDislike() {
 function like() {
     addLike().then((text) => {
         if (text === "Liked video successfully") {
-            document.getElementById('likes').textContent = (likes + 1).toString();
-            likes = parseInt(document.getElementById('likes').textContent);
+            document.getElementById('like-count').textContent = (likes + 1).toString();
+            likes = parseInt(document.getElementById('like-count').textContent);
         }
         if (text === "Video already disliked") {
             removeDislike().then((text) => {
                 if (text === "Removed dislike from video successfully"){
-                    document.getElementById('dislikes').textContent = (dislikes - 1).toString();
-                    dislikes = parseInt(document.getElementById('dislikes').textContent);
+                    document.getElementById('dislike-count').textContent = (dislikes - 1).toString();
+                    dislikes = parseInt(document.getElementById('dislike-count').textContent);
 
                     addLike().then((text) => {
                         if (text === "Liked video successfully") {
-                            document.getElementById('likes').textContent = (likes + 1).toString();
-                            likes = parseInt(document.getElementById('likes').textContent);
+                            document.getElementById('like-count').textContent = (likes + 1).toString();
+                            likes = parseInt(document.getElementById('like-count').textContent);
                         }
                     })
                 }
@@ -70,8 +70,8 @@ function like() {
         if (text === "Video already liked") {
             removeLike().then((text) => {
                 if (text === "Removed like from video successfully"){
-                    document.getElementById('likes').textContent = (likes - 1).toString();
-                    likes = parseInt(document.getElementById('likes').textContent);
+                    document.getElementById('like-count').textContent = (likes - 1).toString();
+                    likes = parseInt(document.getElementById('like-count').textContent);
                 }
             });
         }
@@ -81,19 +81,19 @@ function like() {
 function dislike() {
     addDislike().then((text) => {
         if (text === "Disliked video successfully") {
-            document.getElementById('dislikes').textContent = (dislikes + 1).toString();
-            dislikes = parseInt(document.getElementById('dislikes').textContent);
+            document.getElementById('dislike-count').textContent = (dislikes + 1).toString();
+            dislikes = parseInt(document.getElementById('dislike-count').textContent);
         }
         if (text === "Video already liked") {
             removeLike().then((text) => {
                 if (text === "Removed like from video successfully"){
-                    document.getElementById('likes').textContent = (likes - 1).toString();
-                    likes = parseInt(document.getElementById('likes').textContent);
+                    document.getElementById('like-count').textContent = (likes - 1).toString();
+                    likes = parseInt(document.getElementById('like-count').textContent);
 
                     addDislike().then((text) => {
                         if (text === "Disliked video successfully") {
-                            document.getElementById('dislikes').textContent = (dislikes + 1).toString();
-                            dislikes = parseInt(document.getElementById('dislikes').textContent);
+                            document.getElementById('dislike-count').textContent = (dislikes + 1).toString();
+                            dislikes = parseInt(document.getElementById('dislike-count').textContent);
                         }
                     })
                 }
@@ -102,8 +102,8 @@ function dislike() {
         if (text === "Video already disliked") {
             removeDislike().then((text) => {
                 if (text === "Removed dislike from video successfully"){
-                    document.getElementById('dislikes').textContent = (dislikes - 1).toString();
-                    dislikes = parseInt(document.getElementById('dislikes').textContent);
+                    document.getElementById('dislike-count').textContent = (dislikes - 1).toString();
+                    dislikes = parseInt(document.getElementById('dislike-count').textContent);
                 }
             });
         }
