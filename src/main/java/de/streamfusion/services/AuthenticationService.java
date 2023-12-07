@@ -145,7 +145,7 @@ public class AuthenticationService {
         * @param cookies The cookies of the user.
         * @return Null if the email was not changed, the new token otherwise.
      */
-    public String editUser(@NonNull EditAccountDetailsRequest request, @NonNull String cookies) {
+    public String editUser(@NonNull EditAccountDetailsRequest request, @NonNull String cookies) throws IOException {
         final String token = extractTokenFromCookie(cookies);
         final String email = this.getEmailFromToken(token);
 
@@ -175,10 +175,11 @@ public class AuthenticationService {
 
         user.setUsername(request.newUsername());
         user.setEmail(request.newEmail());
-        user.setFirstName(request.newFirstname());
-        user.setLastName(request.newLastname());
+        user.setFirstName(request.newFirstName());
+        user.setLastName(request.newLastName());
         user.setDateOfBirth(dateOfBirth);
         this.userRepository.save(user);
+        changeProfilePicture(request.newProfilePicture(), user);
 
         if (!request.newEmail().equals(email)) {
             return this.generateToken(user);
@@ -294,5 +295,23 @@ public class AuthenticationService {
         LocalDate now = LocalDate.now();
         Period periodBetween = Period.between(birthdate, now);
         return periodBetween.getYears() <= ageToCheckIfUnder;
+    }
+
+    private static void changeProfilePicture(String profilePicture, @NonNull User user) throws IOException {
+        final File onDisk = new File("%s/data/user/%d/profile-picture.png".formatted(
+                System.getProperty("user.dir"),
+                user.getID()
+        ));
+        if (!onDisk.exists() && !onDisk.getParentFile().mkdirs()) {
+            throw new IOException("Could not create directories.");
+        }
+        // Write string to file
+        if (!onDisk.exists() && !onDisk.createNewFile()) {
+            throw new IOException("Could not create file.");
+        }
+        if (profilePicture == null) {
+            throw new IllegalArgumentException("Profile picture is null.");
+        }
+        Files.write(onDisk.toPath(), Base64.decodeBase64(profilePicture));
     }
 }

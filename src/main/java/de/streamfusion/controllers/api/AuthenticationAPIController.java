@@ -24,7 +24,7 @@ public class AuthenticationAPIController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/edit-details")
+    @PutMapping("/edit-details")
     public ResponseEntity<String> editUserDetails(
             @NonNull @RequestBody EditAccountDetailsRequest request,
             @RequestHeader("Cookie") String cookies,
@@ -39,7 +39,10 @@ public class AuthenticationAPIController {
             return new ResponseEntity<>("Invalid token.", HttpStatus.BAD_REQUEST);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (IOException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
         if (newToken != null) {
             response.addCookie(AuthenticationService.generateCookie(newToken));
             return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
