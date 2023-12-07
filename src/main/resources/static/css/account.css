@@ -1,17 +1,19 @@
+@media (prefers-color-scheme: dark) {
+    input[type=date]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+}
+
 .flex-space-evenly {
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
     height: calc(100vh - 120px);
 }
 
 .flex-space-evenly > div {
     width: 44%;
-    max-height: 88%;
-}
-
-.flex-space-evenly > div {
-    width: 44%;
+    margin: 4% 0;
+    min-width: 630px;
 }
 
 .flex-space-evenly > div > div {
@@ -20,7 +22,7 @@
 }
 
 .headline {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 0 auto 5% auto;
 }
 
@@ -52,10 +54,11 @@
 
 #inputs {
     width: 55%;
+    margin: 0 22.5% 0 0;
 }
 
 #inputs > div {
-    margin-bottom: 12.5%;
+    margin-bottom: 14%;
 }
 
 .input {
@@ -77,14 +80,27 @@
 .input-row {
     display: flex;
     justify-content: space-between;
-    margin: auto auto 5% auto;
+    margin: auto auto 7% auto;
 }
 
 #user-id-input {
     border-color: var(--default-gray);
+    width: 100%;
+    position: relative;
 }
 
 #user-id-input input {
+    color: var(--default-gray);
+    width: 100%;
+}
+
+#user-id-input span {
+    position: absolute;
+    font-size: 0.8rem;
+    background-color: var(--container-dark);
+    bottom: -9px;
+    left: 10px;
+    padding: 0 10px;
     color: var(--default-gray);
 }
 
@@ -92,6 +108,39 @@
     width: 100%;
 }
 
+#change-password, #delete-account {
+    background: transparent;
+    padding: 10px;
+    cursor: pointer;
+    transition: filter 0.3s;
+}
 
+#change-password:hover, #delete-account:hover {
+    filter: brightness(0.5);
+}
 
+#change-password {
+    border: 1px solid var(--theme-color);
+    color: var(--theme-color);
+}
 
+#delete-account {
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+}
+
+#change-password:focus, #delete-account:focus {
+    outline: none;
+}
+
+input[type="submit"] {
+    border: none;
+    border-radius: 25px;
+    background-color: var(--theme-color);
+    color: black;
+    width: 100%;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+}

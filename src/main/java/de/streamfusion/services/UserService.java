@@ -1,6 +1,5 @@
 package de.streamfusion.services;
 
-import de.streamfusion.controllers.requestAndResponse.EditAccountDetailsRequest;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
