@@ -50,8 +50,22 @@
                 <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
             </video>
             <div>
-                etc...
+                <p id="video-title" th:text="${video.getTitle()}"></p>
+                <div id="uploader-div">
+                    <a th:href="'/user?id=' + ${user.getID()}">
+                        <img th:src="${user.getProfilePictureURL()}" alt="">
+                        <div id="uploader">
+                            <span th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></span>
+                            <br>
+                            <span th:text="'@' + ${user.getUsername()}"></span>
+                        </div>
+                    </a>
+                </div>
+                <span th:text="${video.getDescription()}"></span>
             </div>
+        </div>
+        <div>
+            Comments
         </div>
     </div>
 

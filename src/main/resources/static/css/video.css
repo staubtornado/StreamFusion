@@ -1,0 +1,47 @@
+#video-body {
+    width: 66%;
+    display: flex;
+    margin: 5%;
+}
+
+#left-video-body {
+    width: 66%;
+    margin: 0 5% 0 0;
+}
+
+#left-video-body > div {
+    margin: 0 0 0 5%;
+}
+
+#video {
+    border-radius: 25px;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+}
+
+#uploader-div {
+    width: 50%;
+    box-shadow: var(--box-shadow);
+    border: var(--background-dark) 1px solid;
+    border-radius: 25px;
+}
+
+#uploader-div img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--box-shadow);
+}
+
+#uploader-div a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 5%
+}
+
+#uploader {
+    margin: 0 0 0 5%;
+}
