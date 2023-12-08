@@ -2,10 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Account</title>
+    <title th:text="${video.getTitle()} + '- StreamFusion'"></title>
     <link th:href="@{css/default.css}" rel="stylesheet"/>
     <link th:href="@{css/header.css}" rel="stylesheet"/>
     <link th:href="@{css/video.css}" rel="stylesheet"/>
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
 </html>
 
 <header>
