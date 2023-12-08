@@ -37,12 +37,11 @@ public class UserController {
 
     @GetMapping(value = "/account")
     public ModelAndView account(@RequestHeader("Cookie") String cookies) {
-        final String email = this.authenticationService.getEmailFromToken(
-                AuthenticationService.extractTokenFromCookie(cookies)
-        );
         ModelAndView modelAndView = new ModelAndView("account");
         try {
-            final User user = this.userService.getUserByEmail(email);
+            final User user = this.authenticationService.getUserFromToken(
+                    AuthenticationService.extractTokenFromCookie(cookies)
+            );
             modelAndView.addObject("user", user);
         } catch (NoSuchElementException e) {
             modelAndView.setViewName("redirect:/error");

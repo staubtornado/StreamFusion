@@ -5,6 +5,7 @@ import de.streamfusion.models.Role;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
 import de.streamfusion.repositories.VideoRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,7 +206,7 @@ public class AuthenticationService {
         * @param token The token to extract the email from.
         * @return The extracted email.
      */
-    public String getEmailFromToken(String token) {
+    public String getEmailFromToken(String token) throws ExpiredJwtException {
         return this.jwtService.getUsernameFromToken(token);
     }
 
@@ -281,8 +282,13 @@ public class AuthenticationService {
         return cookie;
     }
 
-    public @NonNull User getUserFromToken(String token) {
-        final String email = this.getEmailFromToken(token);
+    public User getUserFromToken(String token) {
+        final String email;
+        try {
+            email = this.getEmailFromToken(token);
+        } catch (ExpiredJwtException e) {
+            return null;
+        }
         return this.userRepository.findByEmail(email).orElseThrow();
     }
 

@@ -1,7 +1,7 @@
 #video-body {
-    width: 66%;
+    width: 75%;
     display: flex;
-    margin: 5%;
+    max-height: 95%;
 }
 
 #left-video-body {
@@ -10,7 +10,11 @@
 }
 
 #left-video-body > div {
-    margin: 0 0 0 5%;
+    margin: 0 0 2% 2%;
+}
+
+#left-video-body > div > p{
+    font-size: 1.3rem;
 }
 
 #video {
@@ -19,11 +23,23 @@
     width: 100%;
 }
 
-#uploader-div {
-    width: 50%;
+#uploader-div, #views, #date, #dislikes, #likes {
     box-shadow: var(--box-shadow);
     border: var(--background-dark) 1px solid;
     border-radius: 25px;
+}
+
+#views, #date, #dislikes, #likes {
+    text-align: center;
+    padding: 1%;
+}
+
+#dislikes button, #likes button {
+    cursor: pointer;
+}
+
+#uploader-div {
+    width: 25%;
 }
 
 #uploader-div img {
@@ -39,9 +55,37 @@
     color: white;
     display: flex;
     align-items: center;
-    margin: 0 0 0 5%
+    padding: 2%;
 }
 
 #uploader {
-    margin: 0 0 0 5%;
+    margin: 0 0 0 2%;
+}
+
+#description {
+    height: 100px;
+    overflow-y: auto;
+}
+
+#description span:first-of-type {
+    font-weight: bold;
+}
+
+#description::-webkit-scrollbar {
+    width: 10px;
+}
+
+#invisible-container {
+    height: calc(100vh - 120px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#row-for-video-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2% 0;
 }
