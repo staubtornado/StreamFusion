@@ -80,7 +80,7 @@ function removeDislikeDisplay(response) {
     }
 }
 
-function redirectToLogin(response) {
+function redirectToLogin() {
     window.location.href = '/login';
 }
 
