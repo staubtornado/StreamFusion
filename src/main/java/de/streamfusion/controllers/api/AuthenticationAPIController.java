@@ -2,6 +2,7 @@ package de.streamfusion.controllers.api;
 
 import de.streamfusion.controllers.requestAndResponse.*;
 import de.streamfusion.services.AuthenticationService;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AuthenticationAPIController {
             newToken = this.authenticationService.editUser(request, cookies);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
-        } catch (MalformedJwtException e) {
+        } catch (MalformedJwtException | ExpiredJwtException e) {
             return new ResponseEntity<>("Invalid token.", HttpStatus.BAD_REQUEST);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -57,7 +58,7 @@ public class AuthenticationAPIController {
     ) {
         try {
             this.authenticationService.deleteUser(request, cookies);
-        } catch (BadCredentialsException | MalformedJwtException e) {
+        } catch (BadCredentialsException | MalformedJwtException | ExpiredJwtException e) {
             return new ResponseEntity<>("Authorization failed.", HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,7 +75,7 @@ public class AuthenticationAPIController {
         final String token;
         try {
             token = this.authenticationService.changePassword(request, cookies);
-        } catch (BadCredentialsException | MalformedJwtException e) {
+        } catch (BadCredentialsException | MalformedJwtException | ExpiredJwtException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
