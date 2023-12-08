@@ -5,13 +5,17 @@ let isLiked = document.getElementById('is-liked').textContent;
 let isDisliked = document.getElementById('is-disliked').textContent;
 
 async function addLike() {
-    return await fetch("/api/v1/video/add-like", {
+    const data = await fetch("/api/v1/video/add-like", {
         method: "PUT",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         },
         body: VIDEO_ID
     });
+    if (data.status === 405) {
+        redirectToLogin()
+    }
+    return data;
 }
 
 async function removeLike() {
@@ -25,14 +29,17 @@ async function removeLike() {
 }
 
 async function addDislike() {
-    return await fetch("/api/v1/video/add-dislike", {
+    const data =  await fetch("/api/v1/video/add-dislike", {
         method: "PUT",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         },
         body: VIDEO_ID
     });
-
+    if (data.status === 405) {
+        redirectToLogin()
+    }
+    return data;
 }
 
 async function removeDislike() {
@@ -71,6 +78,10 @@ function removeDislikeDisplay(response) {
         document.getElementById('dislike-count').textContent = (dislikes - 1).toString();
         dislikes = parseInt(document.getElementById('dislike-count').textContent)
     }
+}
+
+function redirectToLogin(response) {
+    window.location.href = '/login';
 }
 
 function like() {
