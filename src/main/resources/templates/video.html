@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div id="is-liked" th:text="${user.getLikedVideos().contains(video)}"></div>
-    <div id="is-disliked" th:text="${user.getDislikedVideos().contains(video)}"></div>
+    <div id="is-liked" th:text="${user != null ? user.getLikedVideos().contains(video) : 'false'}"></div>
+    <div id="is-disliked" th:text="${user != null ? user.getDislikedVideos().contains(video) : 'false'}"></div>
     <script th:src="@{js/video.js}"></script>
 </body>
