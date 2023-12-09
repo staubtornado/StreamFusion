@@ -1,91 +1,58 @@
+::-moz-selection { /* Firefox */
+    -webkit-text-fill-color: black;
+}
+
+::selection {
+    -webkit-text-fill-color: black;
+}
+
 #video-body {
-    width: 75%;
-    display: flex;
-    max-height: 95%;
+    width: 90%;
+    margin: 5%;
 }
 
-#left-video-body {
-    width: 66%;
-    margin: 0 5% 0 0;
+#video-area {
+    width: 60%;
 }
 
-#left-video-body > div {
-    margin: 0 0 2% 2%;
-}
-
-#left-video-body > div > p{
-    font-size: 1.3rem;
-}
-
-#video {
+#video-body video {
     border-radius: 25px;
-    box-shadow: var(--box-shadow);
     width: 100%;
 }
 
-#uploader-div, #views, #date, #dislikes, #likes {
-    box-shadow: var(--box-shadow);
-    border: var(--background-dark) 1px solid;
-    border-radius: 25px;
-}
-
-#views, #date, #dislikes, #likes {
-    text-align: center;
-    padding: 1%;
-}
-
-#dislikes button, #likes button {
-    cursor: pointer;
-}
-
-#uploader-div {
-    width: 25%;
-}
-
-#uploader-div img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: var(--box-shadow);
-}
-
-#uploader-div a {
-    text-decoration: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 2%;
-}
-
-#uploader {
-    margin: 0 0 0 2%;
+#video-body p {
+    font-size: 1.2rem;
+    margin-left: 1%;
 }
 
 #description {
-    height: 100px;
-    overflow-y: auto;
+    margin: auto 0 1% 1%;
+    max-height: 100px;
+    display: inline-table;
 }
 
-#description span:first-of-type {
+#description > span {
     font-weight: bold;
+    margin-bottom: 1%;
+    display: inline-block;
 }
 
-#description::-webkit-scrollbar {
+#description > div {
+    height: 100px;
+    overflow: auto;
+    color: var(--default-gray);
+    -webkit-text-fill-color: white;
+    transition: color 0.3s ease;
+}
+#description > div::-webkit-scrollbar {
     width: 10px;
 }
 
-#invisible-container {
-    height: calc(100vh - 120px);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+#description > div::-webkit-scrollbar-thumb {
+    border: 10px solid;
+    border-radius: 25px;
 }
 
-#row-for-video-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 2% 0;
+#description > div:hover {
+    color: var(--theme-color);
 }

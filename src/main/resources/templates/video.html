@@ -45,54 +45,20 @@
 </header>
 
 <body>
-    <div id="invisible-container">
-        <div id="video-body" class="container-gray">
-            <div id="left-video-body">
-                <video id="video" controls>
-                    <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
-                </video>
-                <div>
-                    <p id="video-title" th:text="${video.getTitle()}"></p>
-                    <div id="row-for-video-info">
-                        <div id="uploader-div">
-                            <a th:href="'/user?id=' + ${uploader.getID()}">
-                                <img th:src="${uploader.getProfilePictureURL()}" alt="">
-                                <div id="uploader">
-                                    <span th:text="${uploader.getFirstName()} + ' ' + ${uploader.getLastName()}"></span>
-                                    <br>
-                                    <span th:text="'@' + ${uploader.getUsername()}"></span>
-                                </div>
-                            </a>
-                        </div>
-                        <div id="likes">
-                            <button id="like-button" onclick="like()">Like</button>
-                            <span id="like-count" th:text="${video.getLikes()}"></span>
-                            <span> likes</span>
-                        </div>
-                        <div id="dislikes">
-                            <button id="dislike-button" onclick="dislike()">Dislike</button>
-                            <span id="dislike-count" th:text="${video.getDislikes()}"></span>
-                            <span> dislikes</span>
-                        </div>
-                        <div id="views">
-                            <span th:text="${video.getViews()} + ' views'"></span>
-                        </div>
-                        <div id="date">
-                            <span th:text="${video.getUploadDate()}"></span>
-                        </div>
-                    </div>
-                    <div id="description">
-                        <span>Description</span>
-                        <br>
-                        <span th:text="${video.getDescription()}"></span>
-                    </div>
-                </div>
-            </div>
-            <div>
-                Comments
+    <div id="video-body" class="container-gray">
+        <div id="video-area">
+            <video controls>
+                <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
+            </video>
+            <p th:text="${video.getTitle()}"></p>
+            <div id="description">
+                <span>Description</span>
+                <br>
+                <div th:text="${video.getDescription()}"></div>
             </div>
         </div>
     </div>
+
     <div style="display: none" id="is-liked"
          th:text="${user != null ? user.getLikedVideos().contains(video) : 'false'}"></div>
     <div style="display: none" id="is-disliked"
