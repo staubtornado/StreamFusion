@@ -8,7 +8,7 @@
 
 #video-body {
     width: 90%;
-    margin: 5%;
+    margin: 1%;
     min-width: 650px;
     max-width: 1700px;
 }
@@ -74,6 +74,16 @@
 
 #likes {
     grid-column: 4 / 5;
+    gap: 5px;
+}
+
+#likes.selected, #dislikes.selected {
+    border-color: var(--theme-color);
+    color: var(--theme-color);
+}
+
+#dislikes, #views {
+    gap: 5px;
 }
 
 #views:hover, #date:hover {

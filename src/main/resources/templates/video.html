@@ -60,9 +60,13 @@
                         <span th:text="'@' + ${video.getUser().getUsername()}"></span>
                     </div>
                 </a></div>
-                <div id="likes"><span th:text="${video.getLikes()} + ' likes'"></span></div>
-                <div id="dislikes"><span th:text="${video.getDislikes()} + ' dislikes'"></span></div>
-                <div id="views"><span th:text="${video.getViews()} + ' views'"></span></div>
+                <div onclick="like()" id="likes">
+                    <span id="like-count" th:text="${video.getLikes()}"></span><span>likes</span>
+                </div>
+                <div onclick="dislike()" id="dislikes">
+                    <span id="dislike-count" th:text="${video.getDislikes()}"></span><span>dislikes</span>
+                </div>
+                <div id="views"><span th:text="${video.getViews()}"></span><span>views</span></div>
                 <div id="date"><span th:text="${video.getUploadDate()}"></span></div>
             </div>
             <div id="description">
