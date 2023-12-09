@@ -7,6 +7,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -101,7 +102,7 @@ public class CDNController {
         return getResponseEntity(path);
     }
 
-    private ResponseEntity<byte[]> getResponseEntity(String path) {
+    private @NonNull ResponseEntity<byte[]> getResponseEntity(String path) {
         byte[] image;
         try {
             image = new UrlResource(Paths.get(path).toUri()).getInputStream().readAllBytes();
