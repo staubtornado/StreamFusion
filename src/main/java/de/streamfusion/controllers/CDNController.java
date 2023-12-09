@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -83,9 +84,7 @@ public class CDNController {
                     pos += read;
                 }
                 outputStream.flush();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            } catch (IOException ignored) {}
         };
         return new ResponseEntity<>(responseStream, responseHeaders, HttpStatus.PARTIAL_CONTENT);
     }
