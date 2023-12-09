@@ -4,6 +4,13 @@ let dislikes = parseInt(document.getElementById('dislike-count').textContent);
 let isLiked = document.getElementById('is-liked').textContent;
 let isDisliked = document.getElementById('is-disliked').textContent;
 
+if (isLiked === "true") {
+    document.getElementById("likes").classList.add('selected');
+}
+else if (isDisliked === "true") {
+    document.getElementById("dislikes").classList.add('selected');
+}
+
 async function addLike() {
     const data = await fetch("/api/v1/video/add-like", {
         method: "PUT",
@@ -56,6 +63,7 @@ function addLikeDisplay(response) {
     if (response.ok) {
         document.getElementById('like-count').textContent = (likes + 1).toString();
         likes = parseInt(document.getElementById('like-count').textContent);
+        document.getElementById("likes").classList.add('selected');
     }
 }
 
@@ -63,6 +71,7 @@ function addDislikeDisplay(response) {
     if (response.ok) {
         document.getElementById('dislike-count').textContent = (dislikes + 1).toString();
         dislikes = parseInt(document.getElementById('dislike-count').textContent);
+        document.getElementById("dislikes").classList.add('selected');
     }
 }
 
@@ -70,6 +79,7 @@ function removeLikeDisplay(response) {
     if (response.ok) {
         document.getElementById('like-count').textContent = (likes - 1).toString();
         likes = parseInt(document.getElementById('like-count').textContent);
+        document.getElementById("likes").classList.remove('selected');
     }
 }
 
@@ -77,6 +87,7 @@ function removeDislikeDisplay(response) {
     if (response.ok) {
         document.getElementById('dislike-count').textContent = (dislikes - 1).toString();
         dislikes = parseInt(document.getElementById('dislike-count').textContent)
+        document.getElementById("dislikes").classList.remove('selected');
     }
 }
 
