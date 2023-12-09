@@ -51,6 +51,20 @@
                 <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
             </video>
             <p th:text="${video.getTitle()}"></p>
+            <div id="video-stats">
+                <div id="uploader"><a>
+                    <img th:src="${video.getUser().getProfilePictureURL()}" alt="">
+                    <div>
+                        <span th:text="${video.getUser().getFirstName() + ' ' + video.getUser().getLastName()}"></span>
+                        <br>
+                        <span th:text="'@' + ${video.getUser().getUsername()}"></span>
+                    </div>
+                </a></div>
+                <div id="likes"><span th:text="${video.getLikes()} + ' likes'"></span></div>
+                <div id="dislikes"><span th:text="${video.getDislikes()} + ' dislikes'"></span></div>
+                <div id="views"><span th:text="${video.getViews()} + ' views'"></span></div>
+                <div id="date"><span th:text="${video.getUploadDate()}"></span></div>
+            </div>
             <div id="description">
                 <span>Description</span>
                 <br>
