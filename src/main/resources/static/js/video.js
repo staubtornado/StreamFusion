@@ -109,7 +109,7 @@ function like() {
     else {
         addLike().then((response) => {
             addLikeDisplay(response);
-            document.getElementById('is-liked').textContent = "ture";
+            document.getElementById('is-liked').textContent = "true";
             isLiked = "true";
         });
     }
