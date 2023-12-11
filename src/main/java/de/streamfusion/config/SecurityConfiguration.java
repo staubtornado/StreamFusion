@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
-                            "/",
+                            "/**",
                             "/video",
                             "/user",
                             "/register",
@@ -40,7 +40,8 @@ public class SecurityConfiguration {
                             "/cdn/**",
                             "/js/**",
                             "/css/**",
-                            "/img/**"
+                            "/img/**",
+                            "/search/**"
                     ).permitAll();
                     auth.anyRequest().authenticated();
                 })
