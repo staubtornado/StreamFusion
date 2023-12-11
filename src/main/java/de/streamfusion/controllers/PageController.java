@@ -29,7 +29,7 @@ public class PageController {
             user = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
-        } catch (NoSuchElementException ignored) {}
+        } catch (IllegalArgumentException ignored) {}
 
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("user", user);
