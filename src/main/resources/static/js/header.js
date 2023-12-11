@@ -14,3 +14,22 @@ try {
     });
     document.getElementById('header-div').appendChild(button);
 }
+
+const form = document.getElementById('search-form');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    fetch('/search?query=' + document.getElementById('search-input').value, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'String'
+        }
+    }).then((response) => {
+        if (!response.ok) {
+            console.error(response.text());
+            return;
+        }
+        window.location.href = response.url;
+    })
+})
