@@ -1,8 +1,10 @@
+let changedProfilePicture = false;
+
 document.getElementById('image-upload').addEventListener('change', function() {
     let reader = new FileReader();
     reader.onload = function(e) {
         document.getElementById('image-preview').src = e.target.result;
-
+        changedProfilePicture = true;
     };
     reader.readAsDataURL(this.files[0]);
 });
@@ -16,7 +18,16 @@ form.addEventListener('submit', function(e) {
         alert('Passwords do not match');
         return;
     }
-    let picture = document.getElementById('image-preview').src.split(',')[1];
+
+    let img = document.getElementById('image-preview');
+    if (!changedProfilePicture) {
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+
+        img.src = '/cdn/profile-picture/generate?first-name=' + firstName + '&last-name=' + lastName;
+    }
+
+    let picture = img.src.split(',')[1];
 
     const fetchProfilePicture = () => {
         return new Promise((resolve, reject) => {
