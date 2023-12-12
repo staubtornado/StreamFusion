@@ -3,15 +3,21 @@
     --background-light: #ffffff;
 
     --container-dark: #1E1E1E;
+    --container-light: #F2F2F2;
+
+    --font-dark: #ffffff;
+    --font-light: #121212;
+
     --default-gray: #868686;
 
     --theme-color: #BDFF00;
+    --theme-color-text-light: #307f00;
     --error-color: #ff005d;
     --box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 ::-moz-selection { /* Firefox */
-    color: black;
+    color: var(--background-dark);
     background: var(--theme-color);
 }
 
@@ -28,35 +34,34 @@ body {
 @media (prefers-color-scheme: dark) {
     body {
         background-color: var(--background-dark);
-        color: white;
+        color: var(--font-dark);
     }
 
     input {
-        color: white;
+        color: var(--font-dark);
     }
 
     .input {
-        border-bottom: 3px solid white;
-    }
-    .input input {
-        color: white;
+        border-bottom: 3px solid var(--font-dark);
     }
 
     .container-gray {
         background-color: var(--container-dark);
-        border-radius: 25px;
-        box-shadow: var(--box-shadow);
     }
 }
 
 @media (prefers-color-scheme: light) {
     body {
-        background-color: #ffffff;
-        color: #121212;
+        background-color: var(--background-light);
+        color: var(--font-light);
     }
 
     .input {
         border-bottom: 3px solid black;
+    }
+
+    .container-gray {
+        background-color: var(--container-light);
     }
 }
 
@@ -64,4 +69,9 @@ button {
     box-shadow: var(--box-shadow);
     border-radius: 25px;
     border: none;
+}
+
+.container-gray {
+    border-radius: 25px;
+    box-shadow: var(--box-shadow);
 }

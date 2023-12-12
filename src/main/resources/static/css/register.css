@@ -4,7 +4,16 @@
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    #already-registered a {
+        color: var(--theme-color);
+    }
+}
+
 @media (prefers-color-scheme: light) {
+    #already-registered a {
+        color: var(--theme-color-text-light);
+    }
 }
 
 .container-headline {
@@ -49,6 +58,7 @@ input[type=file] {
     border-radius: 50%;
     object-fit: cover;
     transition: 0.3s;
+    box-shadow: var(--box-shadow);
 }
 
 #image-preview:hover {
@@ -67,6 +77,5 @@ input[type=file] {
 }
 
 #already-registered a {
-    color: var(--theme-color);
     text-decoration: none;
 }

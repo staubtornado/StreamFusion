@@ -14,7 +14,7 @@ h1 {
     font-size: 1.5rem;
     margin: auto auto 5% auto;
     cursor: pointer;
-
+    color: var(--background-dark);
     border: transparent;
     border-radius: 25px;
     box-shadow: var(--box-shadow);
@@ -34,7 +34,7 @@ h1 {
     width: 100%;
     background: transparent;
     border: none;
-    margin: auto auto 2% auto;
+    margin: auto auto 4px auto;
 }
 
 label {
