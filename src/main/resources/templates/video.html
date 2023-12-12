@@ -57,7 +57,7 @@
                     <div>
                         <span th:text="${video.getUser().getFirstName() + ' ' + video.getUser().getLastName()}"></span>
                         <br>
-                        <span th:text="'@' + ${video.getUser().getUsername()}"></span>
+                        <span class="username-font-size" th:text="'@' + ${video.getUser().getUsername()}"></span>
                     </div>
                 </a></div>
                 <div onclick="like()" id="likes">
@@ -83,7 +83,7 @@
                         <span th:text="${comment.getUser().getFirstName()} + ' ' + ${comment.getUser().getLastName()}">
                         </span>
                         <br>
-                        <span th:text="'@' + ${comment.getUser().getUsername()}"></span>
+                        <span class="username-font-size" th:text="'@' + ${comment.getUser().getUsername()}"></span>
                         <br>
                         <span th:text="${comment.getContent()}"></span>
                     </div>

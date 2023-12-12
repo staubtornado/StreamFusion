@@ -46,6 +46,7 @@
     justify-content: center;
     align-items: center;
     height: 50%;
+    min-height: max-content;
 }
 
 #video-stats > *:hover {
@@ -174,7 +175,7 @@
 
 #comment-form {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
 #comment-form > div {
@@ -189,5 +190,9 @@
     color: var(--background-dark);
     cursor: pointer;
     padding: 0;
-    height: 100%;
+    margin-bottom: 3px;
+}
+
+.username-font-size {
+    font-size: 0.75rem;
 }
