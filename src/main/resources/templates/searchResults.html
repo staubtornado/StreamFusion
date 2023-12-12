@@ -54,13 +54,13 @@
 </header>
 
 <body>
-    <div id="search-results" th:if="${!videos.isEmpty()}">
-        <a th:each="video : ${videos}"
+    <div id="search-results" th:if="${!resultingVideos.isEmpty()}">
+        <a th:each="video : ${resultingVideos}"
            th:href="'/video?id='+ ${video.getID()}"
            th:text="${video.getTitle() + video.getUser()}"
         ></a>
     </div>
-    <div id="no-search-results" th:if="${videos.isEmpty()}">
+    <div id="no-search-results" th:if="${resultingVideos.isEmpty()}">
         <p th:text="'Nothing found like ' + ${search}"></p>
     </div>
 </body>

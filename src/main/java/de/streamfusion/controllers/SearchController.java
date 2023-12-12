@@ -47,7 +47,7 @@ public class SearchController {
 
         modelAndView.addObject("search", searchQuery);
         modelAndView.addObject("user", user);
-        modelAndView.addObject("videos", videos);
+        modelAndView.addObject("resultingVideos", videos);
         return modelAndView;
     }
 }
