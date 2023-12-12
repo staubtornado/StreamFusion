@@ -93,19 +93,32 @@ public class CDNController {
     @GetMapping("v/thumbnail")
     public ResponseEntity<byte[]> cdnThumbnail(@RequestParam(name = "id") long id) {
         String path = "./data/videos/%d/thumbnail.jpg".formatted(id);
-        return getResponseEntity(path);
+        return getResponseEntity(path, false);
     }
 
     @GetMapping(value = "/u/picture", produces = {"image/png", "image/jpg", "image/jpeg"})
     public ResponseEntity<byte[]> cdnUserPicture(@RequestParam(name = "id") long id) {
         String path = "./data/user/%d/profile-picture.png".formatted(id);
-        return getResponseEntity(path);
+        return getResponseEntity(path, false);
     }
 
-    private @NonNull ResponseEntity<byte[]> getResponseEntity(String path) {
+    @GetMapping(value = "/profile-picture/generate", produces = {"image/jpg", "image/jpeg"})
+    public ResponseEntity<byte[]> cdnGenerateProfilePicture(
+            @NonNull @RequestParam(name = "first-name") String firstName,
+            @NonNull @RequestParam(name = "last-name") String lastName
+    ) {
+        String path = "https://ui-avatars.com/api/?name=%s+%s&size=100&background=random".formatted(firstName, lastName);
+        return getResponseEntity(path, true);
+    }
+
+    private @NonNull ResponseEntity<byte[]> getResponseEntity(String path, boolean isOnline) {
         byte[] image;
         try {
-            image = new UrlResource(Paths.get(path).toUri()).getInputStream().readAllBytes();
+            if (isOnline) {
+                image = new UrlResource(path).getInputStream().readAllBytes();
+            } else {
+                image = new UrlResource(Paths.get(path).toUri()).getInputStream().readAllBytes();
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
