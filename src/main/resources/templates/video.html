@@ -89,13 +89,11 @@
                     </div>
                 </div>
             </div>
-            <div th:if="${user != null}">
+            <div th:if="${user != null}" id="add-comment">
                 <label for="comment-input"></label>
                 <form id="comment-form">
-                    <div class="input">
-                        <input maxlength="255" type="text" id="comment-input" placeholder="Comment..." required>
-                    </div>
-                    <input type="submit" class="submit" value="Send">
+                    <input maxlength="255" type="text" id="comment-input" placeholder="Comment..." required>
+                    <button type="submit" class="submit" value="Send">Send</button>
                 </form>
             </div>
             <div th:if="${user == null}">
