@@ -37,8 +37,10 @@ body {
         color: var(--font-dark);
     }
 
-    input {
+    input, textarea {
         color: var(--font-dark);
+        font-family: inherit;
+        font-size: inherit;
     }
 
     .input {

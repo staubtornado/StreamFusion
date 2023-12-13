@@ -8,10 +8,12 @@
 
 #video-body {
     width: 90%;
-    margin: 1%;
+    margin: 1% auto 0 1%;
     min-width: 650px;
-    max-width: 1700px;
+    max-width: 1500px;
     display: flex;
+    position: absolute;
+    max-height: calc(100vh - 120px - 6%);
 }
 
 #video-area {
@@ -67,7 +69,7 @@
     height: 100%;
     margin-left: 2px;
     text-decoration: none;
-    color: white;
+    color: var(--font-dark);;
 }
 
 #uploader img {
@@ -118,20 +120,24 @@
     height: 100px;
     overflow: auto;
     color: var(--default-gray);
-    -webkit-text-fill-color: white;
+    -webkit-text-fill-color: var(--font-dark);;
     transition: color 0.3s ease;
 }
 
-#description > div::-webkit-scrollbar, #comment-body::-webkit-scrollbar {
+#description > div::-webkit-scrollbar,
+#comment-body::-webkit-scrollbar,
+#add-comment > form > textarea::-webkit-scrollbar {
     width: 10px;
 }
 
-#description > div::-webkit-scrollbar-thumb, #comment-body::-webkit-scrollbar-thumb {
+#description > div::-webkit-scrollbar-thumb,
+#comment-body::-webkit-scrollbar-thumb,
+#add-comment > form > textarea::-webkit-scrollbar-thumb {
     border: 10px solid;
     border-radius: 25px;
 }
 
-#description > div:hover, #comment-body:hover {
+#description > div:hover, #comment-body:hover, #add-comment > form > textarea:hover {
     color: var(--theme-color);
 }
 
@@ -144,7 +150,7 @@
     max-height: 500px;
     overflow-y: auto;
     color: var(--default-gray);
-    -webkit-text-fill-color: white;
+    -webkit-text-fill-color: var(--font-dark);;
     transition: color 0.3s ease;
 }
 
@@ -179,22 +185,36 @@
     justify-content: space-between;
 }
 
-#add-comment > form > input {
+#comment-input-div {
+    width: 80%;
+
+}
+
+#add-comment > form > textarea {
     background: transparent;
     border: none;
+    resize: none;
     width: 80%;
+    color: var(--default-gray);
+    -webkit-text-fill-color: var(--font-dark);
+    caret-color: var(--default-gray);
+}
+
+#add-comment > form > textarea::placeholder {
+    -webkit-text-fill-color: var(--default-gray);
+}
+
+#add-comment > form > textarea:focus {
+    outline: none;
 }
 
 #add-comment > form > button {
-    width: 15%;
-    border-radius: 25px;
-    border: none;
-    background-color: var(--theme-color);
-    color: var(--background-dark);
-    cursor: pointer;
-    padding: 5px;
-}
-
-#add-comment > form > input:focus {
-    outline: none;
-}
+     width: 15%;
+     border-radius: 25px;
+     border: none;
+     background-color: var(--theme-color);
+     color: var(--background-dark);
+     cursor: pointer;
+     padding: 5px;
+    font-weight: bold;
+ }
