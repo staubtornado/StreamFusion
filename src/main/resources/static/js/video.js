@@ -174,6 +174,31 @@ commentForm.addEventListener('submit', (e) => {
             console.error((response.text()));
             return;
         }
+        createComment();
         document.getElementById('comment-input').value = "";
     })
 })
+
+function createComment() {
+    const frag = document.createDocumentFragment();
+    const temp = document.createElement('div');
+
+    temp.innerHTML =
+        '<div class="comment"> ' +
+            '<img alt="" src=' + document.getElementById('profile-picture').src +'>' +
+            '<div>' +
+                '<span>' + document.getElementById('user-auth-test').textContent + '</span>' +
+                '<br>' +
+                '<span class="username-font-size">' + document.getElementById('username-header').textContent +
+                '</span>' +
+                '<br>' +
+                '<span>' + document.getElementById('comment-input').value + '</span>' +
+            '</div>' +
+        '</div>'
+    ;
+    while (temp.firstChild) {
+        frag.appendChild(temp.firstChild);
+    }
+    document.getElementById('comment-body').appendChild(frag);
+}
+
