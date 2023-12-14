@@ -26,6 +26,16 @@ public class Comment {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Set<Comment> replies;
 
+
+    public Comment() {
+    }
+
+    public Comment(String content, User user, Video video) {
+        this.content = content;
+        this.user = user;
+        this.video = video;
+    }
+
     @PrePersist
     public void prePersist() {
         this.id = System.currentTimeMillis();
