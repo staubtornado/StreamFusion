@@ -5,6 +5,7 @@
     <title th:text="${search} + ' - StreamFusion'"></title>
     <link th:href="@{css/default.css}" rel="stylesheet"/>
     <link th:href="@{css/header.css}" rel="stylesheet"/>
+    <link th:href="@{css/searchResults.css}" rel="stylesheet"/>
     <link rel="icon" type="image/png" th:href="@{img/logo.png}">
 </head>
 
@@ -55,10 +56,14 @@
 
 <body>
     <div id="search-results" th:if="${!resultingVideos.isEmpty()}">
-        <a th:each="video : ${resultingVideos}"
-           th:href="'/video?id='+ ${video.getID()}"
-           th:text="${video.getTitle() + video.getUser()}"
-        ></a>
+        <a th:each="video : ${resultingVideos}" th:href="'/video?id='+ ${video.getID()}" class="result-container">
+            <img th:src="${video.getThumbnailURL()}" alt="" class="result-thumbnail">
+            <div>
+                <span th:text="${video.getTitle()}" class="result-title"></span>
+                <span th:text="${video.getViews()}" class="result-views"></span>
+                <span th:text="${video.getUser().getUsername()}" class="result-uploader"></span>
+            </div>
+        </a>
     </div>
     <div id="no-search-results" th:if="${resultingVideos.isEmpty()}">
         <p th:text="'Nothing found like ' + ${search}"></p>
