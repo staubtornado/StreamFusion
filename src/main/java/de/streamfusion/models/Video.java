@@ -74,8 +74,16 @@ public class Video {
         this.user = user;
     }
 
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void deleteComment(Comment comment) {
+        this.comments.remove(comment);
+    }
+
     public Set<Comment> getComments() {
-        return comments;
+        return this.comments;
     }
 
     public String getFiletype() {
