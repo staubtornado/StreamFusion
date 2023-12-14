@@ -1,4 +1,5 @@
 const VIDEO_ID = window.location.search.substring(4);
+const commentForm = document.getElementById('comment-form');
 let likes = parseInt(document.getElementById('like-count').textContent);
 let dislikes = parseInt(document.getElementById('dislike-count').textContent);
 let isLiked = document.getElementById('is-liked').textContent;
@@ -155,3 +156,24 @@ function dislike() {
         });
     }
 }
+
+commentForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    fetch('/api/v1/comment/post-comment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify({
+            videoID: VIDEO_ID,
+            commentContent: document.getElementById('comment-input').value
+        })
+    }).then((response) => {
+        if (!response.ok) {
+            console.error((response.text()));
+            return;
+        }
+        document.getElementById('comment-input').value = "";
+    })
+})
