@@ -6,6 +6,8 @@ import de.streamfusion.models.User;
 import de.streamfusion.models.Video;
 import de.streamfusion.repositories.UserRepository;
 import de.streamfusion.repositories.VideoRepository;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -48,6 +51,7 @@ public class VideoService {
             @NonNull MultipartFile multipartFile,
             String title,
             String description,
+            String thumbnail,
             String cookies
     ) throws IOException {
         if (title == null || title.isBlank()) {
@@ -63,10 +67,10 @@ public class VideoService {
                 AuthenticationService.extractTokenFromCookie(cookies)
         );
 
-        final String fileExtension = Objects.requireNonNull(multipartFile.getContentType()).split("/")[1];
-        final String[] validFileExtensions = new String[] {"mp4", "mp3", "wav", "ogg", "webm"};
+        final String videoFileExtension = Objects.requireNonNull(multipartFile.getContentType()).split("/")[1];
+        final String[] validVideoFileExtensions = new String[] {"mp4", "mp3", "wav", "ogg", "webm"};
 
-        if (!Arrays.asList(validFileExtensions).contains(fileExtension)) {
+        if (!Arrays.asList(validVideoFileExtensions).contains(videoFileExtension)) {
             throw new IllegalArgumentException("File is not a video.");
         }
 
@@ -74,18 +78,39 @@ public class VideoService {
         video.setTitle(title);
         video.setDescription(description);
         video.setUser(user);
-        video.setFiletype(fileExtension);
+        video.setFiletype(videoFileExtension);
         this.videoRepository.save(video);
 
-        final File onDisk = new File("%s/data/videos/%d/video.%s".formatted(
+        final File videoOnDisk = new File("%s/data/videos/%d/video.%s".formatted(
                 System.getProperty("user.dir"),
                 video.getID(),
-                fileExtension
+                videoFileExtension
         ));
-        if (!onDisk.getParentFile().mkdirs()) {
+        if (!videoOnDisk.getParentFile().mkdirs()) {
             throw new IOException("Could not create directories.");
         }
-        multipartFile.transferTo(onDisk);
+        multipartFile.transferTo(videoOnDisk);
+
+
+        final  String thumbnailFileExtension = thumbnail.split("\\.")[1];
+        final String[] validThumbnailFileExtensions = new String[] {"xbm", "tif", "jfif", "ico", "tiff", "gif", "svg",
+                "webp", "svgz", "jpg", "jpeg", "png", "bmp", "pjp", "apng", "pjpeg", "avif"};
+
+        if (!Arrays.asList(validThumbnailFileExtensions).contains(thumbnailFileExtension)) {
+            throw new MultipartStream.IllegalBoundaryException("Thumbnail is not a image");
+        }
+
+        final File thumbnailOnDisk = new File("%s/data/videos/%d/thumbnail.%s".formatted(
+                System.getProperty("user.dir"),
+                video.getID(),
+                thumbnailFileExtension
+        ));
+        // Write string to file
+        if (!thumbnailOnDisk.createNewFile()) {
+            throw new IOException("Could not create file.");
+        }
+        Files.write(thumbnailOnDisk.toPath(), Base64.decodeBase64(thumbnail));
+
         return video;
     }
 
