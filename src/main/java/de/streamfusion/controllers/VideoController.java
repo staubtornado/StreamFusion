@@ -56,8 +56,8 @@ public class VideoController {
     }
 
     @GetMapping("/new")
-    public String upload() {
-        return "upload";
+    public ModelAndView upload() {
+        return new ModelAndView("upload");
     }
 
     @GetMapping("/edit")
