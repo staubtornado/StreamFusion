@@ -4,26 +4,21 @@
     <meta charset="UTF-8">
     <title th:text="${video.getTitle()} + ' - StreamFusion'"></title>
     <link th:href="@{css/default.css}" rel="stylesheet"/>
-    <link th:href="@{css/header.css}" rel="stylesheet"/>
     <link th:href="@{css/video.css}" rel="stylesheet"/>
     <link rel="icon" type="image/png" th:href="@{img/logo.png}">
 </html>
 
-<header>
-    <div class="container-gray" id="header-div">
-        <div id="logo">
-            <a href="/">
-                <img src="/img/logo.png" alt="">
-                <div>
-                    <span>Stream</span>
-                    <span>Fusion</span>
-                </div>
-            </a>
-        </div>
-        <div id="account-section-header" th:if="${user != null}">
-            <div id="account-info-header">
+<body>
+    <div id="header" class="container-gray">
+        <a id="logo" href="/">
+            <img th:src="@{img/logo.png}" alt="">
+            <span>Stream<br>Fusion</span>
+        </a>
+        <div id="search"></div>
+        <div id="account-section" th:if="${user != null}">
+            <div id="account-info">
                 <div id="account-names">
-                    <span id="user-auth-test" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></span>
+                    <span th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></span>
                     <br>
                     <span id="username-header"  th:text="'@' + ${user.getUsername()}"></span>
                 </div>
@@ -40,53 +35,62 @@
                 </ul>
             </div>
         </div>
+        <a th:if="${user == null}" id="login-button" href="/login"><button>Login</button></a>
     </div>
-    <script th:src="@{js/header.js}"></script>
-</header>
-
-<body>
-    <div id="video-body" class="container-gray">
-        <div id="video-area">
-            <video controls>
-                <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
-            </video>
-            <p th:text="${video.getTitle()}"></p>
-            <div id="video-stats">
-                <div id="uploader"><a th:href="'user?id=' + ${video.getUser().getID()}">
-                    <img th:src="${video.getUser().getProfilePictureURL()}" alt="">
-                    <div>
-                        <span th:text="${video.getUser().getFirstName() + ' ' + video.getUser().getLastName()}"></span>
-                        <br>
-                        <span class="username-font-size" th:text="'@' + ${video.getUser().getUsername()}"></span>
-                    </div>
-                </a></div>
-                <div onclick="like()" id="likes">
-                    <span id="like-count" th:text="${video.getLikes()}"></span><span>likes</span>
-                </div>
-                <div onclick="dislike()" id="dislikes">
-                    <span id="dislike-count" th:text="${video.getDislikes()}"></span><span>dislikes</span>
-                </div>
-                <div id="views"><span th:text="${video.getViews()}"></span><span>views</span></div>
-                <div id="date"><span th:text="${video.getUploadDate()}"></span></div>
+    <div id="body" class="container-gray">
+        <div id="video-body">
+            <div id="player">
+                <video controls>
+                    <source th:src="${video.getStreamURL()}" th:type="'video/' + ${video.getFiletype()}">
+                </video>
             </div>
-            <div id="description">
-                <span>Description</span>
-                <br>
-                <div th:text="${video.getDescription()}"></div>
+            <div id="video-info">
+                <p th:text="${video.getTitle()}"></p>
+                <div id="first-section">
+                    <a id="uploader" th:href="'user?id=' + ${video.getUser().getID()}">
+                        <img id="uploader-picture" th:src="${video.getUser().getProfilePictureURL()}" alt="">
+                        <div id="uploader-names">
+                            <span th:text="${video.getUser().getFirstName()} + ' ' + ${video.getUser().getLastName()}">
+                            </span>
+                            <br>
+                            <span id="uploader-username"  th:text="'@' + ${video.getUser().getUsername()}"></span>
+                        </div>
+                    </a>
+                    <div id="likes" onclick="like()">
+                        <span id="like-count" th:text="${video.getLikes()}"></span>
+                        <span th:text="${video.getLikes() == 1 ? 'Like' : 'Likes'}"></span>
+                    </div>
+                    <div id="dislikes" onclick="dislike()">
+                        <span id="dislike-count" th:text="${video.getDislikes()}"></span>
+                        <span th:text="${video.getDislikes() == 1 ? 'Dislike' : 'Dislikes'}"></span>
+                    </div>
+                    <span th:text="${video.getViews()} + ' views'"></span>
+                    <span th:text="${video.getUploadDate()}"></span>
+                </div>
+                <div id="video-description">
+                    <span>Description</span>
+                    <br>
+                    <div th:text="${video.getDescription()}"></div>
+                </div>
             </div>
         </div>
-        <div id="comments">
-            <div id="comment-body">
+        <div id="comments-body">
+            <div id="comments">
                 <div th:each="comment : ${video.getComments()}" class="comment">
-                    <img th:src="${comment.getUser().getProfilePictureURL()}" alt="">
-                    <div>
-                        <span th:text="${comment.getUser().getFirstName()} + ' ' + ${comment.getUser().getLastName()}">
-                        </span>
+                    <a th:href="'/user?id=' + ${comment.getUser().getID()}" class="comment-user-picture">
+                        <img th:src="${comment.getUser().getProfilePictureURL()}" alt="">
+                    </a>
+                    <a th:href="'/user?id=' + ${comment.getUser().getID()}" class="comment-usernames">
+                        <span th:text="${comment.getUser().getFirstName()} + ' ' + ${comment.getUser().getLastName()}"></span>
                         <br>
-                        <span class="username-font-size" th:text="'@' + ${comment.getUser().getUsername()}"></span>
-                        <br>
-                        <span th:text="${comment.getContent()}"></span>
-                    </div>
+                        <span th:text="'@' + ${comment.getUser().getUsername()}"></span>
+                    </a>
+                    <svg class="dots" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 2 8" fill="none">
+                        <path d="M2 7C2 7.55228 1.55228 8 1 8C0.447715 8 0 7.55228 0 7C0 6.44772 0.447715 6 1 6C1.55228 6 2 6.44772 2 7Z" fill="white"/>
+                        <path d="M2 4C2 4.55228 1.55228 5 1 5C0.447715 5 0 4.55228 0 4C0 3.44772 0.447715 3 1 3C1.55228 3 2 3.44772 2 4Z" fill="white"/>
+                        <path d="M2 1C2 1.55228 1.55228 2 1 2C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0C1.55228 0 2 0.447715 2 1Z" fill="white"/>
+                    </svg>
+                    <span th:text="${comment.getContent()}"></span>
                 </div>
             </div>
             <div th:if="${user != null}" id="add-comment">
@@ -101,6 +105,8 @@
             </div>
         </div>
     </div>
+    <div id="footer" class="container-gray"></div>
+
 
     <div style="display: none" id="is-liked"
          th:text="${user != null ? user.getLikedVideos().contains(video) : 'false'}"></div>
