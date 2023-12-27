@@ -6,10 +6,13 @@
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/authentication.css}" rel="stylesheet"/>
     <link th:href="@{/css/login.css}" rel="stylesheet"/>
+    <link th:href="@{/css/messages.css}" rel="stylesheet"/>
     <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
 </head>
 <body>
     <h1>Login</h1>
+    <div th:if="${param.logout}" class="message blue">Successfully logged out.</div>
+    <div th:unless="${param.logout}" class="message"></div>
     <div class="container-gray">
         <form id="login-form">
             <label for="email"></label>

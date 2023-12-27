@@ -1,0 +1,21 @@
+.message {
+    width: max-content;
+    margin: auto auto 2%;
+    border: 1px solid transparent;
+    border-radius: 25px;
+    padding: 10px;
+    box-shadow: var(--box-shadow);
+    display: none;
+}
+
+.message.blue {
+    border-color: #0085FF;
+    background-color: #0085FF1A;
+    display: block;
+}
+
+.message.red {
+    border-color: #FF0000;
+    background-color: #FF00001A;
+    display: block;
+}

@@ -1,5 +1,12 @@
 const form = document.getElementById('login-form');
 
+form.addEventListener('change', () => {
+    let element = document.getElementsByClassName('message')[0];
+    if (element.classList.contains('red')) {
+        element.classList.remove('red');
+    }
+});
+
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -22,7 +29,15 @@ form.addEventListener('submit', function(e) {
         }
     }).then(function() {
         window.location.href = '/'
-    }).catch(function(error) {
-        alert(error);
+    }).catch(function() {
+        let element = document.getElementsByClassName('message')[0];
+        if (element.classList.contains('blue')) {
+            element.classList.remove('blue');
+        }
+        if (element.classList.contains('red')) {
+            element.classList.remove('red');
+        }
+        element.classList.add('red');
+        element.textContent = 'Invalid email or password.'
     });
 });
