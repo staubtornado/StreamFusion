@@ -56,7 +56,19 @@ public class VideoController {
     }
 
     @GetMapping("/new")
-    public ModelAndView upload() {
+    public ModelAndView upload(@RequestHeader(name = "Cookie", required = false) String cookies) {
+        ModelAndView modelAndView = new ModelAndView("upload");
+
+        final User user;
+        try {
+            user = this.authenticationService.getUserFromToken(
+                    AuthenticationService.extractTokenFromCookie(cookies)
+            );
+        } catch (IllegalArgumentException e) {
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
+        }
+        modelAndView.addObject("user", user);
         return new ModelAndView("upload");
     }
 

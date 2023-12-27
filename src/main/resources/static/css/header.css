@@ -1,100 +1,166 @@
-body {
-    margin: 0;
-}
-
-#header-div {
-    width: 100%;
+header {
+    display: flex;
     height: 120px;
-    display: flex;
     align-items: center;
-    justify-content: end;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    justify-content: space-between;
 }
 
-#account-section-header {
-    margin: auto 15px auto auto;
+#logo {
+    display: flex;
+    align-items: center;
+    height: 80%;
+    margin-left: 2%;
+    text-decoration: none;
+}
+
+#logo img {
+    height: 100%;
+    width: auto;
+    margin-right: 0.5%;
+}
+
+#logo span {
+    text-align: center;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: normal;
+    color: var(--font-dark);
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+#search-form {
+    display: flex;
+    width: 30%;
+}
+
+#search-form label {
+    width: 95%;
+}
+
+#search-form input {
+    background: transparent;
+    border: 1px solid var(--background-dark);
+    border-radius: 25px 0 0 25px;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+}
+
+#search-form input:focus {
+    outline: none;
+    border-color: var(--theme-color);
+}
+
+#search-input::-webkit-search-cancel-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--theme-color);
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23777'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>");
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23777'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>");
+    background-size: 20px 20px;
+    height: 20px;
+    width: 20px;
+    transition: all 0.25s;
+}
+
+#search-form button {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0 25px 25px 0;
+    border: 1px solid var(--background-dark);
+    border-left: none;
     cursor: pointer;
-    border: var(--background-dark) 1px solid;
-    border-radius: 25px;
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    width: 225px;
-    padding: 0 25px 0 25px;
-    min-width: max-content;
-    gap: 25px;
-    height: 90px;
-    transition: all 0.5s;;
+    transition: all 0.3s ease-in-out;
 }
 
-#account-section-header svg path {
+#search-form:hover input,
+#search-form:hover button,
+#search-form:hover button,
+#search-form:focus-within button {
+    border-color: var(--theme-color);
+}
+
+#search-form path {
     stroke: var(--background-dark);
-    transition: stroke 0.5s;
+    fill: var(--background-dark);
+    transition: all 0.3s ease-in-out;
 }
 
-#account-section-header:hover {
-    border: var(--theme-color) 1px solid;
-    border-bottom-left-radius: 0;
+#search-form:hover path,
+#search-form:focus-within path {
+    stroke: var(--theme-color);
+    fill: var(--theme-color);
+}
+
+#account-section {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--background-dark);
+    border-radius: 25px;
+    height: 70%;
+    gap: 10%;
+    padding: 0 1%;
+    min-width: max-content;
+    margin: auto 1% auto 0;
+    text-align: right;
+    transition: all 0.5s ease-in-out;
+    white-space: nowrap;
+    position: relative;
+}
+
+#account-section:hover {
+    border-color: var(--theme-color);
     border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
-#account-section-header:hover svg path {
+#account-info {
+    display: flex;
+    gap: 5%;
+    height: 100%;
+    align-items: center;
+}
+
+#account-info img {
+    object-fit: cover;
+    border-radius: 50%;
+    height: 70%;
+    aspect-ratio: 1 / 1;
+}
+
+#account-section svg {
+    width: 50px;
+}
+
+#account-section svg > path {
+    stroke: var(--background-dark);
+    transition: stroke 0.5s ease-in-out;
+}
+
+#account-section:hover svg path {
     stroke: var(--theme-color)
 }
 
-#account-section-header:hover #account-popup {
-    display: block;
-    border: var(--theme-color) 1px solid;
-    border-top: none;
-    opacity: 1;
-    visibility: visible;
-}
-
-#account-section-header img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: var(--box-shadow);
-}
-
-#account-names {
-    text-align: end;
-}
-
-#account-names #username-header {
-    font-size: 0.75rem;
-}
-
-#account-info-header {
-    display: flex;
-    align-items: center;
-}
-
-#account-names {
-    margin: 0 10px 0 0;
-}
-
 #account-popup {
-    position: absolute;
-    top: 106px;
-    right: 15px;
-    width: 300px;
-    height: auto;
     opacity: 0;
     visibility: hidden;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    border: transparent 1px solid;
-    border-top: none;
-    transition: opacity 0.5s, visibility 0.5s;
-    cursor: auto;
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    width: 100%;
+    border: 1px solid var(--theme-color);
+    top: 100%;
+    left: calc(0% - 1px);
 }
 
 #account-popup ul {
     margin: 5%;
     padding: 0;
+    text-align: left;
 }
 
 #account-popup li {
@@ -105,118 +171,34 @@ body {
 
 #account-popup a {
     text-decoration: none;
-    color: white;
+    color: var(--font-dark);;
 }
 
 #logout {
     color: var(--error-color) !important;
 }
 
-#logo {
-    width: 220px;
-    height: 100px;
-    margin: auto auto auto 30px;
+#account-section:hover #account-popup {
+    opacity: 1;
+    visibility: visible;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
 }
 
-#logo a {
-    text-decoration: none;
-    display: flex;
-    color: white;
-}
-
-#logo img {
-    width: 100px;
-    height: 100px;
-}
-
-#logo div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#logo div span {
-    text-align: center;
-    font-size: 2rem;
-    font-style: italic;
-    font-weight: 400;
-    line-height: normal;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+#username-header {
+    font-size : 0.75rem;
 }
 
 #login-button {
-    border: none;
-    border-radius: 25px;
-    background-color: var(--theme-color);
-    color: black;
-    height: 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: var(--box-shadow);
     width: 10%;
-    margin: auto 5% auto auto;
+    height: 50%;
+    margin: 0 1%;
 }
 
-#searchbar-container {
-    --searchPadding: 12px;
-
-    width: 30%;
-    display: flex;
-    align-items: center;
-    padding: var(--searchPadding);
-    border-radius: 24px;
-    background: #292929;
-    border: var(--background-dark) 1px solid;
-    transition: all 0.45s;
-}
-
-#searchbar-container:hover {
-    border: var(--theme-color) 1px solid;
-}
-
-#searchbar-container:focus-within {
-    border: var(--theme-color) 1px solid;
-}
-
-#searchbar-container form {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-#search-input {
-    font-size: 1rem;
-    color: white;
-    margin-left: var(--searchPadding);
-    outline: none;
-    border: none;
-    background: transparent;
-    width: 100%;
-}
-
-#search-input::placeholder, #search-icon {
-    color: rgba(255, 255, 255, 0.25);
-}
-
-#search-input::-webkit-search-cancel-button{
-    -webkit-appearance: none;
+#login-button button {
     background-color: var(--theme-color);
-    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23777'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>");
-    background-size: 20px 20px;
-    height: 20px;
-    width: 20px;
-    transition: all 0.45s;
-}
-
-#search-button {
-    all: unset;
-    display: flex;
-}
-
-#search-button path {
-    fill: white;
-}
-
-#search-button:hover {
     cursor: pointer;
+    font-size: 1.2rem;
+    width: 100%;
+    height: 100%;
 }
