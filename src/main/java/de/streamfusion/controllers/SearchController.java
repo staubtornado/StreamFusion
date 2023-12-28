@@ -28,10 +28,10 @@ public class SearchController {
 
     @GetMapping(value = "/search")
     public ModelAndView search(
-            @RequestParam(value = "query") String searchQuery,
+            @RequestParam(value = "q") String searchQuery,
             @RequestHeader(name = "Cookie", required = false) String cookies
     ) {
-        ModelAndView modelAndView = new ModelAndView("searchResults");
+        ModelAndView modelAndView = new ModelAndView("search");
         ArrayList<Video> videos = new ArrayList<>();
         User user = null;
 
@@ -43,11 +43,11 @@ public class SearchController {
 
         try {
             videos = this.searchService.searchVideo(searchQuery);
-        } catch (NoSuchElementException ignored){}
+        } catch (NoSuchElementException ignored) {}
 
         modelAndView.addObject("search", searchQuery);
         modelAndView.addObject("user", user);
-        modelAndView.addObject("resultingVideos", videos);
+        modelAndView.addObject("results", videos);
         return modelAndView;
     }
 }

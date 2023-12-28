@@ -155,6 +155,7 @@ header {
     border: 1px solid var(--theme-color);
     top: 100%;
     left: calc(0% - 1px);
+    z-index: 1;
 }
 
 #account-popup ul {
