@@ -45,11 +45,12 @@
         </div>
     </div>
     <a th:if="${user == null}" id="login-button" href="/login"><button>Login</button></a>
+    <script th:src="@{/js/header.js}"></script>
 </header>
 
 <body>
-    <div id="search-results" th:if="${!resultingVideos.isEmpty()}">
-        <a th:each="video : ${resultingVideos}" th:href="'/video?id='+ ${video.getID()}" class="result-container">
+    <div id="search-results" th:if="${!results.isEmpty()}">
+        <a th:each="video : ${results}" th:href="'/video?id='+ ${video.getID()}" class="result-container">
             <img th:src="${video.getThumbnailURL()}" alt="" class="result-thumbnail">
             <div>
                 <span th:text="${video.getTitle()}" class="result-title"></span>
@@ -58,7 +59,7 @@
             </div>
         </a>
     </div>
-    <div id="no-search-results" th:if="${resultingVideos.isEmpty()}">
+    <div id="no-search-results" th:if="${results.isEmpty()}">
         <p th:text="'Nothing found like ' + ${search}"></p>
     </div>
 </body>

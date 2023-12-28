@@ -54,6 +54,12 @@ document.getElementById('content').addEventListener('submit', async (event) => {
     }).then((response) => {
         if (response.ok) {
             window.location.href = '/user?id=' + userID;
+        } else {
+            return response.text().then(function (text) {
+                throw new Error(text);
+            });
         }
+    }).catch((error) => {
+        alert(error.message)
     });
 });
