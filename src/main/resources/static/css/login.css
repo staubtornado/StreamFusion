@@ -28,3 +28,17 @@
 .container-gray {
     width: 20%;
 }
+
+.button.theme[type="submit"] {
+    width: 75%;
+    padding: 5px;
+    margin: 0 12.5% 5%;
+    font-size: 1.05rem;
+}
+
+#password-forgotten {
+    width: 67.5%;
+    padding: 7px 5px;
+    margin: auto 16.25% 7%;
+}
+

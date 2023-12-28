@@ -1,0 +1,24 @@
+.button {
+    box-shadow: var(--box-shadow);
+    border-radius: 25px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.button.transparent {
+    background: transparent;
+    border-color: var(--font-light);
+    color: var(--font-light);
+}
+
+.button.theme {
+    color: var(--font-light);
+    background: var(--theme-color);
+}
+
+@media (prefers-color-scheme: dark) {
+    .button.transparent {
+        border-color: var(--font-dark);
+        color: var(--font-dark);
+    }
+}
