@@ -17,7 +17,7 @@ body {
 }
 
 #video-body {
-    width: 66%;
+    width: 60%;
     display: inline-block;
     vertical-align: top;
     height: 100%;
@@ -131,9 +131,43 @@ body {
 
 #comments-body {
     margin: 2.5%;
-    width: 28%;
+    width: 34.63%;
     display: inline-block;
     height: 70vh;
+}
+
+#comments-control {
+    display: flex;
+    border: 1px solid var(--background-dark);
+    border-radius: 25px;
+    padding: 1%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 0 5% 0;
+    width: 98%;
+    height: 5%;
+}
+
+#comments-control > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+    white-space: nowrap;
+    width: 45%;
+}
+
+#comments-control > div:first-child {
+    cursor: pointer;
+}
+
+#comments-control > div:first-child:hover path {
+    stroke: var(--theme-color);
+}
+
+#comments-control path {
+    stroke: var(--background-dark);
+    transition: stroke 0.3s ease-in-out;
 }
 
 #comments {
