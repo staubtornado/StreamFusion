@@ -81,7 +81,12 @@ form.addEventListener('submit', function(e) {
         }).then(function () {
             window.location.href = '/'
         }).catch(function (error) {
-            alert(error);
+            let element = document.getElementsByClassName('message')[0];
+            if (element.classList.contains('red')) {
+                element.classList.remove('red');
+            }
+            element.classList.add('red');
+            element.textContent = error.message;
         });
     }).catch(error => {
         console.error('Failed to fetch profile picture:', error);
