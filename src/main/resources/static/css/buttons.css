@@ -26,8 +26,10 @@
 .switch {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 18px;
+    width: 32px;
+    height: 12px;
+    box-shadow: var(--box-shadow);
+    border-radius: 25px;
 }
 
 .switch input {
@@ -43,28 +45,29 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--font-light);
+    background-color: var(--default-gray);
     transition: 0.3s;
-    border-radius: 25px;
+    border-radius: inherit;
 }
 
 .switch .slider:before {
     position: absolute;
     content: "";
-    height: 20px;
-    width: 20px;
+    height: 16px;
+    width: 16px;
     left: -1px;
-    bottom: -1px;
+    bottom: -3px;
     background-color: var(--default-gray);
     transition: 0.3s;
     border-radius: 50%;
+    border: 1px solid var(--font-light);
 }
 
 .switch input:checked + .slider {
-    background-color: var(--font-light);
+    background-color: var(--default-gray);
 }
 
 .switch input:checked + .slider:before {
-    transform: translateX(22px);
+    transform: translateX(16px);
     background: var(--theme-color);
 }
