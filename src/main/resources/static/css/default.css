@@ -8,21 +8,22 @@
     --font-dark: #ffffff;
     --font-light: #121212;
 
-    --default-gray: #868686;
+    --default-gray: #D9D9D9;
 
     --theme-color: #BDFF00;
     --theme-color-text-light: #307f00;
     --error-color: #ff005d;
+    --error-color-transparent: #ff005d1A;
     --box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 ::-moz-selection { /* Firefox */
-    color: var(--background-dark);
+    color: var(--font-light);
     background: var(--theme-color);
 }
 
 ::selection {
-    color: black;
+    color: var(--font-light);
     background: var(--theme-color);
 }
 
