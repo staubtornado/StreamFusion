@@ -2,6 +2,16 @@
     input[type=date]::-webkit-calendar-picker-indicator {
         filter: invert(1);
     }
+
+    #user-id-input span {
+        background: var(--container-dark);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    #user-id-input span {
+        background: var(--container-light);
+    }
 }
 
 .flex-space-evenly {
@@ -84,24 +94,23 @@
 }
 
 #user-id-input {
-    border-color: var(--default-gray);
+    border-color: var(--medium-gray);
     width: 100%;
     position: relative;
 }
 
 #user-id-input input {
-    color: var(--default-gray);
+    color: var(--medium-gray);
     width: 100%;
 }
 
 #user-id-input span {
     position: absolute;
     font-size: 0.8rem;
-    background-color: var(--container-dark);
     bottom: -9px;
     left: 10px;
     padding: 0 10px;
-    color: var(--default-gray);
+    color: var(--medium-gray);
 }
 
 #email-input {

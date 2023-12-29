@@ -9,8 +9,8 @@
 }
 
 .message.blue {
-    border-color: #0085FF;
-    background-color: #0085FF1A;
+    border-color: var(--blue-color);
+    background-color: var(--blue-color-transparent);
     display: block;
 }
 

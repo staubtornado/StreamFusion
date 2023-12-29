@@ -131,6 +131,7 @@ header {
     border-radius: 50%;
     height: 70%;
     aspect-ratio: 1 / 1;
+    box-shadow: var(--box-shadow);
 }
 
 #account-section svg {

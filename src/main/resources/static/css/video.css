@@ -78,7 +78,6 @@ body {
 }
 
 #likes.selected, #dislikes.selected {
-    border-color: var(--theme-color);
     background-color: var(--theme-color);
     color: var(--font-light);
 }
@@ -100,6 +99,10 @@ body {
     border-radius: 50%;
     height: 50px;
     aspect-ratio: 1 / 1;
+}
+
+#uploader-username {
+    font-size: 0.75rem;
 }
 
 #video-description {
@@ -158,6 +161,25 @@ body {
 
 #comments-control > div:first-child {
     cursor: pointer;
+    position: relative;
+}
+
+#comments-control > div:first-child li {
+    list-style: none;
+}
+
+#comments-control > div:first-child > div {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    background-color: var(--container-dark);
+    display: none;
+    cursor: default;
+}
+
+#comments-control.selected > div:first-child > div {
+    display: block;
 }
 
 #comments-control > div:first-child:hover path {
