@@ -49,7 +49,14 @@ public class PageController {
     }
 
     @GetMapping("/error")
-    public String error() {
-        return "error";
+    public ModelAndView error(@RequestHeader(name = "Cookie", required = false) String cookies) {
+        ModelAndView modelAndView = new ModelAndView("error");
+        try {
+            final User user = this.authenticationService.getUserFromToken(
+                    AuthenticationService.extractTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("user", user);
+        } catch (IllegalArgumentException ignored) {}
+        return modelAndView;
     }
 }

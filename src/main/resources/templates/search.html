@@ -9,45 +9,7 @@
     <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
 </head>
 
-<header class="container-gray">
-    <a id="logo" href="/">
-        <img th:src="@{img/logo.png}" alt="">
-        <span>Stream<br>Fusion</span>
-    </a>
-    <form id="search-form">
-        <label>
-            <input id="search-input" type="search" name="search" placeholder="Search">
-        </label>
-        <button id="search-button" type="submit">
-            <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35px" height="16px" viewBox="0 0 50 50">
-                <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"></path>
-            </svg>
-        </button>
-    </form>
-    <div id="account-section" th:if="${user != null}">
-        <div id="account-info">
-            <div id="account-names">
-                <span th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></span>
-                <br>
-                <span id="username-header"  th:text="'@' + ${user.getUsername()}"></span>
-            </div>
-            <img id="profile-picture" th:src="${user.getProfilePictureURL()}" alt="">
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
-            <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1"/>
-        </svg>
-        <div id="account-popup" class="container-gray">
-            <ul>
-                <li><a th:href="'/user?id=' + ${user.getID()}">Profile</a></li>
-                <li><a href="/account">Account Settings</a></li>
-                <li><a id="logout" href="/login?logout">Logout</a></li>
-            </ul>
-        </div>
-    </div>
-    <a th:if="${user == null}" id="login-button" href="/login"><button>Login</button></a>
-    <script th:src="@{/js/header.js}"></script>
-</header>
-
+<header th:replace="~{header.html :: header}"></header>
 <body>
     <div id="search-results" th:if="${!results.isEmpty()}">
         <a th:each="video : ${results}" th:href="'/video?id='+ ${video.getID()}" class="result-container">
