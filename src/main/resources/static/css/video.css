@@ -63,7 +63,6 @@ body {
     padding: 0.5% 2% 0.5% 0.5%;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
-    color: var(--font-dark);
     white-space: nowrap;
     gap: 2%;
     text-align: left;
@@ -81,7 +80,7 @@ body {
 #likes.selected, #dislikes.selected {
     border-color: var(--theme-color);
     background-color: var(--theme-color);
-    color: var(--background-dark);
+    color: var(--font-light);
 }
 
 #uploader:hover {

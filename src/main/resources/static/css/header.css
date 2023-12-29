@@ -170,13 +170,8 @@ header {
     border-bottom: var(--background-dark) 1px solid;
 }
 
-#account-popup a {
-    text-decoration: none;
-    color: var(--font-dark);;
-}
-
 #logout {
-    color: var(--error-color) !important;
+    color: var(--error-color);
 }
 
 #account-section:hover #account-popup {
