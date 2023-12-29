@@ -29,6 +29,8 @@
         <div id="account-popup" class="container-gray">
             <ul>
                 <li><a th:href="'/user?id=' + ${user.getID()}">Profile</a></li>
+                <li><a href="/video/new">Upload</a></li>
+                <li><a href="/friends">Friends</a></li>
                 <li><a href="/account">Account Settings</a></li>
                 <li><a id="logout" href="/login?logout">Logout</a></li>
             </ul>
