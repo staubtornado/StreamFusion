@@ -15,7 +15,7 @@
 }
 
 .message.red {
-    border-color: #FF0000;
-    background-color: #FF00001A;
+    border-color: var(--error-color);
+    background-color: var(--error-color-transparent);
     display: block;
 }
