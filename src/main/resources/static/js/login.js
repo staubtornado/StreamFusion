@@ -39,5 +39,21 @@ form.addEventListener('submit', function(e) {
         }
         element.classList.add('red');
         element.textContent = 'Invalid email or password.'
+        const horizontalShakeAnimation = [
+            { transform: "translateX(50px)" },
+            { transform: "translateX(-50px)" },
+            { transform: "translateX(25px)" },
+            { transform: "translateX(-25px)" },
+            { transform: "translateX(12px)" },
+            { transform: "translateX(-12px)" },
+            { transform: "translateX(6px)" },
+            { transform: "translateX(-6px)" },
+            { transform: "translateX(3px)" },
+            { transform: "translateX(-3px)" },
+            { transform: "translateX(1px)" },
+            { transform: "translateX(-1px)" },
+            { transform: "translateX(0px)" }
+        ];
+        element.animate(horizontalShakeAnimation, 500);
     });
 });

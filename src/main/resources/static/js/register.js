@@ -9,14 +9,39 @@ document.getElementById('image-upload').addEventListener('change', function() {
     reader.readAsDataURL(this.files[0]);
 });
 
+function setErrorMessage(message) {
+    let element = document.getElementsByClassName('message')[0];
+    if (element.classList.contains('red')) {
+        element.classList.remove('red');
+    }
+    element.classList.add('red');
+    element.textContent = message;
+
+    const horizontalShakeAnimation = [
+        { transform: "translateX(50px)" },
+        { transform: "translateX(-50px)" },
+        { transform: "translateX(25px)" },
+        { transform: "translateX(-25px)" },
+        { transform: "translateX(12px)" },
+        { transform: "translateX(-12px)" },
+        { transform: "translateX(6px)" },
+        { transform: "translateX(-6px)" },
+        { transform: "translateX(3px)" },
+        { transform: "translateX(-3px)" },
+        { transform: "translateX(1px)" },
+        { transform: "translateX(-1px)" },
+        { transform: "translateX(0px)" }
+    ];
+    element.animate(horizontalShakeAnimation, 500);
+}
+
 const form = document.getElementById('register-form');
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     if (document.getElementById('password').value !== document.getElementById('confirmPassword').value) {
-        alert('Passwords do not match');
-        return;
+        return setErrorMessage('Passwords do not match.');
     }
 
     let img = document.getElementById('image-preview');
@@ -81,12 +106,7 @@ form.addEventListener('submit', function(e) {
         }).then(function () {
             window.location.href = '/'
         }).catch(function (error) {
-            let element = document.getElementsByClassName('message')[0];
-            if (element.classList.contains('red')) {
-                element.classList.remove('red');
-            }
-            element.classList.add('red');
-            element.textContent = error.message;
+            setErrorMessage(error.message);
         });
     }).catch(error => {
         console.error('Failed to fetch profile picture:', error);
