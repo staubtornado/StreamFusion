@@ -244,7 +244,7 @@ public class AuthenticationService {
         * @return True if the email is not valid, false otherwise.
      */
     private static boolean emailIsNotValid(@NonNull String email) {
-        return !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        return !email.matches("^[\\w\\-.]+@([\\w-]+\\.)+[\\w-]{2,6}$");
     }
 
     /**
