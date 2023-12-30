@@ -1,5 +1,4 @@
 .button {
-    box-shadow: var(--box-shadow);
     border-radius: 25px;
     border: 1px solid transparent;
     cursor: pointer;
@@ -14,12 +13,54 @@
 .button.theme {
     color: var(--font-light);
     background: var(--theme-color);
+    box-shadow: var(--box-shadow);
+}
+
+.button.magic {
+    background: linear-gradient(135deg, #8E6BCD, #6BC7CD);
+    color: inherit;
+    border: none;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.button.magic:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    filter: blur(25px);
+    opacity: 0.9;
+    background: linear-gradient(135deg, #8E6BCD, #6BC7CD);
+    transition: inherit;
+}
+
+.button.magic:hover:before {
+    transform: scale(1.1);
+}
+
+.button.magic button {
+    height: calc(100% - 4px);
+    width: calc(100% - 4px);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: var(--container-light);
+    color: inherit;
+    border-radius: 25px;
+    border: none;
+    cursor: inherit;
 }
 
 @media (prefers-color-scheme: dark) {
     .button.transparent {
         border-color: var(--font-dark);
         color: var(--font-dark);
+    }
+    .button.magic button {
+        background: var(--container-dark);
     }
 }
 

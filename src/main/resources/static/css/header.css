@@ -97,6 +97,32 @@ header {
     fill: var(--theme-color);
 }
 
+#upload-button-header {
+    width: 7%;
+    height: 30%;
+}
+
+#upload-button-header span {
+    margin: 0 5px 0 0;
+}
+
+#upload-button-header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#upload-button-header path {
+    fill: var(--font-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    #upload-button-header path {
+        fill: var(--font-dark);
+    }
+
+}
+
 #account-section {
     display: flex;
     align-items: center;

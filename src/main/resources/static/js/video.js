@@ -202,3 +202,12 @@ function createComment() {
     document.getElementById('comment-body').appendChild(frag);
 }
 
+document.getElementById('comments-control').addEventListener('click', (event) => {
+    event.stopPropagation();
+    document.getElementById('comments-control').classList.add('selected');
+});
+window.onclick = function() {
+    document.getElementById('comments-control').classList.remove('selected');
+}
+
+
