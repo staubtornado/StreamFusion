@@ -178,4 +178,8 @@ public class User implements UserDetails {
     public void removeDislikedVideo(Video video) {
         this.dislikedVideos.remove(video);
     }
+
+    public String getBannerURL() {
+        return "/cdn/u/banner?id=%d".formatted(this.id);
+    }
 }
