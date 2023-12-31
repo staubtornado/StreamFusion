@@ -102,6 +102,12 @@ public class CDNController {
         return getResponseEntity(path, false);
     }
 
+    @GetMapping(value = "/u/banner", produces = {"image/png", "image/jpg", "image/jpeg"})
+    public ResponseEntity<byte[]> cdnUserBanner(@RequestParam(name = "id") long id) {
+        String path = "./data/user/%d/banner.png".formatted(id);
+        return getResponseEntity(path, false);
+    }
+
     @GetMapping(value = "/profile-picture/generate", produces = {"image/jpg", "image/jpeg"})
     public ResponseEntity<byte[]> cdnGenerateProfilePicture(
             @NonNull @RequestParam(name = "first-name") String firstName,
