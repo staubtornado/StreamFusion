@@ -2,6 +2,7 @@ package de.streamfusion.controllers;
 
 import de.streamfusion.models.User;
 import de.streamfusion.services.AuthenticationService;
+import de.streamfusion.services.VideoService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,23 +14,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class PageController {
     private final AuthenticationService authenticationService;
+    private final VideoService videoController;
 
     @Autowired
-    public PageController(AuthenticationService authenticationService) {
+    public PageController(AuthenticationService authenticationService, VideoService videoController) {
         this.authenticationService = authenticationService;
+        this.videoController = videoController;
     }
 
     @GetMapping("/")
     public ModelAndView home(@RequestHeader(name = "Cookie", required = false) String cookies) {
-        User user = null;
+        ModelAndView modelAndView = new ModelAndView("home");
         try {
-            user = this.authenticationService.getUserFromToken(
+            final User user = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
+            modelAndView.addObject("user", user);
         } catch (IllegalArgumentException ignored) {}
-
-        ModelAndView modelAndView = new ModelAndView("home");
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("videos", this.videoController.getVideos());
         return modelAndView;
     }
 
