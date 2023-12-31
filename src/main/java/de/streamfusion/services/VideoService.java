@@ -47,6 +47,10 @@ public class VideoService {
         return this.videoRepository.findById(id).orElseThrow();
     }
 
+    public Iterable<Video> getVideos() {
+        return this.videoRepository.findAll();
+    }
+
     public Video newVideo(
             @NonNull MultipartFile multipartFile,
             String title,

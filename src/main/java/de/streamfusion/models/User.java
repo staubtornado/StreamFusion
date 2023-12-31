@@ -172,9 +172,31 @@ public class User implements UserDetails {
         this.dislikedVideos.add(video);
     }
 
+    public int getTotalViews() {
+        return this.videos.stream().mapToInt(Video::getViews).sum();
+    }
+
+    public int getTotalComments() {
+        return 911;
+    }
+
+    public float getLikeRatio() {
+        final int likes = this.videos.stream().mapToInt(Video::getLikes).sum();
+        final int dislikes = this.videos.stream().mapToInt(Video::getDislikes).sum();
+
+        if (likes == 0) {
+            return 0;
+        }
+        if (dislikes == 0) {
+            return 1;
+        }
+        return (float) likes / (likes + dislikes);
+    }
+
     public Set<Video> getDislikedVideos(){
         return this.dislikedVideos;
     }
+
     public void removeDislikedVideo(Video video) {
         this.dislikedVideos.remove(video);
     }
