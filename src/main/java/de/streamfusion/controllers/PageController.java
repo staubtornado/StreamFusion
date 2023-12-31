@@ -26,20 +26,18 @@ public class PageController {
     public ModelAndView home(@RequestHeader(name = "Cookie", required = false) String cookies) {
         ModelAndView modelAndView = new ModelAndView("home");
         try {
-            final User user = this.authenticationService.getUserFromToken(
+            final User account = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException ignored) {}
         modelAndView.addObject("videos", this.videoController.getVideos());
         return modelAndView;
     }
 
     @GetMapping("/register")
-    public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView("register");
-        modelAndView.addObject("user", null);
-        return modelAndView;
+    public String register() {
+        return "register";
     }
 
     @GetMapping("/login")
@@ -54,10 +52,10 @@ public class PageController {
     public ModelAndView error(@RequestHeader(name = "Cookie", required = false) String cookies) {
         ModelAndView modelAndView = new ModelAndView("error");
         try {
-            final User user = this.authenticationService.getUserFromToken(
+            final User account = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException ignored) {}
         return modelAndView;
     }

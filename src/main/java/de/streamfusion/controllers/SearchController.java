@@ -33,12 +33,12 @@ public class SearchController {
     ) {
         ModelAndView modelAndView = new ModelAndView("search");
         ArrayList<Video> videos = new ArrayList<>();
-        User user = null;
 
         try {
-            user = this.authenticationService.getUserFromToken(
+            final User account = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException ignored) {}
 
         try {
@@ -46,7 +46,6 @@ public class SearchController {
         } catch (NoSuchElementException ignored) {}
 
         modelAndView.addObject("search", searchQuery);
-        modelAndView.addObject("user", user);
         modelAndView.addObject("results", videos);
         return modelAndView;
     }

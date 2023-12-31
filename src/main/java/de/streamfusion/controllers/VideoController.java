@@ -41,16 +41,15 @@ public class VideoController {
             modelAndView.setViewName("redirect:/error");
             return modelAndView;
         }
-        User user = null;
         try {
-            user = this.authenticationService.getUserFromToken(
+            final User account = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException ignored) {}
 
         modelAndView.addObject("video", video);
         modelAndView.addObject("uploader", uploader);
-        modelAndView.addObject("user", user);
         this.videoService.addView(id);
         return modelAndView;
     }
@@ -59,17 +58,15 @@ public class VideoController {
     public ModelAndView upload(@RequestHeader(name = "Cookie", required = false) String cookies) {
         ModelAndView modelAndView = new ModelAndView("upload");
 
-        final User user;
         try {
-            user = this.authenticationService.getUserFromToken(
+            final User account = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
+            modelAndView.addObject("account", account);
         } catch (IllegalArgumentException e) {
             modelAndView.setViewName("redirect:/error");
-            return modelAndView;
         }
-        modelAndView.addObject("user", user);
-        return new ModelAndView("upload");
+        return modelAndView;
     }
 
     @GetMapping("/edit")

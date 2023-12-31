@@ -24,8 +24,15 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public ModelAndView user(@RequestParam long id) {
+    public ModelAndView user(@RequestParam long id, @RequestHeader(value = "Cookie", required = false) String cookies) {
         ModelAndView modelAndView = new ModelAndView("user");
+        try {
+            final User account = this.authenticationService.getUserFromToken(
+                    AuthenticationService.extractTokenFromCookie(cookies)
+            );
+            modelAndView.addObject("account", account);
+        } catch (IllegalArgumentException ignored) {}
+
         try {
             User user = this.userService.getUserByID(id);
             modelAndView.addObject("user", user);
@@ -39,10 +46,10 @@ public class UserController {
     public ModelAndView account(@RequestHeader("Cookie") String cookies) {
         ModelAndView modelAndView = new ModelAndView("account");
         try {
-            final User user = this.authenticationService.getUserFromToken(
+            final User account = this.authenticationService.getUserFromToken(
                     AuthenticationService.extractTokenFromCookie(cookies)
             );
-            modelAndView.addObject("user", user);
+            modelAndView.addObject("account", account);
         } catch (NoSuchElementException e) {
             modelAndView.setViewName("redirect:/error");
         }

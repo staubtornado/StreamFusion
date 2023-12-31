@@ -19,7 +19,7 @@
                 <form id="content">
                     <div id="image">
                         <label for="image-upload">
-                            <img id="image-preview" alt="profile-picture" th:src="${user.getProfilePictureURL()}">
+                            <img id="image-preview" alt="profile-picture" th:src="${account.getProfilePictureURL()}">
                         </label>
                         <input type="file" id="image-upload" accept="image/*">
                     </div>
@@ -28,24 +28,25 @@
                             <div class="input-row">
                                 <div class="input">
                                     <label for="firstName"></label>
-                                    <input type="text" id="firstName" th:value="${user.getFirstName()}"
+                                    <input type="text" id="firstName" th:value="${account.getFirstName()}"
                                             placeholder="First Name" required>
                                 </div>
                                 <div class="input">
                                     <label for="lastName"></label>
-                                    <input type="text" id="lastName" th:value="${user.getLastName()}"
+                                    <input type="text" id="lastName" th:value="${account.getLastName()}"
                                             placeholder="Last Name" required>
                                 </div>
                             </div>
                             <div class="input-row">
                                 <div class="input">
                                     <label for="username"></label>
-                                    <input type="text" id="username" th:value="${user.getUsername()}"
+                                    <input type="text" id="username" th:value="${account.getUsername()}"
                                             placeholder="Username" required pattern="^[a-z\d]{1,20}$">
                                 </div>
                                 <div class="input">
                                     <label for="dateOfBirth"></label>
-                                    <input type="date" id="dateOfBirth" th:value="${user.getDateOfBirthString()}" required>
+                                    <input type="date" id="dateOfBirth"
+                                           th:value="${account.getDateOfBirthString()}" required>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +55,13 @@
                                 <div class="input" id="user-id-input">
                                     <span>UserID</span>
                                     <label for="userID"></label>
-                                    <input type="text" id="userID" th:value="${user.getID()}" readonly>
+                                    <input type="text" id="userID" th:value="${account.getID()}" readonly>
                                 </div>
                             </div>
                             <div class="input-row">
                                 <div class="input" id="email-input">
                                     <label for="email"></label>
-                                    <input type="email" id="email" th:value="${user.getEmail()}"
+                                    <input type="email" id="email" th:value="${account.getEmail()}"
                                            placeholder="Email" required>
                                 </div>
                             </div>

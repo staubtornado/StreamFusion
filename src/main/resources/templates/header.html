@@ -23,28 +23,28 @@
             <span>Upload</span>
         </button>
     </a>
-    <!--/*@thymesVar id="user" type="de.streamfusion.models.User"*/-->
-    <div id="account-section" th:if="${user != null}">
+    <!--/*@thymesVar id="account" type="de.streamfusion.models.User"*/-->
+    <div id="account-section" th:if="${account != null}">
         <div id="account-info">
             <div id="account-names">
-                <span th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></span>
+                <span th:text="${account.getFirstName()} + ' ' + ${account.getLastName()}"></span>
                 <br>
-                <span id="username-header"  th:text="'@' + ${user.getUsername()}"></span>
+                <span id="username-header"  th:text="'@' + ${account.getUsername()}"></span>
             </div>
-            <img id="profile-picture" th:src="${user.getProfilePictureURL()}" alt="">
+            <img id="profile-picture" th:src="${account.getProfilePictureURL()}" alt="">
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="10" viewBox="0 0 26 10" fill="none">
             <path d="M0.999999 1L10 7.75C11.7778 9.08333 14.2222 9.08333 16 7.75L25 1"/>
         </svg>
         <div id="account-popup" class="container-gray">
             <ul>
-                <li><a th:href="'/user?id=' + ${user.getID()}">Profile</a></li>
+                <li><a th:href="'/user?id=' + ${account.getID()}">Profile</a></li>
                 <li><a href="/friends">Friends</a></li>
                 <li><a href="/account">Account</a></li>
                 <li><a id="logout" href="/login?logout">Logout</a></li>
             </ul>
         </div>
     </div>
-    <a th:if="${user == null}" id="login-button" href="/login"><button>Login</button></a>
+    <a th:if="${account == null}" id="login-button" href="/login"><button>Login</button></a>
     <script th:src="@{/js/header.js}"></script>
 </header>
