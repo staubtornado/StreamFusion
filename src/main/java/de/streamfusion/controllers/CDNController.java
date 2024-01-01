@@ -90,9 +90,9 @@ public class CDNController {
         return new ResponseEntity<>(responseStream, responseHeaders, HttpStatus.PARTIAL_CONTENT);
     }
 
-    @GetMapping("v/thumbnail")
+    @GetMapping("/v/thumbnail")
     public ResponseEntity<byte[]> cdnThumbnail(@RequestParam(name = "id") long id) {
-        String path = "./data/videos/%d/thumbnail.jpg".formatted(id);
+        String path = "./data/videos/%d/thumbnail.png".formatted(id);
         return getResponseEntity(path, false);
     }
 
