@@ -113,4 +113,14 @@ public class Video {
     public String getUploadDate() {
         return DateFormat.getDateInstance(DateFormat.MEDIUM).format(new Date(this.id));
     }
+
+    public float getLikeRatio() {
+        if (this.likes == 0) {
+            return 0;
+        }
+        if (this.dislikes == 0) {
+            return 1;
+        }
+        return (float) this.likes / (this.likes + this.dislikes);
+    }
 }
