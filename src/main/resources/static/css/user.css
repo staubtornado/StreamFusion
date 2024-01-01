@@ -10,6 +10,7 @@
     object-fit: cover;
     border-radius: 25px;
     box-shadow: var(--box-shadow);
+    margin: 0 0 4em 0;
 }
 
 #card {

@@ -31,6 +31,18 @@
                 <span th:text="${(user.getLikeRatio() * 100) + '% Likes'}"></span>
             </div>
         </div>
+        <div id="videos">
+            <div th:each="video : ${user.getVideos()}" class="video">
+                <a th:href="${'/video?id=' + video.getID()}">
+                    <img th:src="${video.getThumbnailURL()}" alt="">
+                    <div>
+                        <span th:text="${video.getTitle()}"></span>
+                        <span th:text="${video.getViews() + ' Views'}"></span>
+                        <span th:text="${video.getLikeRatio() * 100 + '% Likes'}"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
