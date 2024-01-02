@@ -1,8 +1,8 @@
 package de.streamfusion.controllers.api;
 
+import de.streamfusion.controllers.requestAndResponse.EditVideoRequest;
 import de.streamfusion.exceptions.VideoAlreadyRatedException;
 import de.streamfusion.exceptions.VideoNotRatedException;
-import de.streamfusion.controllers.requestAndResponse.EditVideoRequest;
 import de.streamfusion.models.Video;
 import de.streamfusion.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
