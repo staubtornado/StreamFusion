@@ -19,6 +19,7 @@ public class Video {
     @Column(length = 4096)
     private String description;
     private String filetype;
+    private String thumbnailFileType;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -100,6 +101,14 @@ public class Video {
 
     public void setFiletype(String filetype) {
         this.filetype = filetype;
+    }
+
+    public String getThumbnailFileType() {
+        return this.thumbnailFileType;
+    }
+
+    public void setThumbnailFileType(String thumbnailFileType) {
+        this.thumbnailFileType = thumbnailFileType;
     }
 
     public String getStreamURL() {
