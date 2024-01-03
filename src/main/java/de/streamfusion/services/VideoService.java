@@ -7,6 +7,7 @@ import de.streamfusion.models.Video;
 import de.streamfusion.repositories.UserRepository;
 import de.streamfusion.repositories.VideoRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,7 @@ public class VideoService {
             String title,
             String description,
             String thumbnail,
+            String imgType,
             String cookies
     ) throws IOException {
         if (title == null || title.isBlank()) {
@@ -94,19 +96,17 @@ public class VideoService {
         }
         multipartFile.transferTo(videoOnDisk);
 
-//        final String thumbnailFileExtension = TODO: Extract Mime
-//        final String[] validThumbnailFileExtensions = new String[] {"xbm", "tif", "jfif", "ico", "tiff", "gif", "svg",
-//                "webp", "svgz", "jpg", "jpeg", "png", "bmp", "pjp", "apng", "pjpeg", "avif"};
-//
-//        if (!Arrays.asList(validThumbnailFileExtensions).contains(thumbnailFileExtension)) {
-//            throw new MultipartStream.IllegalBoundaryException("Thumbnail is not a image");
-//        }
+        final String[] validThumbnailFileExtensions = new String[] {"xbm", "tif", "jfif", "ico", "tiff", "gif", "svg",
+                "webp", "svgz", "jpg", "jpeg", "png", "bmp", "pjp", "apng", "pjpeg", "avif"};
+
+        if (!Arrays.asList(validThumbnailFileExtensions).contains(imgType)) {
+            throw new MultipartStream.IllegalBoundaryException("Thumbnail is not an image");
+        }
 
         final File thumbnailOnDisk = new File("%s/data/videos/%d/thumbnail.%s".formatted(
                 System.getProperty("user.dir"),
                 video.getID(),
-                //thumbnailFileExtension
-                "png"
+                imgType
         ));
         // Write string to file
         if (!thumbnailOnDisk.createNewFile()) {

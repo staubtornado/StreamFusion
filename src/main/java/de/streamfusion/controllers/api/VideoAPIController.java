@@ -31,11 +31,12 @@ public class VideoAPIController {
             @RequestParam(value = "title") String title,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "thumbnail") String thumbnail,
+            @RequestParam(value = "imgType") String imgType,
             @RequestHeader("Cookie") String cookies
     ) {
         final Video video;
         try {
-            video = this.videoService.newVideo(file, title, description, thumbnail, cookies);
+            video = this.videoService.newVideo(file, title, description, thumbnail, imgType, cookies);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (IllegalArgumentException e) {

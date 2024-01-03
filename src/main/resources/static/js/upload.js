@@ -14,6 +14,9 @@ document.getElementById('upload-form').addEventListener('submit', (e) => {
         const base64String = dataURL.split(',')[1];
         formData.append('thumbnail', base64String);
 
+        const fileNameSplits = thumbnail.name.split('.');
+        formData.append('imgType', fileNameSplits[fileNameSplits.length - 1]);
+
         fetch('/api/v1/video/upload', {
             method: 'POST',
             body: formData
