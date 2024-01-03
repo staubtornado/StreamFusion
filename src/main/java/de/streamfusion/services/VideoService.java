@@ -56,7 +56,7 @@ public class VideoService {
             String title,
             String description,
             String thumbnail,
-            String imgType,
+            String thumbnailFileType,
             String cookies
     ) throws IOException {
         if (title == null || title.isBlank()) {
@@ -84,6 +84,7 @@ public class VideoService {
         video.setDescription(description);
         video.setUser(user);
         video.setFiletype(videoFileExtension);
+        video.setThumbnailFileType(thumbnailFileType);
         this.videoRepository.save(video);
 
         final File videoOnDisk = new File("%s/data/videos/%d/video.%s".formatted(
@@ -99,14 +100,14 @@ public class VideoService {
         final String[] validThumbnailFileExtensions = new String[] {"xbm", "tif", "jfif", "ico", "tiff", "gif", "svg",
                 "webp", "svgz", "jpg", "jpeg", "png", "bmp", "pjp", "apng", "pjpeg", "avif"};
 
-        if (!Arrays.asList(validThumbnailFileExtensions).contains(imgType)) {
+        if (!Arrays.asList(validThumbnailFileExtensions).contains(thumbnailFileType)) {
             throw new MultipartStream.IllegalBoundaryException("Thumbnail is not an image");
         }
 
         final File thumbnailOnDisk = new File("%s/data/videos/%d/thumbnail.%s".formatted(
                 System.getProperty("user.dir"),
                 video.getID(),
-                imgType
+                thumbnailFileType
         ));
         // Write string to file
         if (!thumbnailOnDisk.createNewFile()) {
