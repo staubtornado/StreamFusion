@@ -92,7 +92,7 @@ public class CDNController {
 
     @GetMapping("/v/thumbnail")
     public ResponseEntity<byte[]> cdnThumbnail(@RequestParam(name = "id") long id) {
-        String path = "./data/videos/%d/thumbnail.%s)".formatted(id, videoService.getVideoByID(id).getThumbnailFileType());
+        String path = "./data/videos/%d/thumbnail.%s".formatted(id, videoService.getVideoByID(id).getThumbnailFileType());
         return getResponseEntity(path, false);
     }
 
