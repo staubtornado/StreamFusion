@@ -15,9 +15,11 @@
     <div id="search-results" th:if="${!results.isEmpty()}">
         <a th:each="video : ${results}" th:href="'/video?id='+ ${video.getID()}" class="result-container">
             <img th:src="${video.getThumbnailURL()}" alt="" class="result-thumbnail">
-            <div>
+            <div class="text-container">
                 <span th:text="${video.getTitle()}" class="result-title"></span>
                 <span th:text="${video.getViews()}" class="result-views"></span>
+                <span th:text="${video.getUploadDate()}" class="result-upload-date"></span>
+                <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="result-uploader-profile-pic">
                 <span th:text="${video.getUser().getUsername()}" class="result-uploader"></span>
             </div>
         </a>

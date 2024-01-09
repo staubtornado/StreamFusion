@@ -4,3 +4,55 @@
     justify-content: center;
     align-items: center;
 }
+
+.result-container {
+    display: flex;
+    border: var(--container-dark) 1px solid;
+    border-radius: 25px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.result-container:hover {
+    background-color: var(--container-dark);
+}
+
+.result-thumbnail {
+    /*TODO:something smart here*/
+    height: 180px;
+    width: 330px;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+    justify-content: center;
+}
+
+.result-title {
+    font-size: 2rem;
+}
+
+.result-views {
+    font-size: 0.5rem;
+}
+
+.result-upload-date:before {
+    content: "•";
+    margin: 0 4px;
+}
+
+.result-upload-date {
+    font-size: 0.5rem;
+}
+
+.result-uploader-profile-pic {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+.result-uploader {
+
+}
