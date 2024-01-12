@@ -11,7 +11,7 @@
     border-radius: 25px;
     margin: 20px 10px 10px 10px;
     padding: 10px;
-    max-width: 1005px;
+    max-width: 1020px;
 }
 
 .result-container:hover {
@@ -28,7 +28,7 @@
 .text-container {
     display: flex;
     flex-direction: column;
-    padding-left: 5px;
+    margin-left: 15px;
     justify-content: flex-start;
 }
 
@@ -40,7 +40,7 @@
     font-size: 0.75rem;
 }
 
-.result-upload-date:before {
+.result-views:before {
     content: "•";
     margin: 0 4px;
 }

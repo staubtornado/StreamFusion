@@ -18,16 +18,16 @@
             <div class="text-container">
                 <span th:text="${video.getTitle()}" class="result-title"></span>
                 <div class="wrap-container" id="views-and-date">
-                    <span th:text="${video.getViews()} + ' Views'" class="result-views"></span>
                     <span th:text="${video.getUploadDate()}" class="result-upload-date"></span>
+                    <span th:text="${video.getViews()} + ' Views'" class="result-views"></span>
                 </div>
                 <div class="wrap-container">
                     <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="result-uploader-profile-pic">
                     <span th:text="${video.getUser().getUsername()}" class="result-uploader"></span>
                 </div>
                 <div class="result-description"
-                     th:text="${video.getDescription().length() < 600} ? ${video.getDescription()} :
-                              ${video.getDescription().substring(0, 596)} + ' ...'">
+                     th:text="${video.getDescription().length() < 250} ? ${video.getDescription()} :
+                              ${video.getDescription().substring(0, 244)} + ' ...'">
                 </div>
             </div>
         </a>
