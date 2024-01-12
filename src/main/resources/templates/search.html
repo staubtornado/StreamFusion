@@ -25,6 +25,10 @@
                     <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="result-uploader-profile-pic">
                     <span th:text="${video.getUser().getUsername()}" class="result-uploader"></span>
                 </div>
+                <div class="result-description"
+                     th:text="${video.getDescription().length() < 600} ? ${video.getDescription()} :
+                              ${video.getDescription().substring(0, 596)} + ' ...'">
+                </div>
             </div>
         </a>
     </div>
