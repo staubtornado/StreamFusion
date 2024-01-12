@@ -17,10 +17,14 @@
             <img th:src="${video.getThumbnailURL()}" alt="" class="result-thumbnail">
             <div class="text-container">
                 <span th:text="${video.getTitle()}" class="result-title"></span>
-                <span th:text="${video.getViews()}" class="result-views"></span>
-                <span th:text="${video.getUploadDate()}" class="result-upload-date"></span>
-                <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="result-uploader-profile-pic">
-                <span th:text="${video.getUser().getUsername()}" class="result-uploader"></span>
+                <div class="wrap-container" id="views-and-date">
+                    <span th:text="${video.getViews()} + ' Views'" class="result-views"></span>
+                    <span th:text="${video.getUploadDate()}" class="result-upload-date"></span>
+                </div>
+                <div class="wrap-container">
+                    <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="result-uploader-profile-pic">
+                    <span th:text="${video.getUser().getUsername()}" class="result-uploader"></span>
+                </div>
             </div>
         </a>
     </div>
