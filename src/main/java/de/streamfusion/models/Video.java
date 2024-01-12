@@ -12,6 +12,7 @@ public class Video {
     @Id
     @Column(name = "video_id")
     private Long id;
+    @Column(length = 64)
     private String title;
     private int likes;
     private int dislikes;
