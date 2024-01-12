@@ -36,11 +36,11 @@
     font-size: 1.5rem;
 }
 
-.result-views, .result-upload-date {
+.result-views, .result-upload-date, .result-ratio {
     font-size: 0.75rem;
 }
 
-.result-views:before {
+.result-views:before, .result-ratio:before {
     content: "•";
     margin: 0 4px;
 }
