@@ -20,6 +20,9 @@
                 <div class="wrap-container" id="views-and-date">
                     <span th:text="${video.getUploadDate()}" class="result-upload-date"></span>
                     <span th:text="${video.getViews()} + ' Views'" class="result-views"></span>
+                    <span th:text="${#numbers.formatDecimal((video.getLikeRatio() * 100), 0, 0)}
+                                     + '%'" class="result-ratio">
+                    </span>
                 </div>
                 <div class="wrap-container">
                     <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="result-uploader-profile-pic">
