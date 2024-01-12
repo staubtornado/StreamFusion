@@ -9,7 +9,7 @@
     display: flex;
     border: var(--container-dark) 1px solid;
     border-radius: 25px;
-    margin-top: 20px;
+    margin: 20px 10px 10px 10px;
     padding: 10px;
 }
 
@@ -21,21 +21,22 @@
     /*TODO:something smart here*/
     height: 180px;
     width: 330px;
+    border-radius: 25px;
 }
 
 .text-container {
     display: flex;
     flex-direction: column;
     padding-left: 5px;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .result-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
-.result-views {
-    font-size: 0.5rem;
+.result-views, .result-upload-date {
+    font-size: 0.75rem;
 }
 
 .result-upload-date:before {
@@ -43,8 +44,14 @@
     margin: 0 4px;
 }
 
-.result-upload-date {
-    font-size: 0.5rem;
+.wrap-container {
+    display: flex;
+    margin: 5px 0 5px 0;
+    align-items: center;
+}
+
+#views-and-date {
+    margin-left: 5px;
 }
 
 .result-uploader-profile-pic {
@@ -54,5 +61,5 @@
 }
 
 .result-uploader {
-
+    margin-left: 5px;
 }
