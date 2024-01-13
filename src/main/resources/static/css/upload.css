@@ -1,0 +1,61 @@
+#container {
+    margin: 3em auto;
+    width: 40%;
+    padding: 2em;
+}
+
+#container > p {
+    font-size: 2rem;
+    margin: 0 auto 1em 0;
+}
+
+#first-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 1em;
+}
+
+#inputs-beside-picture {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 2;
+}
+
+label[for="thumbnail-upload"] {
+    flex: 1;
+    display: flex;
+    border-radius: 25px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+#preview {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+#thumbnail-upload {
+    display: none;
+}
+
+label[for="description-input"] {
+    margin: 0 0 1em;
+    display: flex;
+}
+
+#message {
+    display: block;
+    margin: 0 0 1em;
+}
+
+#submit {
+    margin: 0 auto;
+    width: 30%;
+    height: 2.5em;
+    display: block;
+    font-size: 1.1rem;
+}
