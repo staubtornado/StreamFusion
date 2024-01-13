@@ -1,10 +1,19 @@
+document.getElementById('thumbnail-upload').addEventListener('change', function() {
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('preview').src = e.target.result;
+        changedProfilePicture = true;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
 document.getElementsByTagName('form')[1].addEventListener('submit', (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('file', document.getElementById('file').files[0]);
-    formData.append('title', document.getElementById('title').value);
-    formData.append('description', document.getElementById('description').value);
+    formData.append('file', document.getElementById('video-input').files[0]);
+    formData.append('title', document.getElementById('title-input').value);
+    formData.append('description', document.getElementById('description-input').value);
 
     const thumbnail = document.getElementById('thumbnail-upload').files[0];
     const reader = new FileReader();

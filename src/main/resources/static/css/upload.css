@@ -1,6 +1,8 @@
 #container {
     margin: 3em auto;
     width: 40%;
+    max-width: 40em;
+    min-width: 30em;
     padding: 2em;
 }
 
@@ -13,13 +15,41 @@
     display: flex;
     justify-content: space-between;
     margin: 0 0 1em;
+    gap: 2em;
 }
 
 #inputs-beside-picture {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     flex: 2;
+    gap: 1em;
+    justify-content: space-evenly;
+}
+
+#inputs-beside-picture > label > input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--background-dark);
+    border-radius: 25px;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+#inputs-beside-picture > label > input:hover, #inputs-beside-picture > label > input:focus {
+    border-color: var(--theme-color);
+    outline: none;
+}
+
+#inputs-beside-picture > label > input:hover::-webkit-file-upload-button {
+    border-color: var(--theme-color);
+}
+
+#inputs-beside-picture > label > input::-webkit-file-upload-button {
+    background: no-repeat;
+    border: none;
+    color: inherit;
+    border-right: 1px solid var(--background-dark);
+    transition: all 0.3s ease-in-out;
 }
 
 label[for="thumbnail-upload"] {
@@ -31,11 +61,34 @@ label[for="thumbnail-upload"] {
     position: relative;
 }
 
+label[for="thumbnail-upload"]:hover #preview {
+    filter: brightness(0.7);
+}
+
+label[for="thumbnail-upload"] button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    background: none;
+    color: var(--font-dark);
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+label[for="thumbnail-upload"]:hover button {
+    opacity: 1;
+    visibility: visible;
+}
+
 #preview {
     height: 100%;
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
+    transition: filter 0.3s ease-in-out;
 }
 
 #thumbnail-upload {
@@ -45,17 +98,39 @@ label[for="thumbnail-upload"] {
 label[for="description-input"] {
     margin: 0 0 1em;
     display: flex;
+    height: 10em;
+}
+
+label[for="description-input"] > textarea {
+    width: 100%;
+    font-family: inherit;
+    background: transparent;
+    border: 1px solid var(--background-dark);
+    border-radius: 25px;
+    padding: 10px;
+    resize: none;
+    transition: all 0.3s ease-in-out;
+}
+
+label[for="description-input"] > textarea:hover, label[for="description-input"] > textarea:focus {
+    border-color: var(--theme-color);
+    outline: none;
 }
 
 #message {
     display: block;
     margin: 0 0 1em;
+    text-align: center;
+    border: 2px solid var(--blue-color);
+    background: var(--blue-color-transparent);
+    border-radius: 25px;
+    padding: 10px;
 }
 
 #submit {
-    margin: 0 auto;
+    margin: 2em auto 0;
     width: 30%;
-    height: 2.5em;
     display: block;
-    font-size: 1.1rem;
+    height: 2em;
+    font-size: 1.2rem;
 }

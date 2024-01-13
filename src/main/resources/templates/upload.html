@@ -26,18 +26,19 @@
                 </div>
                 <label for="thumbnail-upload">
                     <img id="preview" alt="" src="/img/blank_profile.jpg">
+                    <button class="button transparent" type="button">Upload Thumbnail</button>
                 </label>
                 <input type="file" id="thumbnail-upload" accept="image/*">
             </div>
             <label for="description-input">
                 <textarea id="description-input" placeholder="Description" maxlength="4096" required></textarea>
             </label>
-            <span>
+            <span id="message">
                 Videos must adhere to content standards suitable for users under 14. Uploading inappropriate, harmful, or
                 pornographic material may result in the suspension of your account and legal consequences. By uploading a
                 video, you confirm full ownership of the content.
             </span>
-            <button class="button theme" type="submit">Upload</button>
+            <button id="submit" class="button theme" type="submit">Upload</button>
         </form>
     </div>
     <script th:src="@{/js/upload.js}"></script>

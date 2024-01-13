@@ -15,43 +15,46 @@
 }
 
 .flex-space-evenly {
+    margin: 5em auto;
+    width: 30%;
+    min-width: 40em;
+    padding: 2em;
     display: flex;
-    justify-content: space-evenly;
-    height: calc(100vh - 120px);
-}
-
-.flex-space-evenly > div {
-    width: 44%;
-    margin: 4% 0;
-    min-width: 630px;
-}
-
-.flex-space-evenly > div > div {
-    width: 90%;
-    margin: 5%
+    flex-direction: column;
 }
 
 .headline {
     font-size: 2rem;
-    margin: 0 auto 5% auto;
+    margin: 0 0 5% 0;
 }
 
 #content {
     display: flex;
+    position: relative;
+    justify-content: center;
 }
 
 #image {
-    margin: 0 5% 0 5%;
+    position: absolute;
+    left: 2%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 15%;
 }
 
 #image-preview {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: var(--box-shadow);
     transition: filter 0.3s;
     cursor: pointer;
+}
+
+#image > button {
+    padding: 7px;
 }
 
 #image-preview:hover {
@@ -64,7 +67,6 @@
 
 #inputs {
     width: 55%;
-    margin: 0 22.5% 0 0;
 }
 
 #inputs > div {
@@ -117,39 +119,13 @@
     width: 100%;
 }
 
-#change-password, #delete-account {
-    background: transparent;
+#inputs .input-row button {
     padding: 10px;
-    cursor: pointer;
-    transition: filter 0.3s;
 }
 
-#change-password:hover, #delete-account:hover {
-    filter: brightness(0.5);
-}
-
-#change-password {
-    border: 1px solid var(--theme-color);
-    color: var(--theme-color);
-}
-
-#delete-account {
-    border: 1px solid var(--error-color);
-    color: var(--error-color);
-}
-
-#change-password:focus, #delete-account:focus {
-    outline: none;
-}
-
-input[type="submit"] {
-    border: none;
-    border-radius: 25px;
-    background-color: var(--theme-color);
-    color: var(--font-light);
-    width: 100%;
+#content button[type="submit"] {
+    width: 50%;
+    margin: 0 25%;
     height: 40px;
     font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: var(--box-shadow);
 }

@@ -1,10 +1,22 @@
-document.getElementById('image-upload').addEventListener('change', function() {
-    let reader = new FileReader();
+function onChangeEvent(previewID, inputID) {
+    const reader = new FileReader();
     reader.onload = (e) => {
-        document.getElementById('image-preview').src = e.target.result;
-    };
-    reader.readAsDataURL(this.files[0]);
+        document.getElementById(previewID).src = e.target.result;
+    }
+    reader.readAsDataURL(document.getElementById(inputID).files[0]);
+}
+
+document.getElementById('image-upload').addEventListener('change', () => {
+    onChangeEvent('image-preview', 'image-upload');
 });
+
+document.getElementById('banner-upload').addEventListener('change', () => {
+    onChangeEvent('banner-preview', 'banner-upload');
+});
+
+document.getElementById('banner-button').onclick = () => {
+    document.getElementById('banner-upload').click();
+}
 
 const userID = document.getElementById('userID').value;
 

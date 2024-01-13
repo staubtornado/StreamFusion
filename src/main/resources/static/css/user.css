@@ -78,6 +78,7 @@
 #blur-background > div:nth-child(2) > img {
     width: 135px;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     box-shadow: var(--box-shadow);
 }

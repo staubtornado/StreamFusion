@@ -1,19 +1,37 @@
 .button {
     border-radius: 25px;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     cursor: pointer;
-}
-
-.button.transparent {
-    background: transparent;
-    border-color: var(--font-light);
-    color: var(--font-light);
 }
 
 .button.theme {
     color: var(--font-light);
     background: var(--theme-color);
     box-shadow: var(--box-shadow);
+}
+
+.button.transparent {
+    background: transparent;
+    border-color: var(--font-light);
+    color: var(--font-light);
+    box-shadow: none;
+    transition: filter 0.3s ease-in-out;
+}
+
+.button.transparent:hover {
+    filter: brightness(0.8);
+}
+
+.button.theme.transparent {
+    background: transparent;
+    color: var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+.button.red.transparent {
+    background: transparent;
+    color: var(--error-color);
+    border-color: var(--error-color);
 }
 
 .button.magic {
