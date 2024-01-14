@@ -59,19 +59,6 @@ public class VideoAPIController {
         return new ResponseEntity<>("Video successfully deleted.", HttpStatus.OK);
     }
 
-    @PostMapping(value = "/edit")
-    public ResponseEntity<String> editVideo(
-            @NonNull @RequestBody EditVideoRequest request,
-            @RequestHeader("Cookie") String cookies
-    ) {
-        try {
-            this.videoService.editVideo(request.title(), request.description(), request.id(), cookies);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>("Video successfully edited.", HttpStatus.OK);
-    }
-
     @PutMapping(value = "/add-like")
     public ResponseEntity<String> addLike(
             @NonNull @RequestBody long id,
