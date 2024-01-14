@@ -19,7 +19,6 @@
 }
 
 .result-thumbnail {
-    /*TODO:something smart here*/
     height: 180px;
     width: 330px;
     border-radius: 25px;
@@ -30,6 +29,7 @@
     flex-direction: column;
     margin-left: 15px;
     justify-content: flex-start;
+    min-width: 170px;
 }
 
 .result-title {
