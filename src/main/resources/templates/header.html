@@ -27,7 +27,7 @@
     <div id="account-section" th:if="${account != null}">
         <div id="account-info">
             <div id="account-names">
-                <span th:text="${account.getFirstName()} + ' ' + ${account.getLastName()}"></span>
+                <span id="nms" th:text="${account.getFirstName()} + ' ' + ${account.getLastName()}"></span>
                 <br>
                 <span id="username-header"  th:text="'@' + ${account.getUsername()}"></span>
             </div>
