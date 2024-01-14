@@ -284,7 +284,7 @@ dots.forEach((dot) => {
 
         ul[2].addEventListener('click', (e => {
             fetch('/api/v1/comment/remove-comment', {
-                method: 'PUT',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': "application/json; charset=UTF-8"
                 },
