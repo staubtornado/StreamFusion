@@ -51,7 +51,7 @@ public class AuthenticationAPIController {
         return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<String> deleteUser(
             @NonNull @RequestBody DeleteAccountRequest request,
             @RequestHeader("Cookie") String cookies
