@@ -19,7 +19,19 @@ document.getElementsByTagName('form')[1].addEventListener('submit', (e) => {
 
     const thumbnail = document.getElementById('thumbnail-upload').files[0];
     const reader = new FileReader();
-    reader.readAsDataURL(thumbnail);
+
+    try {
+        reader.readAsDataURL(thumbnail);
+    } catch (error) {
+        message.classList.remove('red');
+        message.style.display = 'block';
+        setTimeout(function() {
+            message.classList.add('red');
+        }, 10);
+        message.textContent = 'Please select a thumbnail.';
+        return;
+    }
+
     reader.onload = () => {
         const dataURL = reader.result;
         const base64String = dataURL.split(',')[1];
@@ -48,8 +60,12 @@ document.getElementsByTagName('form')[1].addEventListener('submit', (e) => {
         }).then((id) => {
             window.location.href = '/video?id=' + id;
         }).catch((error) => {
+            message.classList.remove('red');
             message.classList.remove('blue');
-            message.classList.add('red');
+            message.style.display = 'block';
+            setTimeout(function() {
+                message.classList.add('red');
+            }, 10);
             message.textContent = error.message;
         })
     }
