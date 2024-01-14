@@ -16,32 +16,28 @@
         <img id="banner" th:src="${user.getBannerURL()}" alt="">
         <div id="card">
             <div id="blur-background">
-                <div><a th:href="${'mailto:' + user.getEmail()}">Contact</a></div>
-                <div>
-                    <img th:src="${user.getProfilePictureURL()}" alt="">
-                    <span id="name" th:text="${user.getFirstName() + ' ' + user.getLastName()}"></span>
-                    <span th:text="${'@' + user.getUsername()}"></span>
-                </div>
-                <div><a>104 Followers</a></div>
+                <img th:src="${user.getProfilePictureURL()}" alt="">
+                <span id="name" th:text="${user.getFirstName() + ' ' + user.getLastName()}"></span>
+                <span th:text="${'@' + user.getUsername()}"></span>
             </div>
             <div>
                 <span th:text="${user.getVideos().size()} + ' Videos'"></span>
                 <span th:text="${user.getTotalViews()} + ' Views'"></span>
                 <span th:text="${user.getTotalComments() + ' Comments'}"></span> <!-- TODO: Implement used methods -->
-                <span th:text="${(user.getLikeRatio() * 100) + '% Likes'}"></span>
+                <span th:text="${#numbers.formatDecimal((user.getLikeRatio() * 100), 0, 0) + '% Likes'}"></span>
             </div>
         </div>
         <div id="videos">
-            <div th:each="video : ${user.getVideos()}" class="video">
-                <a th:href="${'/video?id=' + video.getID()}">
-                    <img th:src="${video.getThumbnailURL()}" alt="">
-                    <div>
-                        <span th:text="${video.getTitle()}"></span>
-                        <span th:text="${video.getViews() + ' Views'}"></span>
-                        <span th:text="${video.getLikeRatio() * 100 + '% Likes'}"></span>
-                    </div>
-                </a>
-            </div>
+            <a th:each="video : ${user.getVideos()}" class="video" th:href="${'/video?id=' + video.getID()}">
+                <img th:src="${video.getThumbnailURL()}" alt="">
+                <div>
+                    <p th:text="${video.getTitle()}"></p>
+                    <span th:text="${video.getUploadDate()}"></span>
+                    <span class="views" th:text="${video.getViews() + ' Views'}"></span>
+                    <span class="ratio"
+                          th:text="${#numbers.formatDecimal((video.getLikeRatio() * 100), 0, 0) + '%'}"></span>
+                </div>
+            </a>
         </div>
     </div>
 </body>

@@ -1,7 +1,7 @@
 #container {
     margin: 3em;
     position: relative;
-    height: calc(100vh - 120px - 6em);
+    padding: 0 0 2em;
 }
 
 #banner {
@@ -43,39 +43,13 @@
     box-shadow: var(--box-shadow);
     backdrop-filter: blur(15px);
     display: flex;
-    justify-content: space-between;
-    height: 14.5em;
-}
-
-#blur-background > div:nth-child(1), #blur-background > div:nth-child(3) {
-    width: 30%;
-}
-
-#blur-background > div:nth-child(1) > a, #blur-background > div:nth-child(3) > a {
-    border: 1px solid var(--font-dark);
-    border-radius: 25px;
-    display: block;
-    width: min-content;
-    padding: 10px 20px;
-}
-
-#blur-background > div:nth-child(1) > a {
-    margin: 10px 0 0 10px;
-}
-
-#blur-background > div:nth-child(3) > a {
-    margin: 10px 10px 0 auto;
-    white-space: nowrap;
-}
-
-#blur-background > div:nth-child(2) {
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 14.5em;
 }
 
-#blur-background > div:nth-child(2) > img {
+#blur-background > img {
     width: 135px;
     object-fit: cover;
     aspect-ratio: 1 / 1;
@@ -86,6 +60,40 @@
 #name {
     font-size: 1.25rem;
     margin: 1em 0 0 0;
+}
+
+#videos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1em;
+}
+
+.video {
+    width: 20em;
+}
+
+.video img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 25px;
+    margin: 0 0 0.5em;
+}
+
+.video > div > p {
+    margin: 0 auto 4px;
+    display: block;
+}
+
+.video > div > span {
+    color: var(--medium-gray);
+    font-size: 0.75rem;
+}
+
+.views:before, .ratio:before {
+    content: "•";
+    margin: 0 4px 0 0;
 }
 
 @media (prefers-color-scheme: light) {
