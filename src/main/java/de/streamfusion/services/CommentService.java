@@ -35,4 +35,21 @@ public class CommentService {
         this.commentRepository.save(comment);
         video.addComment(comment);
     }
+
+    public void likeComment(long id) {
+        Comment comment = this.commentRepository.findById(id).orElseThrow();
+        comment.setLikes(comment.getLikes() + 1);
+        this.commentRepository.save(comment);
+    }
+
+    public void dislikeComment(long id) {
+        Comment comment = this.commentRepository.findById(id).orElseThrow();
+        comment.setDislikes(comment.getDislikes() + 1);
+        this.commentRepository.save(comment);
+    }
+
+    public void removeComment(long id) {
+        Comment comment = this.commentRepository.findById(id).orElseThrow();
+        this.commentRepository.delete(comment);
+    }
 }
