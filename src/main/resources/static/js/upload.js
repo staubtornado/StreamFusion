@@ -7,6 +7,8 @@ document.getElementById('thumbnail-upload').addEventListener('change', function(
     reader.readAsDataURL(this.files[0]);
 });
 
+const message = document.getElementsByClassName('message')[0];
+
 document.getElementsByTagName('form')[1].addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -26,18 +28,29 @@ document.getElementsByTagName('form')[1].addEventListener('submit', (e) => {
         const fileNameSplits = thumbnail.name.split('.');
         formData.append('imgType', fileNameSplits[fileNameSplits.length - 1]);
 
+        message.classList.remove('red');
+        message.classList.add('blue');
+        message.textContent = 'Uploading... Please wait.';
+
         fetch('/api/v1/video/upload', {
             method: 'POST',
             body: formData
         }).then((response) => {
-            if (!response.ok) {
-                throw Error(response.statusText);
+            if (response.ok) {
+                return response.text();
             }
-            return response.text();
+            if (response.status === 401) {
+                window.location.href = '/login';
+            }
+            if (response.status === 413) {
+                throw new Error('Video file is too large.');
+            }
         }).then((id) => {
             window.location.href = '/video?id=' + id;
         }).catch((error) => {
-            console.log(error);
+            message.classList.remove('blue');
+            message.classList.add('red');
+            message.textContent = error.message;
         })
     }
 });

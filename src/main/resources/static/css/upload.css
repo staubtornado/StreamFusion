@@ -1,5 +1,9 @@
+.message {
+    margin: 2em auto !important;
+}
+
 #container {
-    margin: 3em auto;
+    margin: 2em auto 0;
     width: 40%;
     max-width: 40em;
     min-width: 30em;
