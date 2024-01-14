@@ -12,7 +12,22 @@
 
 <header th:replace="~{header.html :: header}"></header>
 <body>
-    <h1>Fassen Sie mich nicht an!</h1>
-    <h2>Das ist Homo-Shit!</h2>
+    <div id="video-select" th:if="${videos != null}">
+        <a th:each="video : ${videos}" th:href="'/video?id='+ ${video.getID()}" class="video-container">
+            <img th:src="${video.getThumbnailURL()}" alt="" class="video-thumbnail">
+            <div class="text-container">
+                <span th:text="${video.getTitle()}" class="title"></span>
+                <div class="section-container" id="views-and-date">
+                    <span th:text="${video.getUploadDate()}" class="upload-date"></span>
+                    <span th:text="${video.getViews()} + ' Views'" class="views"></span>
+                    <span th:text="${#numbers.formatDecimal((video.getLikeRatio() * 100), 0, 0)} + '%'" class="ratio"></span>
+                </div>
+                <div id="uploader-container" class="section-container">
+                    <img th:src="${video.getUser().getProfilePictureURL}" alt="" class="uploader-profile-pic">
+                    <span th:text="${video.getUser().getUsername()}" class="uploader"></span>
+                </div>
+            </div>
+        </a>
+    </div>
 </body>
 </html>
