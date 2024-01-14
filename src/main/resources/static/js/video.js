@@ -204,7 +204,7 @@ function createComment() {
     while (temp.firstChild) {
         frag.appendChild(temp.firstChild);
     }
-    document.getElementById('comments').appendChild(frag);
+    document.getElementById('comments').insertBefore(frag, document.getElementById('comments').firstChild)
 }
 
 document.getElementById('comments-control').addEventListener('click', (event) => {
