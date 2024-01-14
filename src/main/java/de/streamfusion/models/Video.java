@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 
 @Entity
 @Table(name = "videos")
@@ -85,7 +89,9 @@ public class Video {
     }
 
     public Set<Comment> getComments() {
-        return this.comments;
+        List<Comment> commentList = new ArrayList<>(comments);
+        commentList.sort(Comparator.comparing(Comment::getID, Comparator.reverseOrder()));
+        return new LinkedHashSet<>(commentList);
     }
 
     public String getFiletype() {
