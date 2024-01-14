@@ -30,7 +30,10 @@ public class SearchService {
         } catch (NumberFormatException e) {
             for (Video video : this.videoRepository.findAll()) {
                 String title = video.getTitle();
-                if (fuzzyMatch(searchQuery, title)) {
+                if (title.toLowerCase().contains(searchQuery.toLowerCase())) {
+                    videos.add(video);
+                }
+                else if (fuzzyMatch(searchQuery, title)) {
                     videos.add(video);
                 }
             }
