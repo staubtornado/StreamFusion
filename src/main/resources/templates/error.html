@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Error</title>
     <link th:href="@{/css/default.css}" rel="stylesheet"/>
     <link th:href="@{/css/header.css}" rel="stylesheet"/>
     <link th:href="@{/css/buttons.css}" rel="stylesheet"/>
+    <link th:href="@{/css/error.css}" rel="stylesheet"/>
+    <link th:href="@{/css/messages.css}" rel="stylesheet"/>
     <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
 </head>
 
-<header th:replace="~{header.html :: header}"></header>
 <body>
-    <h1>ERROR!</h1>
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+
+    <div class="container-gray">
+        <p>Error</p>
+        <div>
+            <p th:text="${status}"></p>
+            <p th:text="${error}"></p>
+            <span class="message red" th:text="${message} + '.'"></span>
+
+            <a href="/"><button class="button theme" type="button">Home</button></a>
+        </div>
+    </div>
 </body>
 </html>
