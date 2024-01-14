@@ -1,8 +1,7 @@
 .container-gray {
-    width: 50%;
+    width: 30%;
     margin: 2em auto;
     padding: 2em;
-    max-width: 20em;
 }
 
 .container-gray > p {
@@ -10,22 +9,14 @@
     margin: 0 0 5% 0;
 }
 
-.container-gray > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 2em;
-}
-
-.container-gray > div > p {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 600;
+.container-gray > span {
+    width: max-content;
+    margin: 0 auto 2em;
+    display: block;
 }
 
 .message.red {
-    margin: auto;
+    margin: 0 auto 2em;
 }
 
 a button {
@@ -35,4 +26,6 @@ a button {
 
 .container-gray a {
     width: 20%;
+    display: block;
+    margin: auto;
 }
