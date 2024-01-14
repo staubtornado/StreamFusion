@@ -71,6 +71,14 @@
 
 .video {
     width: 20em;
+    transition: transform 0.3s ease-in-out;
+    border: 1px solid var(--background-dark);
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.video:hover {
+    transform: scale(1.05);
 }
 
 .video img {
@@ -94,6 +102,10 @@
 .views:before, .ratio:before {
     content: "•";
     margin: 0 4px 0 0;
+}
+
+.message.blue {
+    margin: auto;
 }
 
 @media (prefers-color-scheme: light) {

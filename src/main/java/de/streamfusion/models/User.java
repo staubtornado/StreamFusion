@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
@@ -202,6 +203,9 @@ public class User implements UserDetails {
     }
 
     public String getBannerURL() {
-        return "/cdn/u/banner?id=%d".formatted(this.id);
+        if (Path.of("./data/user/%d/banner.png".formatted(this.id)).toFile().exists()) {
+            return "/cdn/u/banner?id=%d".formatted(this.id);
+        }
+        return "./img/default-banner.png";
     }
 }
