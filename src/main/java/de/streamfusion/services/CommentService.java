@@ -48,7 +48,7 @@ public class CommentService {
         this.commentRepository.save(comment);
     }
 
-    public void removeComment(long id) {
+    public void deleteComment(long id) {
         Comment comment = this.commentRepository.findById(id).orElseThrow();
         this.commentRepository.delete(comment);
     }
