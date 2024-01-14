@@ -57,10 +57,10 @@ public class CommentAPIController {
         return new ResponseEntity<>("Successfully disliked comment", HttpStatus.OK);
     }
 
-    @PutMapping(value = "/remove-comment")
-    public ResponseEntity<String> removeComment(@NonNull @RequestBody long commentID) {
+    @DeleteMapping(value = "/remove-comment")
+    public ResponseEntity<String> deleteComment(@NonNull @RequestBody long commentID) {
         try {
-            this.commentService.removeComment(commentID);
+            this.commentService.deleteComment(commentID);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
