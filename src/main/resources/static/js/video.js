@@ -1,4 +1,5 @@
 const VIDEO_ID = window.location.search.substring(4);
+const USER_ID  = document.getElementById('profile-picture').src.split('=')[1];
 const commentForm = document.getElementById('comment-form');
 let likes = parseInt(document.getElementById('like-count').textContent);
 let dislikes = parseInt(document.getElementById('dislike-count').textContent);
@@ -185,10 +186,10 @@ function createComment() {
 
     temp.innerHTML =
         '<div class="comment"> ' +
-            '<a class="comment-user-picture" href=' + "/user?id=" + document.getElementById('profile-picture').src.split('=')[1] + '>' +
+            '<a class="comment-user-picture" href=' + "/user?id=" + USER_ID + '>' +
                 '<img alt="" src=' + document.getElementById('profile-picture').src +'>' +
             '</a>' +
-            '<a class="comment-usernames" href=' + "/user?id=" + document.getElementById('profile-picture').src.split('=')[1] + '>' +
+            '<a class="comment-usernames" href=' + "/user?id=" + USER_ID + '>' +
                 '<span>' + document.getElementById('nms').textContent + '</span>' +
                 '<br>' +
                 '<span>' + document.getElementById('username-header').textContent + '</span>' +
@@ -204,7 +205,7 @@ function createComment() {
     while (temp.firstChild) {
         frag.appendChild(temp.firstChild);
     }
-    document.getElementById('comments').insertBefore(frag, document.getElementById('comments').firstChild)
+    document.getElementById('comments').insertBefore(frag, document.getElementById('comments').firstChild);
 }
 
 document.getElementById('comments-control').addEventListener('click', (event) => {
@@ -215,4 +216,84 @@ window.onclick = function() {
     document.getElementById('comments-control').classList.remove('selected');
 }
 
+const dots = document.querySelectorAll('.dots');
+document.addEventListener('click', (event) => {
+    dots.forEach((dot) => {
+        const parent = dot.parentElement;
+        const div = parent.querySelector('div');
+        if (!parent.contains(event.target) && div.classList.contains('show')) {
+            div.classList.remove('show');
+        }
+    });
+});
 
+dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+        const parent = dot.parentElement;
+        const comment_ID = parent.querySelector('p').textContent;
+        parent.querySelector('div').classList.add('show');
+        const ul = parent.querySelector('ul').children;
+
+        ul[0].addEventListener('click', (e => {
+            fetch('/api/v1/comment/like-comment', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': "application/json; charset=UTF-8"
+                },
+                body: comment_ID
+            }).then((response) => {
+                if (response.ok) {
+                    console.log(response);
+                }
+            })
+        }))
+
+        ul[1].addEventListener('click', (e => {
+            fetch('/api/v1/comment/dislike-comment', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': "application/json; charset=UTF-8"
+                },
+                body: comment_ID
+            }).then((response) => {
+                if (response.ok) {
+                    console.log(response);
+                }
+            })
+        }))
+
+        // ul[2].addEventListener('click', (e => {
+        //     document.getElementById('comment-input').focus();
+        //     //await user input & send!
+        //
+        //     fetch('/api/v1/comment/edit-comment', {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': "application/json; charset=UTF-8"
+        //         },
+        //         body: JSON.stringify({
+        //             commentID: comment_ID,
+        //             commentContent: document.getElementById('comment-input').value
+        //         })
+        //     }).then((response) => {
+        //         if (response.ok) {
+        //             console.log(response);
+        //         }
+        //     })
+        // }))
+
+        ul[2].addEventListener('click', (e => {
+            fetch('/api/v1/comment/remove-comment', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': "application/json; charset=UTF-8"
+                },
+                body: comment_ID
+            }).then((response) => {
+                if (response.ok) {
+                    console.log(response);
+                }
+            })
+        }))
+    });
+});
