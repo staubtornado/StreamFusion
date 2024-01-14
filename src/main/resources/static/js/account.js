@@ -20,36 +20,38 @@ document.getElementById('banner-button').onclick = () => {
 
 const userID = document.getElementById('userID').value;
 
+function fetchPicture(elementID) {
+    return new Promise((resolve, reject) => {
+        let elementContent = document.getElementById(elementID).src.split(',')[1];
+
+        if (typeof elementContent !== 'undefined') {
+            resolve(elementContent);
+        } else {
+            const url = document.getElementById(elementID).src;
+
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        elementContent = e.target.result.split(',')[1];
+                        resolve(elementContent);
+                    };
+                    reader.readAsDataURL(blob);
+                })
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
+        }
+    });
+}
+
 document.getElementById('content').addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    let picture = document.getElementById('image-preview').src.split(',')[1];
-    const fetchProfilePicture = () => {
-        return new Promise((resolve, reject) => {
-            if (typeof picture !== 'undefined') {
-                resolve(picture);
-            } else {
-                const url = document.getElementById('image-preview').src;
-
-                fetch(url)
-                    .then(response => response.blob())
-                    .then(blob => {
-                        let reader = new FileReader();
-                        reader.onload = function (e) {
-                            picture = e.target.result.split(',')[1];
-                            resolve(picture);
-                        };
-                        reader.readAsDataURL(blob);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        reject(error);
-                    });
-            }
-        });
-    };
-
-    picture = await fetchProfilePicture();
+    let picture = await fetchPicture('image-preview');
+    let banner = await fetchPicture('banner-preview');
     fetch('/api/v1/auth/edit-details', {
         method: 'PUT',
         headers: {
@@ -61,7 +63,8 @@ document.getElementById('content').addEventListener('submit', async (event) => {
             newEmail: document.getElementById('email').value,
             newUsername: document.getElementById('username').value,
             newDateOfBirth: document.getElementById('dateOfBirth').value,
-            newProfilePicture: picture
+            newProfilePicture: picture,
+            newBannerPicture: banner,
         })
     }).then((response) => {
         if (response.ok) {

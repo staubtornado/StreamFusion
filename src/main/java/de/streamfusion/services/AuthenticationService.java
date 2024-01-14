@@ -73,7 +73,7 @@ public class AuthenticationService {
 
         // Convert the date of birth to a long value representing the milliseconds since January 1, 1970, 00:00:00 GMT
         long dateOfBirth = Date.from(Instant.parse(registerRequest.dateOfBirth() + "T00:00:00.00Z")).getTime();
-        if (userIsUnderage(dateOfBirth, 14)) {
+        if (userIsUnderage(dateOfBirth)) {
             throw new IllegalArgumentException("User is under 14");
         }
         final User user = new User(
@@ -170,7 +170,7 @@ public class AuthenticationService {
 
         // Convert the date of birth to a long value representing the milliseconds since January 1, 1970, 00:00:00 GMT
         long dateOfBirth = Date.from(Instant.parse(request.newDateOfBirth() + "T00:00:00.00Z")).getTime();
-        if (userIsUnderage(dateOfBirth, 14)) {
+        if (userIsUnderage(dateOfBirth)) {
             throw new IllegalArgumentException("User is under 14");
         }
 
@@ -182,6 +182,9 @@ public class AuthenticationService {
         this.userRepository.save(user);
         changeProfilePicture(request.newProfilePicture(), user);
 
+        if (request.newBannerPicture() != null) {
+            changeBanner(request.newBannerPicture(), user);
+        }
         if (!request.newEmail().equals(email)) {
             return this.generateToken(user);
         }
@@ -299,11 +302,11 @@ public class AuthenticationService {
         return !dateOfBirth.matches("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
     }
 
-    private static boolean userIsUnderage(long userBirthday, int ageToCheckIfUnder) {
+    private static boolean userIsUnderage(long userBirthday) {
         LocalDate birthdate = new Date(userBirthday).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate now = LocalDate.now();
         Period periodBetween = Period.between(birthdate, now);
-        return periodBetween.getYears() <= ageToCheckIfUnder;
+        return periodBetween.getYears() <= 14;
     }
 
     private static void changeProfilePicture(String profilePicture, @NonNull User user) throws IOException {
@@ -322,5 +325,20 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Profile picture is null.");
         }
         Files.write(onDisk.toPath(), Base64.decodeBase64(profilePicture));
+    }
+
+    private static void changeBanner(String banner, @NonNull User user) throws IOException {
+        final File onDisk = new File("%s/data/user/%d/banner.png".formatted(
+                System.getProperty("user.dir"),
+                user.getID()
+        ));
+        // Write string to file
+        if (!onDisk.exists() && !onDisk.createNewFile()) {
+            throw new IOException("Could not create file.");
+        }
+        if (banner == null) {
+            throw new IllegalArgumentException("Banner is null.");
+        }
+        Files.write(onDisk.toPath(), Base64.decodeBase64(banner));
     }
 }

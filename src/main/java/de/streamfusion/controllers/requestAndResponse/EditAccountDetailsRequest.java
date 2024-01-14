@@ -6,5 +6,6 @@ public record EditAccountDetailsRequest(
         String newFirstName,
         String newLastName,
         String newDateOfBirth,
-        String newProfilePicture
+        String newProfilePicture,
+        String newBannerPicture
 ) {}
