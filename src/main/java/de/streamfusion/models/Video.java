@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
-import java.util.function.Consumer;
 
 @Entity
 @Table(name = "videos")
@@ -85,9 +84,9 @@ public class Video {
         this.comments.add(comment);
     }
 
-    public void deleteComment(Comment comment) {
-        this.comments.remove(comment);
-    }
+//    public void deleteComment(Comment comment) {
+//        this.comments.remove(comment);
+//    }
 
     public Set<Comment> getCommentsByDate(boolean desc) {
         List<Comment> commentList = new ArrayList<>(comments);
@@ -99,15 +98,15 @@ public class Video {
         return new LinkedHashSet<>(commentList);
     }
 
-    public Set<Comment> getCommentsByLikes(boolean desc) {
-        ArrayList<Comment> commentList = new ArrayList<>(comments);
-        if (desc) {
-            commentList.sort(Comparator.comparing(Comment::getLikes, Comparator.reverseOrder()));
-        } else {
-            commentList.sort(Comparator.comparing(Comment::getLikes));
-        }
-        return new LinkedHashSet<>(commentList);
-    }
+//    public Set<Comment> getCommentsByLikes(boolean desc) {
+//        ArrayList<Comment> commentList = new ArrayList<>(comments);
+//        if (desc) {
+//            commentList.sort(Comparator.comparing(Comment::getLikes, Comparator.reverseOrder()));
+//        } else {
+//            commentList.sort(Comparator.comparing(Comment::getLikes));
+//        }
+//        return new LinkedHashSet<>(commentList);
+//    }
 
     public String getFiletype() {
         return this.filetype;

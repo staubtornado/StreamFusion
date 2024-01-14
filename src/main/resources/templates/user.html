@@ -24,7 +24,7 @@
             <div>
                 <span th:text="${user.getVideos().size()} + ' Videos'"></span>
                 <span th:text="${user.getTotalViews()} + ' Views'"></span>
-                <span th:text="${user.getTotalComments() + ' Comments'}"></span> <!-- TODO: Implement used methods -->
+<!--                <span th:text="${user.getTotalComments() + ' Comments'}"></span> &lt;!&ndash; TODO: Implement used methods &ndash;&gt;-->
                 <span th:text="${#numbers.formatDecimal((user.getLikeRatio() * 100), 0, 0) + '% Likes'}"></span>
             </div>
         </div>

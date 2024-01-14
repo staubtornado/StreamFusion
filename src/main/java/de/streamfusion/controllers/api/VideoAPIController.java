@@ -1,6 +1,5 @@
 package de.streamfusion.controllers.api;
 
-import de.streamfusion.controllers.requestAndResponse.EditVideoRequest;
 import de.streamfusion.exceptions.VideoAlreadyRatedException;
 import de.streamfusion.exceptions.VideoNotRatedException;
 import de.streamfusion.models.Video;
@@ -47,17 +46,17 @@ public class VideoAPIController {
         return new ResponseEntity<>(video.getID().toString(), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete")
-    public ResponseEntity<String> deleteVideo(@RequestBody long id, @RequestHeader("Cookie") String cookies) {
-        try {
-            this.videoService.deleteVideo(id, cookies);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>("Video successfully deleted.", HttpStatus.OK);
-    }
+//    @DeleteMapping(value = "/delete")
+//    public ResponseEntity<String> deleteVideo(@RequestBody long id, @RequestHeader("Cookie") String cookies) {
+//        try {
+//            this.videoService.deleteVideo(id, cookies);
+//        } catch (NoSuchElementException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } catch (IOException e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//        return new ResponseEntity<>("Video successfully deleted.", HttpStatus.OK);
+//    }
 
     @PutMapping(value = "/add-like")
     public ResponseEntity<String> addLike(

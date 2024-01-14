@@ -2,7 +2,7 @@ package de.streamfusion.models;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
+//import java.util.Set;
 
 @Entity
 @Table(name = "comments")
@@ -20,11 +20,11 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id")
     private Video video;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Comment parent;
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private Set<Comment> replies;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_id")
+//    private Comment parent;
+//    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+//    private Set<Comment> replies;
 
 
     public Comment() {
@@ -77,19 +77,19 @@ public class Comment {
         return video;
     }
 
-    public Comment getParent() {
-        return parent;
-    }
+//    public Comment getParent() {
+//        return parent;
+//    }
+//
+//    public void setParent(Comment parent) {
+//        this.parent = parent;
+//    }
 
-    public void setParent(Comment parent) {
-        this.parent = parent;
-    }
-
-    public Set<Comment> getReplies() {
-        return replies;
-    }
-
-    public void addReply(Comment reply) {
-        this.replies.add(reply);
-    }
+//    public Set<Comment> getReplies() {
+//        return replies;
+//    }
+//
+//    public void addReply(Comment reply) {
+//        this.replies.add(reply);
+//    }
 }

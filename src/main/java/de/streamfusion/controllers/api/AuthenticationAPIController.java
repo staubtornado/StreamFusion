@@ -51,38 +51,38 @@ public class AuthenticationAPIController {
         return new ResponseEntity<>("Successfully changed account details.", HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteUser(
-            @NonNull @RequestBody DeleteAccountRequest request,
-            @RequestHeader("Cookie") String cookies
-    ) {
-        try {
-            this.authenticationService.deleteUser(request, cookies);
-        } catch (BadCredentialsException | MalformedJwtException | ExpiredJwtException e) {
-            return new ResponseEntity<>("Authorization failed.", HttpStatus.BAD_REQUEST);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>("Successfully deleted user.", HttpStatus.OK);
-    }
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<String> deleteUser(
+//            @NonNull @RequestBody DeleteAccountRequest request,
+//            @RequestHeader("Cookie") String cookies
+//    ) {
+//        try {
+//            this.authenticationService.deleteUser(request, cookies);
+//        } catch (BadCredentialsException | MalformedJwtException | ExpiredJwtException e) {
+//            return new ResponseEntity<>("Authorization failed.", HttpStatus.BAD_REQUEST);
+//        } catch (NoSuchElementException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>("Successfully deleted user.", HttpStatus.OK);
+//    }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(
-            @NonNull @RequestBody ChangePasswordRequest request,
-            @RequestHeader("Cookie") String cookies,
-            HttpServletResponse response
-    ) {
-        final String token;
-        try {
-            token = this.authenticationService.changePassword(request, cookies);
-        } catch (BadCredentialsException | MalformedJwtException | ExpiredJwtException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        response.addCookie(AuthenticationService.generateCookie(token));
-        return new ResponseEntity<>("Successfully changed password.", HttpStatus.OK);
-    }
+//    @PostMapping("/change-password")
+//    public ResponseEntity<String> changePassword(
+//            @NonNull @RequestBody ChangePasswordRequest request,
+//            @RequestHeader("Cookie") String cookies,
+//            HttpServletResponse response
+//    ) {
+//        final String token;
+//        try {
+//            token = this.authenticationService.changePassword(request, cookies);
+//        } catch (BadCredentialsException | MalformedJwtException | ExpiredJwtException e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        } catch (NoSuchElementException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        response.addCookie(AuthenticationService.generateCookie(token));
+//        return new ResponseEntity<>("Successfully changed password.", HttpStatus.OK);
+//    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request, HttpServletResponse response) {

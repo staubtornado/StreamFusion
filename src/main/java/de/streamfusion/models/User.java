@@ -133,10 +133,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public Long getDateOfBirth() {
-        return this.dateOfBirth;
-    }
-
     public String getDateOfBirthString() {
         return new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(this.dateOfBirth));
     }
@@ -177,9 +173,9 @@ public class User implements UserDetails {
         return this.videos.stream().mapToInt(Video::getViews).sum();
     }
 
-    public int getTotalComments() {
-        return 911;
-    }
+//    public int getTotalComments() {
+//        return 911;
+//    }
 
     public float getLikeRatio() {
         final int likes = this.videos.stream().mapToInt(Video::getLikes).sum();

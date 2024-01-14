@@ -208,13 +208,13 @@ function createComment() {
     document.getElementById('comments').insertBefore(frag, document.getElementById('comments').firstChild);
 }
 
-document.getElementById('comments-control').addEventListener('click', (event) => {
-    event.stopPropagation();
-    document.getElementById('comments-control').classList.add('selected');
-});
-window.onclick = function() {
-    document.getElementById('comments-control').classList.remove('selected');
-}
+// document.getElementById('comments-control').addEventListener('click', (event) => {
+//     event.stopPropagation();
+//     document.getElementById('comments-control').classList.add('selected');
+// });
+// window.onclick = function() {
+//     document.getElementById('comments-control').classList.remove('selected');
+// }
 
 const dots = document.querySelectorAll('.dots');
 document.addEventListener('click', (event) => {
@@ -234,7 +234,7 @@ dots.forEach((dot) => {
         parent.querySelector('div').classList.add('show');
         const ul = parent.querySelector('ul').children;
 
-        ul[0].addEventListener('click', (e => {
+        ul[0].addEventListener('click', (() => {
             fetch('/api/v1/comment/like-comment', {
                 method: 'PUT',
                 headers: {
@@ -248,7 +248,7 @@ dots.forEach((dot) => {
             })
         }))
 
-        ul[1].addEventListener('click', (e => {
+        ul[1].addEventListener('click', (() => {
             fetch('/api/v1/comment/dislike-comment', {
                 method: 'PUT',
                 headers: {
@@ -282,7 +282,7 @@ dots.forEach((dot) => {
         //     })
         // }))
 
-        ul[2].addEventListener('click', (e => {
+        ul[2].addEventListener('click', (() => {
             fetch('/api/v1/comment/remove-comment', {
                 method: 'DELETE',
                 headers: {

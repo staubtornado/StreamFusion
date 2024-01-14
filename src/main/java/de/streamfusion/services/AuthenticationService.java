@@ -1,10 +1,11 @@
 package de.streamfusion.services;
 
-import de.streamfusion.controllers.requestAndResponse.*;
+import de.streamfusion.controllers.requestAndResponse.AuthenticationRequest;
+import de.streamfusion.controllers.requestAndResponse.EditAccountDetailsRequest;
+import de.streamfusion.controllers.requestAndResponse.RegisterRequest;
 import de.streamfusion.models.Role;
 import de.streamfusion.models.User;
 import de.streamfusion.repositories.UserRepository;
-import de.streamfusion.repositories.VideoRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -20,15 +21,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Instant;
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.Date;
 
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
-    private final VideoRepository videoRepository;
+//    private final VideoRepository videoRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -38,14 +39,14 @@ public class AuthenticationService {
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             JWTService jwtService,
-            AuthenticationManager authenticationManager,
-            VideoRepository videoRepository
+            AuthenticationManager authenticationManager
+//            VideoRepository videoRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
-        this.videoRepository = videoRepository;
+//        this.videoRepository = videoRepository;
     }
 
     /**
@@ -105,39 +106,39 @@ public class AuthenticationService {
         return this.generateToken(user);
     }
 
-    /**
-        * Changes the password of the user.
-        *
-        * @param request The change password request.
-        * @param cookies The cookies of the user.
-        * @return The new token.
-     */
-    public String changePassword(@NonNull ChangePasswordRequest request, @NonNull String cookies) {
-        final String token = extractTokenFromCookie(cookies);
-        final String email = this.getEmailFromToken(token);
-        matchCredentials(email, request.oldPassword());
+//    /**
+//        * Changes the password of the user.
+//        *
+//        * @param request The change password request.
+//        * @param cookies The cookies of the user.
+//        * @return The new token.
+//     */
+//    public String changePassword(@NonNull ChangePasswordRequest request, @NonNull String cookies) {
+//        final String token = extractTokenFromCookie(cookies);
+//        final String email = this.getEmailFromToken(token);
+//        matchCredentials(email, request.oldPassword());
+//
+//        final User user = this.userRepository.findByEmail(email).orElseThrow();
+//        user.setPassword(this.passwordEncoder.encode(request.newPassword()));
+//        this.userRepository.save(user);
+//        return this.generateToken(user);
+//    }
 
-        final User user = this.userRepository.findByEmail(email).orElseThrow();
-        user.setPassword(this.passwordEncoder.encode(request.newPassword()));
-        this.userRepository.save(user);
-        return this.generateToken(user);
-    }
-
-    /**
-        * Deletes the user and all his videos.
-        *
-        * @param request The delete account request.
-        * @param cookies The cookies of the user.
-     */
-    public void deleteUser(@NonNull DeleteAccountRequest request, @NonNull String cookies) {
-        String token = extractTokenFromCookie(cookies);
-        String email = this.getEmailFromToken(token);
-
-        this.matchCredentials(email, request.password());
-        final User user = this.userRepository.findByEmail(email).orElseThrow();
-        this.videoRepository.deleteAll(user.getVideos());
-        this.userRepository.delete(user);
-    }
+//    /**
+//        * Deletes the user and all his videos.
+//        *
+//        * @param request The delete account request.
+//        * @param cookies The cookies of the user.
+//     */
+//    public void deleteUser(@NonNull DeleteAccountRequest request, @NonNull String cookies) {
+//        String token = extractTokenFromCookie(cookies);
+//        String email = this.getEmailFromToken(token);
+//
+//        this.matchCredentials(email, request.password());
+//        final User user = this.userRepository.findByEmail(email).orElseThrow();
+//        this.videoRepository.deleteAll(user.getVideos());
+//        this.userRepository.delete(user);
+//    }
 
     /**
         * Edits the user.

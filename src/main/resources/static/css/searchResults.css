@@ -23,6 +23,7 @@
     height: 180px;
     width: 330px;
     border-radius: 25px;
+    object-fit: cover;
 }
 
 .text-container {
@@ -60,6 +61,7 @@
     height: 25px;
     width: 25px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .result-uploader {

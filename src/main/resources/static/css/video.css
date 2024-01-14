@@ -229,7 +229,7 @@ body {
     background-color: var(--container-dark);
     border: solid 1px var(--theme-color);
     border-radius: 10px;
-    left: 330px;
+    right: 5%;
 }
 
 .comment-settings ul {

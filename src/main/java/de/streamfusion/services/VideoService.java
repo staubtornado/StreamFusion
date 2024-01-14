@@ -118,47 +118,47 @@ public class VideoService {
         return video;
     }
 
-    public void deleteVideo(@NonNull long id, String cookie) throws IOException {
-        final Video video = this.videoRepository.findById(id).orElseThrow();
-        final User user = this.authenticationService.getUserFromToken(
-                AuthenticationService.extractTokenFromCookie(cookie)
-        );
-        if (!Objects.equals(video.getUser().getID(), user.getID())) {
-            throw new IllegalArgumentException("User does not own video.");
-        }
-        File directory = new File("%s/data/videos/%d".formatted(
-                System.getProperty("user.dir"),
-                video.getID()
-        ));
-        if (!directory.exists()) {
-            this.videoRepository.delete(video);
-            return;
-        }
-        try {
-            for (File file : Objects.requireNonNull(directory.listFiles())) {
-                if (!file.delete()) {
-                    throw new IOException("Could not delete file.");
-                }
-            }
-        } catch (NullPointerException ignored) {}
-        if (!directory.delete()) {
-            throw new IOException("Could not delete directory.");
-        }
-        this.videoRepository.delete(video);
-    }
+//    public void deleteVideo(@NonNull long id, String cookie) throws IOException {
+//        final Video video = this.videoRepository.findById(id).orElseThrow();
+//        final User user = this.authenticationService.getUserFromToken(
+//                AuthenticationService.extractTokenFromCookie(cookie)
+//        );
+//        if (!Objects.equals(video.getUser().getID(), user.getID())) {
+//            throw new IllegalArgumentException("User does not own video.");
+//        }
+//        File directory = new File("%s/data/videos/%d".formatted(
+//                System.getProperty("user.dir"),
+//                video.getID()
+//        ));
+//        if (!directory.exists()) {
+//            this.videoRepository.delete(video);
+//            return;
+//        }
+//        try {
+//            for (File file : Objects.requireNonNull(directory.listFiles())) {
+//                if (!file.delete()) {
+//                    throw new IOException("Could not delete file.");
+//                }
+//            }
+//        } catch (NullPointerException ignored) {}
+//        if (!directory.delete()) {
+//            throw new IOException("Could not delete directory.");
+//        }
+//        this.videoRepository.delete(video);
+//    }
 
-    public void editVideo(String title, String description, long id, String cookies) throws IllegalArgumentException {
-        final User user = this.authenticationService.getUserFromToken(
-                AuthenticationService.extractTokenFromCookie(cookies)
-        );
-        final Video video = this.videoRepository.findById(id).orElseThrow();
-        if (!Objects.equals(video.getUser().getID(), user.getID())) {
-            throw new IllegalArgumentException("User does not own video.");
-        }
-        video.setTitle(title);
-        video.setDescription(description);
-        this.videoRepository.save(video);
-    }
+//    public void editVideo(String title, String description, long id, String cookies) throws IllegalArgumentException {
+//        final User user = this.authenticationService.getUserFromToken(
+//                AuthenticationService.extractTokenFromCookie(cookies)
+//        );
+//        final Video video = this.videoRepository.findById(id).orElseThrow();
+//        if (!Objects.equals(video.getUser().getID(), user.getID())) {
+//            throw new IllegalArgumentException("User does not own video.");
+//        }
+//        video.setTitle(title);
+//        video.setDescription(description);
+//        this.videoRepository.save(video);
+//    }
 
     public void addView(long id) {
         final Video video = this.videoRepository.findById(id).orElseThrow();
