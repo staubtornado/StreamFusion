@@ -14,12 +14,11 @@
     border-radius: 25px;
     padding: 10px;
     width: 340px;
-    transition: all 350ms;
+    transition: transform 0.3s ease-in-out;
 }
 
 .video-container:hover {
-    background-color: var(--container-dark);
-    transition: all 350ms;
+    transform: scale(1.05);
 }
 
 .video-thumbnail {

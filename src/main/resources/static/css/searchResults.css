@@ -12,10 +12,11 @@
     margin: 20px 10px 10px 10px;
     padding: 10px;
     max-width: 1020px;
+    transition: transform 0.3s ease-in-out;
 }
 
 .result-container:hover {
-    background-color: var(--container-dark);
+    transform: scale(1.05);
 }
 
 .result-thumbnail {

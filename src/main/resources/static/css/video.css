@@ -205,6 +205,7 @@ body {
     max-height: 200px;
     gap: 2%;
     margin: 0 0 10% 0;
+    position: relative;
 }
 
 .dots {
@@ -220,6 +221,35 @@ body {
 
 .dots:hover path {
     fill: var(--theme-color);
+}
+
+.comment-settings {
+    position: absolute;
+    display: none;
+    border: solid 1px var(--theme-color);
+    border-radius: 10px;
+    left: 330px;
+}
+
+.comment-settings ul {
+    margin: 5%;
+    padding: 0;
+    text-align: left;
+}
+
+.comment-settings li {
+    list-style: none;
+    padding: 10px;
+    border-bottom: var(--background-dark) 1px solid;
+    cursor: pointer;
+}
+
+#remove {
+    color: var(--error-color);
+}
+
+.show {
+    display: block;
 }
 
 .comment:hover .dots {

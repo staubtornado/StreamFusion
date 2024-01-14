@@ -5,6 +5,7 @@ import de.streamfusion.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -34,5 +35,35 @@ public class CommentAPIController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Successfully commented video", HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/like-comment")
+    public ResponseEntity<String> likeComment(@NonNull @RequestBody long commentID) {
+        try {
+            this.commentService.likeComment(commentID);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully liked comment", HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/dislike-comment")
+    public ResponseEntity<String> dislikeComment(@NonNull @RequestBody long commentID) {
+        try {
+            this.commentService.dislikeComment(commentID);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully disliked comment", HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/remove-comment")
+    public ResponseEntity<String> deleteComment(@NonNull @RequestBody long commentID) {
+        try {
+            this.commentService.deleteComment(commentID);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully removed comment", HttpStatus.OK);
     }
 }

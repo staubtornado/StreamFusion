@@ -87,6 +87,17 @@
                         <path d="M2 4C2 4.55228 1.55228 5 1 5C0.447715 5 0 4.55228 0 4C0 3.44772 0.447715 3 1 3C1.55228 3 2 3.44772 2 4Z" fill="white"/>
                         <path d="M2 1C2 1.55228 1.55228 2 1 2C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0C1.55228 0 2 0.447715 2 1Z" fill="white"/>
                     </svg>
+                    <div class="comment-settings">
+                        <ul>
+                            <li class="like-comment">Like</li>
+                            <li class="dislike-comment">Dislike</li>
+                            <!--<li th:if="${comment.getUser().getID() == account.getID()}" class="edit-comment">Edit</li>-->
+                            <li th:if="${comment.getUser().getID() == account.getID()}" class="remove-comment" id="remove">Remove</li>
+                        </ul>
+                    </div>
+                    <p style="display: none" th:text="${comment.getID()}" class="comment-id"></p>
+                    <p style="display: none" th:text="${comment.getID()}" class="comment-id"></p>
+                    <p style="display: none" th:text="${comment.getID()}" class="comment-id"></p>
                     <span th:text="${comment.getContent()}"></span>
                 </div>
             </div>
