@@ -7,11 +7,13 @@
     <link th:href="@{/css/header.css}" rel="stylesheet"/>
     <link th:href="@{/css/upload.css}" rel="stylesheet"/>
     <link th:href="@{/css/buttons.css}" rel="stylesheet"/>
+    <link th:href="@{/css/messages.css}" rel="stylesheet"/>
     <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
 </head>
 
 <header th:replace="~{header.html :: header}"></header>
 <body>
+    <span class="message"></span>
     <div class="container-gray" id="container">
         <p>New Video</p>
         <form>
