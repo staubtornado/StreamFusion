@@ -242,7 +242,7 @@ dots.forEach((dot) => {
                 },
                 body: comment_ID
             }).then((response) => {
-                if (response.ok) {
+                if (!response.ok) {
                     console.log(response);
                 }
             })
@@ -256,7 +256,7 @@ dots.forEach((dot) => {
                 },
                 body: comment_ID
             }).then((response) => {
-                if (response.ok) {
+                if (!response.ok) {
                     console.log(response);
                 }
             })
@@ -290,9 +290,11 @@ dots.forEach((dot) => {
                 },
                 body: comment_ID
             }).then((response) => {
-                if (response.ok) {
+                if (!response.ok) {
                     console.log(response);
                 }
+            }).then(() => {
+                location.reload();
             })
         }))
     });
