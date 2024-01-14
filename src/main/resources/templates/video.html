@@ -73,7 +73,7 @@
             </div>
 
             <div id="comments">
-                <div th:each="comment : ${video.getComments()}" class="comment">
+                <div th:each="comment : ${video.getCommentsByDate(true)}" class="comment">
                     <a th:href="'/user?id=' + ${comment.getUser().getID()}" class="comment-user-picture">
                         <img th:src="${comment.getUser().getProfilePictureURL()}" alt="">
                     </a>
