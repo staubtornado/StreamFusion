@@ -226,6 +226,7 @@ body {
 .comment-settings {
     position: absolute;
     display: none;
+    background-color: var(--container-dark);
     border: solid 1px var(--theme-color);
     border-radius: 10px;
     left: 330px;
