@@ -185,21 +185,26 @@ function createComment() {
 
     temp.innerHTML =
         '<div class="comment"> ' +
-            '<img alt="" src=' + document.getElementById('profile-picture').src +'>' +
-            '<div>' +
-                '<span>' + document.getElementById('user-auth-test').textContent + '</span>' +
+            '<a class="comment-user-picture" href=' + "/user?id=" + document.getElementById('profile-picture').src.split('=')[1] + '>' +
+                '<img alt="" src=' + document.getElementById('profile-picture').src +'>' +
+            '</a>' +
+            '<a class="comment-usernames" href=' + "/user?id=" + document.getElementById('profile-picture').src.split('=')[1] + '>' +
+                '<span>' + document.getElementById('nms').textContent + '</span>' +
                 '<br>' +
-                '<span class="username-font-size">' + document.getElementById('username-header').textContent +
-                '</span>' +
-                '<br>' +
-                '<span>' + document.getElementById('comment-input').value + '</span>' +
-            '</div>' +
+                '<span>' + document.getElementById('username-header').textContent + '</span>' +
+            '</a>'+
+            '<svg class="dots" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 2 8" fill="none">' +
+                '<path d="M2 7C2 7.55228 1.55228 8 1 8C0.447715 8 0 7.55228 0 7C0 6.44772 0.447715 6 1 6C1.55228 6 2 6.44772 2 7Z" fill="white"/>' +
+                '<path d="M2 4C2 4.55228 1.55228 5 1 5C0.447715 5 0 4.55228 0 4C0 3.44772 0.447715 3 1 3C1.55228 3 2 3.44772 2 4Z" fill="white"/>' +
+                '<path d="M2 1C2 1.55228 1.55228 2 1 2C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0C1.55228 0 2 0.447715 2 1Z" fill="white"/>' +
+            '</svg>' +
+            '<span>' + document.getElementById('comment-input').value + '</span>' +
         '</div>'
     ;
     while (temp.firstChild) {
         frag.appendChild(temp.firstChild);
     }
-    document.getElementById('comment-body').appendChild(frag);
+    document.getElementById('comments').insertBefore(frag, document.getElementById('comments').firstChild)
 }
 
 document.getElementById('comments-control').addEventListener('click', (event) => {
