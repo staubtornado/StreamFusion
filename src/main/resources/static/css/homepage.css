@@ -1,3 +1,62 @@
-h1, h2 {
-    text-align: center;
+#video-select {
+    display: flex;
+    margin: 15px;
+    justify-content: space-evenly;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: var(--container-dark) 1px solid;
+    border-radius: 25px;
+    padding: 10px;
+    width: 340px;
+    transition: all 350ms;
+}
+
+.video-container:hover {
+    background-color: var(--container-dark);
+    transition: all 350ms;
+}
+
+.video-thumbnail {
+    width: 340px;
+    aspect-ratio: 16/9;
+    border-radius: 25px;
+    margin-bottom: 5px;
+}
+
+.text-container {
+    padding-left: 5px;
+}
+
+.section-container {
+    margin: 5px 0;
+}
+
+.views, .upload-date, .ratio {
+    font-size: 0.75rem;
+}
+
+.views:before, .ratio:before {
+    content: "•";
+    margin: 0 4px;
+}
+
+#uploader-container {
+    display: flex;
+    align-items: center;
+}
+
+.uploader-profile-pic {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+.uploader {
+    margin-left: 5px;
 }
