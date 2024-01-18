@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -51,6 +52,22 @@ public class VideoService {
 
     public Iterable<Video> getVideos() {
         return this.videoRepository.findAll();
+    }
+
+    public Iterable<Video> getRecommendedVideos() {
+        List<Video> videos = this.videoRepository.findAll();
+        videos.sort((v1, v2) -> {
+            double v1Ratio = v1.getLikeRatio();
+            double v2Ratio = v2.getLikeRatio();
+
+            return (int) ((v1Ratio * v1.getViews()) - (v2Ratio * v2.getViews()));
+        });
+        for (int i = 0; i < videos.size() / 2; i++) {
+            Video temp = videos.get(i);
+            videos.set(i, videos.get(videos.size() - i - 1));
+            videos.set(videos.size() - i - 1, temp);
+        }
+        return videos.subList(0, Math.min(videos.size(), 50));
     }
 
     public Video newVideo(

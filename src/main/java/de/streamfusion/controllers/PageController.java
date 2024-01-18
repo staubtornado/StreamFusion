@@ -31,7 +31,7 @@ public class PageController {
             );
             modelAndView.addObject("account", account);
         } catch (IllegalArgumentException ignored) {}
-        modelAndView.addObject("videos", this.videoController.getVideos());
+        modelAndView.addObject("videos", this.videoController.getRecommendedVideos());
         return modelAndView;
     }
 
