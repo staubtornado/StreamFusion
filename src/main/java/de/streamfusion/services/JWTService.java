@@ -9,6 +9,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@Transactional
 public class JWTService {
     private final String secret;
     private final int expiration;

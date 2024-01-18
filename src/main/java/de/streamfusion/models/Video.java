@@ -3,12 +3,7 @@ package de.streamfusion.models;
 import jakarta.persistence.*;
 
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 @Entity
 @Table(name = "videos")
@@ -28,7 +23,7 @@ public class Video {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
     @PrePersist

@@ -7,8 +7,10 @@ import de.streamfusion.repositories.CommentRepository;
 import de.streamfusion.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CommentService {
     private final AuthenticationService authenticationService;
     private final CommentRepository commentRepository;

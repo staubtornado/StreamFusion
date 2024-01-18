@@ -11,6 +11,7 @@ import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
+@Transactional
 public class VideoService {
     private final VideoRepository videoRepository;
     private final AuthenticationService authenticationService;
